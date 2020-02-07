@@ -102,9 +102,18 @@ const Search = () => {
             setAlert(alertFun('danger', 'Error! ', ' Please try again...'))
             window.setTimeout(() => { setAlert(null) }, 2700)
             chi = undefined
-        } else {
+        } else if (heading === "Empty") {
+            console.log('Result is Empty')
+            handleBlock()
+            // window.setTimeout(() => { handleBlock() }, 1000)
+            // chi = <h1>Please Try Again</h1>
+            setAlert(alertFun('warning', 'Empty! ', ' Result Is Empty. Please try again...'))
+            window.setTimeout(() => { setAlert(null) }, 2700)
+            chi = undefined
+        }else {
             chi = undefined
         }
+        
     }, [heading])
 
 

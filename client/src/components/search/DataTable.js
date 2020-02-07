@@ -54,7 +54,7 @@ const DataTable = () => {
     
     
     useEffect(() => {
-        if (class_list[0].like == undefined) {
+        if (typeof class_list[0].like == undefined) {
             console.log("fistTime")
             let tdata = data;
             tdata = tdata.map((item1 => {

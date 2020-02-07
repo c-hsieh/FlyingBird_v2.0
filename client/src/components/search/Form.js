@@ -77,10 +77,15 @@ const Form = (prop) => {
                 fetch('/post', options).then(res => {
                     return res.json()
                 }).then((j) => {
-                    console.log('j.err', j.err);
+                    
                     if (j.err == undefined) {
-                        setState({ class_list: j, heading: "Finish" })
-                    } else {
+                        if (j.length == 0) {
+                            console.log(j.length)
+                            setState({ class_list: [], heading: "Empty" })
+                        }else{
+                            setState({ class_list: j, heading: "Finish" })
+                        }
+                    }else {
                         setState({ class_list: [], heading: "Err" })
                     }
 
@@ -97,23 +102,32 @@ const Form = (prop) => {
     }, [formValue, alert])
 
     const setvalue = async(e) => {
+        console.log("Hello", e.target.id)
         if (e.target.id === "engTeach") {
             setFormValue({
                 ...formValue,
                 [e.target.id]: e.target.checked === "on" ? "Y" : "N",
-                ['course_code']: ''
+                ['course_code']: '',
+                ['serial_number']: ''
             })
         } else if (e.target.id === "teacher" || e.target.id === "chn") {
             setFormValue({
                 ...formValue,
                 [e.target.id]: encodeURI(e.target.value),
-                ['course_code']: ''
+                ['course_code']: '',
+                ['serial_number']: ''
             })
-        } else {
+        } else if (e.target.id === "formsubmit") {
+            setFormValue({
+                ...formValue,
+                [e.target.id]: encodeURI(e.target.value)
+            })
+        }else {
             setFormValue({
                 ...formValue,
                 [e.target.id]: e.target.value,
-                ['course_code']: ''
+                ['course_code']: '',
+                ['serial_number']: ''
             })
         }
     }
@@ -138,10 +152,10 @@ const Form = (prop) => {
     // useEffect(() => {
     //     console.log('formValue', formValue)
     // }, [formValue])
-    const onChange = async(e) => {
+    const onChange = (e) => {
         // setvalue(e)
         // console.log(e.target.id )
-        if (e.target.id == 'course_code'){
+        if (e.target.id == 'course_code' || e.target.id == 'serial_number'){
             setFormValue({
                 ...FormValueInite,
                 [e.target.id]: e.target.value
@@ -186,7 +200,7 @@ const Form = (prop) => {
                         </button>
                 </div>
             </div>
-            <form onSubmit={findClass}>
+            <form onSubmit={findClass} id="formsubmit">
                 
                 <div className="row">
                     <div className="form-group col">
