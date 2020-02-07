@@ -28,14 +28,11 @@ const formatterChnName = (cell, row) =>{
 const formatterCodeCredit = (cell, row) => {
     // console.log('cell', cell)
     // console.log('row', row)
-
     const sp = [row.credit, row.option_code]
     const jo = sp.join(` `)
     return (
-
         <span dangerouslySetInnerHTML={{ __html: jo }}>
         </span>
-        
     )
 }
 const formatterNoDept =(cell, row)=>{
@@ -54,24 +51,29 @@ const DataTable = () => {
     const { class_list, heading} = state;
     const [data, setData] = useState(class_list);
     const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
-
+    
+    
     useEffect(() => {
-        let tdata = data;
-        tdata = tdata.map((item1 => {
-            return{
-                ...item1,
-                ['like']: likeList.some((item) => item.serial_no == item1.serial_no)
-            }
-        }))
-        setData([
-            ...tdata
-        ])
-        console.log('dataInite', data)
+        if (class_list[0].like == undefined) {
+            console.log("fistTime")
+            let tdata = data;
+            tdata = tdata.map((item1 => {
+                return {
+                    ...item1,
+                    ['like']: likeList.some((item) => item.serial_no == item1.serial_no)
+                }
+            }))
+            setData([
+                ...tdata
+            ])
+            
+            console.log('dataInite', data)
+        }
     }, [])
     const addToLike = (cell, row) => {
-        // let LikeList = localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : []
-        console.log('addToLike', row)
+        
         if (!(likeList.some((item) => item.serial_no == row.serial_no))){
+            let cde = likeList
             const likeItem = {
                 acadm_year: row.acadm_year,
                 acadm_term: row.acadm_term,
@@ -81,38 +83,27 @@ const DataTable = () => {
                 chn_name: row.chn_name,
                 time_inf: row.time_inf
             }
-            console.log('likeItem', likeItem)
-            setLikeList([
-                ...likeList,
-                {
-                    acadm_year: row.acadm_year,
-                    acadm_term: row.acadm_term,
-                    serial_no: row.serial_no,
-                    course_code: row.course_code,
-                    dept_code: row.dept_code,
-                    chn_name: row.chn_name,
-                    time_inf: row.time_inf
-                }
-            ])
-            setLikeList(['123456'])
-            // console.log(likeList);
-            console.log("add to localstorage1")
-            localStorage.setItem('LikeList', JSON.stringify(likeList));
-            console.log('likeList', likeList)
-            console.log('loaclstrage', JSON.parse(localStorage.getItem('LikeList')))
-            console.log("add to localstorage2")
+            // console.log('likeItem', likeItem)
+            cde.push(likeItem)
+            setLikeList(cde)
+            
+            // console.log('likeListADD', likeList)
+            localStorage.setItem('LikeList', JSON.stringify(cde));
+            // console.log('likeList', likeList)
+            
         }else{
-            let abc = likeList;
-            abc = abc.filiter((li) => li.serial_no != row.serial_no)
-            setLikeList([
-                ...abc
-            ])
-            localStorage.setItem('LikeList', JSON.stringify(abc));
-            console.log("remove to localstorage")
+            
+            setLikeList(abc => 
+                abc.filter((li) => 
+                    li.serial_no != row.serial_no
+            ))
+            localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
-        let tdata = data;
-        tdata = tdata.map((item => {
-            if (item.serial_no == row.serial_no){
+        console.log('setData', data)
+        
+        setData(data => data.map((item => {
+            if (item.serial_no == row.serial_no) {
+                console.log('item.serial_no', item.serial_no)
                 return {
                     ...item,
                     ['like']: !(item.like)
@@ -120,46 +111,19 @@ const DataTable = () => {
             }
             return item
         }))
-        setData([
-            ...tdata
-        ])
-        console.log('likeList2', likeList)
-        console.log('data', data)
-        // localStorage.removeItem()
-        // localStorage.clear()
+
+        )
     }
-    
-    // const Like = (prop) => {
-    //     // let LikeList = localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : []
-    //     console.log('Like', prop.row)
-    //     if (likeList.some((item) => item.serial_no == prop.row.serial_no)) {
-    //         return <a href='#' onClick={() => addToLike(prop.cell, prop.row)} style={{ "color": "red" }}><i class="fas fa-heart"></i></a>
-    //     } else {
-    //         return <a href='#' onClick={() => addToLike(prop.cell, prop.row)} style={{ "color": "red" }}><i class="far fa-heart"></i></a>
-    //     }
-        
-    // }
+ 
     const formatterLike = (cell, row) => {
         console.log('formatterLike', row)
-        // return (
-        //     <Like cell={cell} row={row} />
-        // )
+        
         if (row.like) {
-            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red" }}><i className="fas fa-heart"></i></a>
+            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size":"0.8em"}}><i className="fas fa-heart"></i></a>
         } else {
-            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red" }}><i className="far fa-heart"></i></a>
+            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
         }
     }
-    // {
-    //     dataField: 'credit',
-    //         text: '學分',
-    //             sort: true
-    // }, 
-    // {
-    //     dataField: 'dept_chiabbr',
-    //         text: '開課單位',
-    //             sort: true
-    // },
     
     const columns = [{
         dataField: 'course_code',
@@ -217,7 +181,13 @@ const DataTable = () => {
         isDummyField: true,
         // style:  {  width: '10px'},
         formatter: formatterLike,
-        sort: false
+        sort: false,
+        headerStyle: (colum, colIndex) => {
+            return { width: '5em', textAlign: 'center', fontSize: "0.8em"};
+        },
+        style: {
+            textAlign: 'center',
+        }
     }];
 
     const expandRow = {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory, { PaginationProvider, PaginationListStandalone} from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 
 import { Context } from '../../context/context'
 import Spinner from '../layout/Spinner'
@@ -10,37 +10,31 @@ import Spinner from '../layout/Spinner'
 import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
 const { SearchBar } = Search;
-const formatterChnName = (cell, row) =>{
-    console.log('cell', cell)
-    console.log('row', row)
-
-    const sp = cell.split('</br>')
-    console.log('sp', sp)
-    const jo = sp.join(`</br >`)
-    return(
-        <span>
-            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadm_year}&term=${row.acadm_term}&courseCode=${row.course_code}&deptCode=${row.dept_code}`} target="_blank">{sp[0]}</a>
-            <br />
-            <p>
-                {sp[1]}
-            </p>
-        </span>
-    )
-}
-
-const formatterCodeCredit = (cell, row) => {
+const formatterChnName = (cell, row) => {
     // console.log('cell', cell)
     // console.log('row', row)
 
-    const sp = [row.credit, row.option_code]
-    const jo = sp.join(` `)
+    const sp = cell.split('</br>')
+    const jo = sp.join(`</br >`)
     return (
-
-        <span dangerouslySetInnerHTML={{ __html: jo }}>
+        <span>
+            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadm_year}&term=${row.acadm_term}&courseCode=${row.course_code}&deptCode=${row.dept_code}`} target="_blank">{sp[0]}</a>
+            <br />
+            <p>{sp[1]}</p>
         </span>
-        
     )
 }
+
+// const formatterCodeCredit = (cell, row) => {
+//     // console.log('cell', cell)
+//     // console.log('row', row)
+//     const sp = [row.credit, row.option_code]
+//     const jo = sp.join(` `)
+//     return (
+//         <span dangerouslySetInnerHTML={{ __html: jo }}>
+//         </span>
+//     )
+// }
 const formatterNoCodeCredit = (cell, row) => {
     // console.log('cell', cell)
     // console.log('row', row)
@@ -55,7 +49,7 @@ const formatterNoCodeCredit = (cell, row) => {
 
     )
 }
-const formatterNoDept =(cell, row)=>{
+const formatterNoDept = (cell, row) => {
     const sp = [row.serial_no, row.dept_chiabbr]
     const jo = sp.join(`</br >`)
     return (
@@ -64,19 +58,87 @@ const formatterNoDept =(cell, row)=>{
         </span>
     )
 }
+
+
 const DataTable = () => {
     const [state, setState] = useContext(Context);
-    const { class_list, heading} = state;
-    // {
-    //     dataField: 'credit',
-    //         text: '學分',
-    //             sort: true
-    // }, 
-    // {
-    //     dataField: 'dept_chiabbr',
-    //         text: '開課單位',
-    //             sort: true
-    // },
+    const { class_list, heading } = state;
+    const [data, setData] = useState(class_list);
+    const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
+
+
+    useEffect(() => {
+        if (class_list[0].like == undefined) {
+            console.log("fistTime")
+            let tdata = data;
+            tdata = tdata.map((item1 => {
+                return {
+                    ...item1,
+                    ['like']: likeList.some((item) => item.serial_no == item1.serial_no)
+                }
+            }))
+            setData([
+                ...tdata
+            ])
+
+            console.log('dataInite', data)
+        }
+    }, [])
+    const addToLike = (cell, row) => {
+
+        if (!(likeList.some((item) => item.serial_no == row.serial_no))) {
+            let cde = likeList
+            const likeItem = {
+                acadm_year: row.acadm_year,
+                acadm_term: row.acadm_term,
+                serial_no: row.serial_no,
+                course_code: row.course_code,
+                dept_code: row.dept_code,
+                chn_name: row.chn_name,
+                time_inf: row.time_inf
+            }
+            // console.log('likeItem', likeItem)
+            cde.push(likeItem)
+            setLikeList(cde)
+
+            // console.log('likeListADD', likeList)
+            localStorage.setItem('LikeList', JSON.stringify(cde));
+            // console.log('likeList', likeList)
+
+        } else {
+
+            setLikeList(abc =>
+                abc.filter((li) =>
+                    li.serial_no != row.serial_no
+                ))
+            localStorage.setItem('LikeList', JSON.stringify(likeList));
+        }
+        console.log('setData', data)
+
+        setData(data => data.map((item => {
+            if (item.serial_no == row.serial_no) {
+                console.log('item.serial_no', item.serial_no)
+                return {
+                    ...item,
+                    ['like']: !(item.like)
+                }
+            }
+            return item
+        }))
+
+        )
+    }
+
+    const formatterLike = (cell, row) => {
+        console.log('formatterLike', row)
+
+        if (row.like) {
+            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size": "0.8em" }}><i className="fas fa-heart"></i></a>
+        } else {
+            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+        }
+    }
+
     const columns = [{
         dataField: 'course_code',
         text: '開課序號 ID',
@@ -92,7 +154,7 @@ const DataTable = () => {
         dataField: 'chn_name',
         text: '課程名稱',
         formatter: formatterChnName,
-        style: { width: 'auto !important'},
+        style: { width: 'auto !important' },
         sort: true
     }, {
         dataField: 'option_code',
@@ -103,7 +165,7 @@ const DataTable = () => {
         dataField: 'eng_name',
         text: '課程英文名稱',
         formatter: formatterChnName,
-        style: { width: 'auto !important'},
+        style: { width: 'auto !important' },
         sort: true,
         hidden: true
     }, {
@@ -127,13 +189,26 @@ const DataTable = () => {
     }, {
         dataField: 'restrict',
         text: '限修',
-        style:  {  width: 'auto'},
+        style: { width: 'auto' },
         sort: true,
         hidden: true
+    }, {
+        dataField: 'tcode',//serial_no
+        text: 'Like',
+        isDummyField: true,
+        // style:  {  width: '10px'},
+        formatter: formatterLike,
+        sort: false,
+        headerStyle: (colum, colIndex) => {
+            return { width: '5em', textAlign: 'center', fontSize: "0.8em" };
+        },
+        style: {
+            textAlign: 'center',
+        }
     }];
 
     const expandRow = {
-        
+
         renderer: (row, rowIndex) => (
             // console.log('rowIndexkkk', rowIndex)
             // <div>{`${row.credit == 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
@@ -143,7 +218,7 @@ const DataTable = () => {
                 <p>{`限修人數: ${row.limit_count_h}`}</p>
                 <p>{`授權碼人數: ${row.authorize_p}`}</p>
             </div>
-            
+
         ),
         className: (isExpanded, row, rowIndex) => {
             // if (rowIndex > 2) return 'foo';
@@ -155,12 +230,12 @@ const DataTable = () => {
         },
         // onlyOneExpanding: true,
         expanded: [1, 3],
-        onExpand: (row, isExpand, rowIndex, e) => {
-            console.log('row', row, 'isExpand', isExpand, 'rowIndex', rowIndex, 'e', e)
-        },
-        expandColumnRenderer: ({ expanded, rowKey, expandable }) => (
-            console.log('expanded', expanded, 'rowKey', rowKey, 'expandable', expandable)
-        )
+        // onExpand: (row, isExpand, rowIndex, e) => {
+        //     console.log('row', row, 'isExpand', isExpand, 'rowIndex', rowIndex, 'e', e)
+        // },
+        // expandColumnRenderer: ({ expanded, rowKey, expandable }) => (
+        //     console.log('expanded', expanded, 'rowKey', rowKey, 'expandable', expandable)
+        // )
     };
     // let ttable = <BootstrapTable keyField='id' data={class_list} columns={columns} />
     // useEffect(() => {
@@ -182,12 +257,12 @@ const DataTable = () => {
             console.log('rowIndex', rowIndex)
         }
     };
-    
+
     const options = {
         custom: true,
-        paginationSize: 4,
+        paginationSize: 3,
         pageStartIndex: 1,
-        sizePerPage:11,
+        sizePerPage: 8,
         firstPageText: 'First',
         prePageText: 'Back',
         nextPageText: 'Next',
@@ -205,7 +280,7 @@ const DataTable = () => {
         toggles
     }) => (
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                
+
                 <button type="button" className="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="far fa-check-circle"></i>
                 </button>
@@ -236,24 +311,25 @@ const DataTable = () => {
                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                         <label class="custom-control-label dropdown-item" for="customCheck1">checkbox</label>
                     </div> */}
-                    
+
                 </div>
             </div>
         );
+
     const contentTable = ({ paginationProps, paginationTableProps }) => (
         <div className="">
             {/* <SizePerPageDropdownStandalone
                 {...paginationProps}
             /> */}
-            
-            <PaginationListStandalone  {...paginationProps} style={{ 'margin-right': '10px' }}/>
+
+            <PaginationListStandalone  {...paginationProps} style={{ 'margin-right': '10px' }} />
             <ToolkitProvider
                 keyField="id"
                 className='d-flex'
                 columns={
                     columns
                 }
-                data={class_list}
+                data={data} //class_list
                 columnToggle
                 search
             >
@@ -262,17 +338,17 @@ const DataTable = () => {
                         <div>
                             <CustomToggleList {...toolkitprops.columnToggleProps} />
                             <SearchBar
-                            {...toolkitprops.searchProps}
-                            className='ml-auto'
-                            placeholder="Search..."
-                            style={{'margin-right': '10px'}}
+                                {...toolkitprops.searchProps}
+                                className='ml-auto'
+                                placeholder="Search..."
+                                style={{ 'margin-right': '10px' }}
                             />
                             <BootstrapTable
                                 bootstrap4
                                 striped
-                                hover
+                                // hover
                                 expandRow={expandRow}
-                                selectRow={selectRow}
+                                // selectRow={selectRow}
                                 {...toolkitprops.baseProps}
                                 {...paginationTableProps}
                             />
@@ -280,13 +356,13 @@ const DataTable = () => {
                     )
                 }
             </ToolkitProvider>
-            <PaginationListStandalone {...paginationProps} className='ml-auto'/>
+            <PaginationListStandalone {...paginationProps} className='ml-auto' />
         </div>
     );
     if (class_list === undefined || class_list.length === 0) {
         console.log("class_list", class_list)
         return <Spinner />;
-    }else{
+    } else {
         return (
             <>
                 {/* <h2>{heading}</h2> */}
@@ -304,11 +380,19 @@ const DataTable = () => {
                 >
                     {contentTable}
                 </PaginationProvider>
-                {/* <Code>{sourceCode}</Code> */}
+                {/* <BootstrapTable
+                    keyField='id'
+                    bootstrap4
+                    // striped
+                    // hover
+                    expandRow={expandRow}
+                    data={data}
+                    columns={columns}
+                /> */}
             </ >
         )
     }
-    
+
 }
 
 
