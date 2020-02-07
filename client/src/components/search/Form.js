@@ -220,7 +220,7 @@ const Form = (prop) => {
                     <div className="form-group col-xs-7 col-sm-6">
                         <label htmlFor="classCode">ClassName Select:</label>
                         <select className="form-control form-control" id="classCode" onChange={onChange} value={formValue.classCode}>
-                            {Object.keys(classLevel).map(i => <option key={classLevel[i]} value={customData[i]}>{i}</option>)}
+                            {Object.keys(classLevel).map(i => <option key={classLevel[i]} value={classLevel[i]}>{i}</option>)}
                         </select>
                     </div>
                 </div>
