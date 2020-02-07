@@ -2,14 +2,17 @@ import React, { useState, useEffect, useContext } from 'react'
 import customData from './listdep.json';
 import { Context } from '../../context/context'
 import Timeselect from './TimeSelect';
+import { CSSTransitionGroup } from 'react-transition-group'
 
-const Form = () => {
+import './time.css'
+
+const Form = (prop) => {
     const [depFilter, setDepFilter] = useState("");
     const [dep, setDep] = useState(Object.keys(customData[0]));
     const [SUBmit, setSUBmit] = useState(false);
     const [state, setState] = useContext(Context);
 
-    const [formValue, setFormValue] = useState({
+    const FormValueInite = {
         'acadmYear': '108',
         'acadmTerm': '2',
         'chn': "",
@@ -29,7 +32,8 @@ const Form = () => {
         'start': '0',
         'limit': '99999',
         'page': '1'
-    });
+    }
+    const [formValue, setFormValue] = useState(FormValueInite);
     // console.log(dep)
 
     const classLevel = {
@@ -43,56 +47,76 @@ const Form = () => {
         "大碩合開": "9",
     };
     
-    
 
     useEffect(() => {
         if(SUBmit){
-            console.log('formValue', formValue)
-            console.log('get a submit')
-            setState({class_list: [], heading: "Searching" });
-            // setState({ 
-            //     ...state,
-            //     ['class_list']: [] 
-            // });
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formValue)
-            };
-            fetch('/post', options).then(res =>{
-                return res.json()
-            }).then( (j) => {
-                setState({ class_list: j, heading: "Finish"})
-                // console.log(j)
-            })
-            .catch(err =>{
-                console.error(err)
-            })
+            if (formValue.chn == "" && formValue.engTeach == "" && formValue.deptCode == "" 
+                && formValue.classCode == "" && formValue.teacher == "" && formValue.serial_number == ""
+                && formValue.course_code == ""){
+                    console.log('emepty')
+                    // alert = <p>Try again</p> 
+                prop.setAlert(prop.alertFun('warning','Warning! ',' Please enter something...'))
+                window.setTimeout(() => { prop.setAlert(null) }, 2500)
+            }else{
+                prop.handleBlock();
+                console.log('formValue', formValue)
+                console.log('FormValueInite', FormValueInite)
+                console.log('get a submit')
+                setState({ class_list: [], heading: "Searching" });
+                // setState({ 
+                //     ...state,
+                //     ['class_list']: [] 
+                // });
+                const options = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formValue)
+                };
+                fetch('/post', options).then(res => {
+                    return res.json()
+                }).then((j) => {
+                    console.log('j.err', j.err);
+                    if (j.err == undefined) {
+                        setState({ class_list: j, heading: "Finish" })
+                    } else {
+                        setState({ class_list: [], heading: "Err" })
+                    }
+
+                    // console.log(j)
+
+                })
+                    .catch(err => {
+                        console.error(err)
+                    })
+            }
+            
             setSUBmit(false)
         }
-    }, [formValue])
+    }, [formValue, alert])
 
     const setvalue = async(e) => {
         if (e.target.id === "engTeach") {
             setFormValue({
                 ...formValue,
-                [e.target.id]: e.target.checked === "on" ? "Y" : "N"
+                [e.target.id]: e.target.checked === "on" ? "Y" : "N",
+                ['course_code']: ''
             })
         } else if (e.target.id === "teacher" || e.target.id === "chn") {
             setFormValue({
                 ...formValue,
-                [e.target.id]: encodeURI(e.target.value)
+                [e.target.id]: encodeURI(e.target.value),
+                ['course_code']: ''
             })
         } else {
             setFormValue({
                 ...formValue,
-                [e.target.id]: e.target.value
+                [e.target.id]: e.target.value,
+                ['course_code']: ''
             })
         }
     }
-
     const findClass = async(e) => {
 
         e.preventDefault();
@@ -115,13 +139,53 @@ const Form = () => {
     //     console.log('formValue', formValue)
     // }, [formValue])
     const onChange = async(e) => {
-        setvalue(e)
+        // setvalue(e)
+        // console.log(e.target.id )
+        if (e.target.id == 'course_code'){
+            setFormValue({
+                ...FormValueInite,
+                [e.target.id]: e.target.value
+            })
+        }else{
+            setvalue(e)
+        }
+        
         // console.log('e.target.value', e.target.value)
         // console.log('e.target.id', e.target.id)
     };
     // console.log(customData);
+    const reSetasd = (e) => {
+        e.preventDefault()
+        setFormValue({
+            ...FormValueInite
+        })
+        console.log(prop);
+        
+    }
+    // let abc = alert
+    console.log('alert', alert)
+    // const ccc = (e) =>{
+    //     e.preventDefault()
+    //     return (<p>Hey success</p>)
+    // }
+    // useEffect(() => {
+    //     console.log(alert)
+    // })
+    // window.setTimeout(() => {}, 2000)
+    
+    
     return (
         <React.Fragment>
+            
+            {/* {alert} */}
+            
+            <div className="row ">
+                <div className="form-group col d-flex justify-content-end">
+                    <button className="btn btn-primary btn-sm " onClick={reSetasd}>
+                        Reset
+                        </button>
+                </div>
+            </div>
             <form onSubmit={findClass}>
                 
                 <div className="row">
@@ -183,7 +247,8 @@ const Form = () => {
                 
                 
                 
-                <button className="btn btn-primary btn-lg btn-block mb-5" data-toggle="collapse" data-target="#collapseFilter" type="submit" aria-expanded="true" aria-controls="collapseFilter">
+
+                <button className="btn btn-primary btn-lg btn-block mb-5" >
                     Search...
                 </button>
             </form>

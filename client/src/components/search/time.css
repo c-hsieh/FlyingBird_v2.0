@@ -265,3 +265,45 @@ main section.demo .info p {
         font-size: 1.3vw;
     }
 }
+
+.caret {
+display: inline-block;
+width: 0;
+height: 0;
+margin-left: 1px;
+vertical-align: middle;
+border-top: 3px dashed;
+border-top: 3px dashed \9;
+border-right: 3px solid transparent;
+border-left: 3px solid transparent;
+}
+
+.dropup, .dropdown {
+position: relative;
+}
+
+.dropup .caret, .navbar-fixed-bottom .dropdown .caret {
+border-top: 0;
+border-bottom: 3px dashed;
+border-bottom: 3px solid \9;
+}
+
+
+.formblock-appear {
+  opacity: 0.01;
+}
+
+.formblock-appear.formblock-appear-active {
+  opacity: 1;
+  /* transition: opacity .3s linear; */
+  transition: visibility 0.3s linear 0.3s, opacity 0.3s linear
+}
+
+/* .alertblock-appear {
+  opacity: 0.01;
+}
+.alertblock-appear.alertblock-appear-active {
+  opacity: 1;
+  /* transition: opacity .3s linear; */
+  /* transition: visibility 0.3s linear 0.3s, opacity 0.3s linear
+}  */

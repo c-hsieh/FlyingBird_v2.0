@@ -11,16 +11,19 @@ import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
 const { SearchBar } = Search;
 const formatterChnName = (cell, row) =>{
-    // console.log('cell', cell)
-    // console.log('row', row)
+    console.log('cell', cell)
+    console.log('row', row)
 
     const sp = cell.split('</br>')
+    console.log('sp', sp)
     const jo = sp.join(`</br >`)
     return(
         <span>
             <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadm_year}&term=${row.acadm_term}&courseCode=${row.course_code}&deptCode=${row.dept_code}`} target="_blank">{sp[0]}</a>
             <br />
-            <p>{sp[1]}</p>
+            <p>
+                {sp[1]}
+            </p>
         </span>
     )
 }
@@ -38,6 +41,20 @@ const formatterCodeCredit = (cell, row) => {
         
     )
 }
+const formatterNoCodeCredit = (cell, row) => {
+    // console.log('cell', cell)
+    // console.log('row', row)
+
+    const sp = [row.credit, row.option_code]
+    let jo = sp.join(` `)
+    jo = row.serial_no + '</br>' + jo
+    return (
+
+        <span dangerouslySetInnerHTML={{ __html: jo }}>
+        </span>
+
+    )
+}
 const formatterNoDept =(cell, row)=>{
     const sp = [row.serial_no, row.dept_chiabbr]
     const jo = sp.join(`</br >`)
@@ -47,109 +64,9 @@ const formatterNoDept =(cell, row)=>{
         </span>
     )
 }
-
-
 const DataTable = () => {
     const [state, setState] = useContext(Context);
     const { class_list, heading} = state;
-    const [data, setData] = useState(class_list);
-    const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
-
-    useEffect(() => {
-        let tdata = data;
-        tdata = tdata.map((item1 => {
-            return{
-                ...item1,
-                ['like']: likeList.some((item) => item.serial_no == item1.serial_no)
-            }
-        }))
-        setData([
-            ...tdata
-        ])
-        console.log('dataInite', data)
-    }, [])
-    const addToLike = (cell, row) => {
-        // let LikeList = localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : []
-        console.log('addToLike', row)
-        if (!(likeList.some((item) => item.serial_no == row.serial_no))){
-            const likeItem = {
-                acadm_year: row.acadm_year,
-                acadm_term: row.acadm_term,
-                serial_no: row.serial_no,
-                course_code: row.course_code,
-                dept_code: row.dept_code,
-                chn_name: row.chn_name,
-                time_inf: row.time_inf
-            }
-            console.log('likeItem', likeItem)
-            setLikeList([
-                ...likeList,
-                {
-                    acadm_year: row.acadm_year,
-                    acadm_term: row.acadm_term,
-                    serial_no: row.serial_no,
-                    course_code: row.course_code,
-                    dept_code: row.dept_code,
-                    chn_name: row.chn_name,
-                    time_inf: row.time_inf
-                }
-            ])
-            setLikeList(['123456'])
-            // console.log(likeList);
-            console.log("add to localstorage1")
-            localStorage.setItem('LikeList', JSON.stringify(likeList));
-            console.log('likeList', likeList)
-            console.log('loaclstrage', JSON.parse(localStorage.getItem('LikeList')))
-            console.log("add to localstorage2")
-        }else{
-            let abc = likeList;
-            abc = abc.filiter((li) => li.serial_no != row.serial_no)
-            setLikeList([
-                ...abc
-            ])
-            localStorage.setItem('LikeList', JSON.stringify(abc));
-            console.log("remove to localstorage")
-        }
-        let tdata = data;
-        tdata = tdata.map((item => {
-            if (item.serial_no == row.serial_no){
-                return {
-                    ...item,
-                    ['like']: !(item.like)
-                }
-            }
-            return item
-        }))
-        setData([
-            ...tdata
-        ])
-        console.log('likeList2', likeList)
-        console.log('data', data)
-        // localStorage.removeItem()
-        // localStorage.clear()
-    }
-    
-    // const Like = (prop) => {
-    //     // let LikeList = localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : []
-    //     console.log('Like', prop.row)
-    //     if (likeList.some((item) => item.serial_no == prop.row.serial_no)) {
-    //         return <a href='#' onClick={() => addToLike(prop.cell, prop.row)} style={{ "color": "red" }}><i class="fas fa-heart"></i></a>
-    //     } else {
-    //         return <a href='#' onClick={() => addToLike(prop.cell, prop.row)} style={{ "color": "red" }}><i class="far fa-heart"></i></a>
-    //     }
-        
-    // }
-    const formatterLike = (cell, row) => {
-        console.log('formatterLike', row)
-        // return (
-        //     <Like cell={cell} row={row} />
-        // )
-        if (row.like) {
-            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red" }}><i className="fas fa-heart"></i></a>
-        } else {
-            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red" }}><i className="far fa-heart"></i></a>
-        }
-    }
     // {
     //     dataField: 'credit',
     //         text: '學分',
@@ -160,7 +77,6 @@ const DataTable = () => {
     //         text: '開課單位',
     //             sort: true
     // },
-    
     const columns = [{
         dataField: 'course_code',
         text: '開課序號 ID',
@@ -170,17 +86,18 @@ const DataTable = () => {
         dataField: 'serial_no',
         text: '開課代碼',
         formatter: formatterNoDept,
-        sort: true
-    }, {
-        dataField: 'option_code',
-        text: '學分 必/選',
-        formatter: formatterCodeCredit,
-        sort: true
+        sort: true,
+        hidden: true
     }, {
         dataField: 'chn_name',
         text: '課程名稱',
         formatter: formatterChnName,
         style: { width: 'auto !important'},
+        sort: true
+    }, {
+        dataField: 'option_code',
+        text: '開課代碼 學分 必/選',
+        formatter: formatterNoCodeCredit,
         sort: true
     }, {
         dataField: 'eng_name',
@@ -200,24 +117,19 @@ const DataTable = () => {
     }, {
         dataField: 'limit_count_h',
         text: '限修人數',
-        sort: true
+        sort: true,
+        hidden: true
     }, {
         dataField: 'authorize_p',
         text: '授權碼人數',
-        sort: true
+        sort: true,
+        hidden: true
     }, {
         dataField: 'restrict',
         text: '限修',
         style:  {  width: 'auto'},
         sort: true,
         hidden: true
-    }, {
-        dataField: 'tcode',//serial_no
-        text: 'Like',
-        isDummyField: true,
-        // style:  {  width: '10px'},
-        formatter: formatterLike,
-        sort: false
     }];
 
     const expandRow = {
@@ -228,6 +140,8 @@ const DataTable = () => {
             <div>
                 <p>{`${row.restrict == '' ? '無限修條件' : `限修條件:`}`}</p>
                 <p>{`${row.restrict == '' ? '' : `${row.restrict}`}`}</p>
+                <p>{`限修人數: ${row.limit_count_h}`}</p>
+                <p>{`授權碼人數: ${row.authorize_p}`}</p>
             </div>
             
         ),
@@ -241,12 +155,12 @@ const DataTable = () => {
         },
         // onlyOneExpanding: true,
         expanded: [1, 3],
-        // onExpand: (row, isExpand, rowIndex, e) => {
-        //     console.log('row', row, 'isExpand', isExpand, 'rowIndex', rowIndex, 'e', e)
-        // },
-        // expandColumnRenderer: ({ expanded, rowKey, expandable }) => (
-        //     console.log('expanded', expanded, 'rowKey', rowKey, 'expandable', expandable)
-        // )
+        onExpand: (row, isExpand, rowIndex, e) => {
+            console.log('row', row, 'isExpand', isExpand, 'rowIndex', rowIndex, 'e', e)
+        },
+        expandColumnRenderer: ({ expanded, rowKey, expandable }) => (
+            console.log('expanded', expanded, 'rowKey', rowKey, 'expandable', expandable)
+        )
     };
     // let ttable = <BootstrapTable keyField='id' data={class_list} columns={columns} />
     // useEffect(() => {
@@ -326,7 +240,6 @@ const DataTable = () => {
                 </div>
             </div>
         );
-    
     const contentTable = ({ paginationProps, paginationTableProps }) => (
         <div className="">
             {/* <SizePerPageDropdownStandalone
@@ -340,7 +253,7 @@ const DataTable = () => {
                 columns={
                     columns
                 }
-                data={data} //class_list
+                data={class_list}
                 columnToggle
                 search
             >
@@ -357,9 +270,9 @@ const DataTable = () => {
                             <BootstrapTable
                                 bootstrap4
                                 striped
-                                // hover
+                                hover
                                 expandRow={expandRow}
-                                // selectRow={selectRow}
+                                selectRow={selectRow}
                                 {...toolkitprops.baseProps}
                                 {...paginationTableProps}
                             />
@@ -391,15 +304,7 @@ const DataTable = () => {
                 >
                     {contentTable}
                 </PaginationProvider>
-                {/* <BootstrapTable
-                    keyField='id'
-                    bootstrap4
-                    // striped
-                    // hover
-                    expandRow={expandRow}
-                    data={data}
-                    columns={columns}
-                /> */}
+                {/* <Code>{sourceCode}</Code> */}
             </ >
         )
     }
