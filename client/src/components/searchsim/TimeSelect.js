@@ -2,33 +2,24 @@ import React, { useState, useEffect, useContext } from 'react'
 
 
 import Selection from '@simonwep/selection-js/dist/selection.min.js'
-
 import './time.css';
-const Timeselect = (prop) => {
-    const [selection, setSelection] = useState(Selection.create({
-
-        // Class for the selection-area
-        class: 'selection',
-
-        frame: document,
-
-        // All elements in this container can be selected
-        selectables: ['.box-wrap > div.table'],
-
-        // The container is also the boundary in this case
-        boundaries: ['.box-wrap']
-    }))
+const Timeselect = () => {
+    
     useEffect(() => {
         console.log("hi")
 
         // Initialize selectionjs
+        const selection = Selection.create({
 
-        // const selection = 
-        selection.on('beforestart', evt => {
-            // This function can return "false" to abort the selection
-            console.log('beforestart', evt);
-        })
-        selection.on('start', ({ inst, selected, oe }) => {
+            // Class for the selection-area
+            class: 'selection',
+
+            // All elements in this container can be selected
+            selectables: ['.box-wrap > div.table'],
+
+            // The container is also the boundary in this case
+            boundaries: ['.box-wrap']
+        }).on('start', ({ inst, selected, oe }) => {
 
             // Remove class if the user isn't pressing the control key or ⌘ key
             // if (!oe.ctrlKey && !oe.metaKey) {
@@ -61,7 +52,6 @@ const Timeselect = (prop) => {
                 }
                 // el.classList.add('selected');
             }
-            // console.log(document.getElementsByName("1233"))
 
             // Remove the class from elements that where removed
             // since the last selection
@@ -80,43 +70,24 @@ const Timeselect = (prop) => {
 
         }).on('stop', ({ inst }) => {
             inst.keepSelection();
-            console.log('inst', inst)
-            // setSelection(inst)
+        });
+        selection.on('stop', evt => {
+            // for (i of evt.inst.h){
+            //     console.log(i.className);
+            // }
             let se = []
-            inst.h.forEach((value, i) => {
+            evt.inst.h.forEach((value, i) => {
                 if (value.className == "table selected") {
                     // console.log(i)
-                    
-                    let c = (Math.floor(i / 6)).toString()
-                    let w = ((i % 6) + 1).toString()
-                    console.log('w: ', w, 'c: ', c);
-                    se.push("checkWkSection".concat(w).concat(c))
-                    
-                    // se.push(i)
+                    se.push(i)
                 }
-                
                 // console.log(value.className, i)
             });
-            prop.setTimeList(se)
-        });
-        // selection.on('stop', evt => {
-        //     // for (i of evt.inst.h){
-        //     //     console.log(i.className);
-        //     // }
-        //     let se = []
-        //     evt.inst.h.forEach((value, i) => {
-        //         if (value.className == "table selected") {
-        //             // console.log(i)
-        //             se.push(i)
-        //         }
-        //         // console.log(value.className, i)
-        //     });
-        //     console.log("select", se)
-        //     // console.log("HH")
-        //     // console.log('stop', evt.inst.h);
-        // })
-    }, [])
-    console.log("TimeSelect Hello")
+            console.log("select", se)
+            // console.log("HH")
+            // console.log('stop', evt.inst.h);
+        })
+    },[])
     return (
         <>
             <main>
@@ -273,7 +244,7 @@ const Timeselect = (prop) => {
                     </section>
                 </section>
             </main>
-
+            
 
         </>
     )

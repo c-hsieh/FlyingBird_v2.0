@@ -43,7 +43,9 @@ const List = (prop) => {
                         </Link> */}
                         <a 
                             className="btn btn-dark btn-block"
-                            href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&deptCode=${likeItem.dept_code}`}
+                            href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=&deptCode=${likeItem.dept_code}&formS=&classes1=&deptGroup=`}
+                            
+
                             target="_blank"
                             role="button"
                         >

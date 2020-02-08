@@ -77,7 +77,7 @@ const Search = () => {
     // }
     if (heading === "Finish") {
         // DataTableMedia
-        if (size > 750){
+        if (size > 850){
             chi = <DataTable />
         }else{
             chi = <DataTableMedia />

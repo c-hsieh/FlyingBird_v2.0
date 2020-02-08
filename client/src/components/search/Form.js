@@ -1,39 +1,150 @@
 import React, { useState, useEffect, useContext } from 'react'
-import customData from './listdep.json';
+// import customData from './listdep.json';
+import customData from './d.json';
 import { Context } from '../../context/context'
 import Timeselect from './TimeSelect';
 import { CSSTransitionGroup } from 'react-transition-group'
 
+import Selection from '@simonwep/selection-js/dist/selection.min.js'
 import './time.css'
-
+const TimeSelectListInital = {
+    "checkWkSection10": "0",
+    "checkWkSection11": "0",
+    "checkWkSection12": "0",
+    "checkWkSection13": "0",
+    "checkWkSection14": "0",
+    "checkWkSection15": "0",
+    "checkWkSection16": "0",
+    "checkWkSection17": "0",
+    "checkWkSection18": "0",
+    "checkWkSection19": "0",
+    "checkWkSection110": "0",
+    "checkWkSection111": "0",
+    "checkWkSection112": "0",
+    "checkWkSection113": "0",
+    "checkWkSection114": "0",
+    "checkWkSection20": "0",
+    "checkWkSection21": "0",
+    "checkWkSection22": "0",
+    "checkWkSection23": "0",
+    "checkWkSection24": "0",
+    "checkWkSection25": "0",
+    "checkWkSection26": "0",
+    "checkWkSection27": "0",
+    "checkWkSection28": "0",
+    "checkWkSection29": "0",
+    "checkWkSection210": "0",
+    "checkWkSection211": "0",
+    "checkWkSection212": "0",
+    "checkWkSection213": "0",
+    "checkWkSection214": "0",
+    "checkWkSection30": "0",
+    "checkWkSection31": "0",
+    "checkWkSection32": "0",
+    "checkWkSection33": "0",
+    "checkWkSection34": "0",
+    "checkWkSection35": "0",
+    "checkWkSection36": "0",
+    "checkWkSection37": "0",
+    "checkWkSection38": "0",
+    "checkWkSection39": "0",
+    "checkWkSection310": "0",
+    "checkWkSection311": "0",
+    "checkWkSection312": "0",
+    "checkWkSection313": "0",
+    "checkWkSection314": "0",
+    "checkWkSection40": "0",
+    "checkWkSection41": "0",
+    "checkWkSection42": "0",
+    "checkWkSection43": "0",
+    "checkWkSection44": "0",
+    "checkWkSection45": "0",
+    "checkWkSection46": "0",
+    "checkWkSection47": "0",
+    "checkWkSection48": "0",
+    "checkWkSection49": "0",
+    "checkWkSection410": "0",
+    "checkWkSection411": "0",
+    "checkWkSection412": "0",
+    "checkWkSection413": "0",
+    "checkWkSection414": "0",
+    "checkWkSection50": "0",
+    "checkWkSection51": "0",
+    "checkWkSection52": "0",
+    "checkWkSection53": "0",
+    "checkWkSection54": "0",
+    "checkWkSection55": "0",
+    "checkWkSection56": "0",
+    "checkWkSection57": "0",
+    "checkWkSection58": "0",
+    "checkWkSection59": "0",
+    "checkWkSection510": "0",
+    "checkWkSection511": "0",
+    "checkWkSection512": "0",
+    "checkWkSection513": "0",
+    "checkWkSection514": "0",
+    "checkWkSection60": "0",
+    "checkWkSection61": "0",
+    "checkWkSection62": "0",
+    "checkWkSection63": "0",
+    "checkWkSection64": "0",
+    "checkWkSection65": "0",
+    "checkWkSection66": "0",
+    "checkWkSection67": "0",
+    "checkWkSection68": "0",
+    "checkWkSection69": "0",
+    "checkWkSection610": "0",
+    "checkWkSection611": "0",
+    "checkWkSection612": "0",
+    "checkWkSection613": "0",
+    "checkWkSection614": "0"
+}
 const Form = (prop) => {
     const [depFilter, setDepFilter] = useState("");
     const [dep, setDep] = useState(Object.keys(customData[0]));
     const [SUBmit, setSUBmit] = useState(false);
+    const [timeShow, setTimeShow] = useState(false);
+    const [ timeList, setTimeList ] = useState([]);
+    const [timeSelectList, setTimeSelectList] = useState(TimeSelectListInital)
+    const [dis, setDis] = useState(0);
     const [state, setState] = useContext(Context);
+    
 
-    const FormValueInite = {
-        'acadmYear': '108',
-        'acadmTerm': '2',
-        'chn': "",
-        'engTeach': "",
-        'moocs': 'N',
-        'remoteCourse': 'N',
-        'digital': 'N',
-        'adsl': 'N',
-        'deptCode': "",
-        // 'deptCode': 'SU40',
-        'classCode': "",
-        'teacher': "",
-        'serial_number': "",
-        'course_code': "",
-        'language': 'chinese',
-        'action': 'showGrid',
-        'start': '0',
-        'limit': '99999',
-        'page': '1'
+    const selection = new Selection({
+        class: 'selection',
+
+        // All elements in this container can be selected
+        selectables: ['.box-wrap > div.table'],
+
+        // The container is also the boundary in this case
+        boundaries: ['.box-wrap']
+    })
+    
+    useEffect(() => {
+        let t = TimeSelectListInital
+        timeList.forEach((i) => t[i]="1")
+        setTimeSelectList(t);
+    }, [timeList])
+    
+
+    
+    const FormValueInitial = {
+        "serialNo": "",
+        "chnName": "",
+        "teacher": "",
+        "deptCode": "",
+        "formS": "",
+        "class1": "",
+        "generalCore": "",
+        "notFull": "",
+        "courseCode": "",
+        "action": "showGrid",
+        "actionButton": "query",
+        "page": "1",
+        "start": "0",
+        "limit": "999999"
     }
-    const [formValue, setFormValue] = useState(FormValueInite);
+    const [formValue, setFormValue] = useState(FormValueInitial);
     // console.log(dep)
 
     const classLevel = {
@@ -49,9 +160,10 @@ const Form = (prop) => {
     
 
     useEffect(() => {
+        console.log('formValue', formValue)
         if(SUBmit){
-            if (formValue.chn == "" && formValue.engTeach == "" && formValue.deptCode == "" 
-                && formValue.classCode == "" && formValue.teacher == "" && formValue.serial_number == ""
+            if (formValue.chnName == "" && formValue.serialNo == "" && formValue.teacher == "" 
+                && formValue.deptCode == "" && formValue.generalCore == "" && formValue.courseCode == ""
                 && formValue.course_code == ""){
                     console.log('emepty')
                     // alert = <p>Try again</p> 
@@ -60,7 +172,7 @@ const Form = (prop) => {
             }else{
                 prop.handleBlock();
                 console.log('formValue', formValue)
-                console.log('FormValueInite', FormValueInite)
+                console.log('FormValueInitial', FormValueInitial)
                 console.log('get a submit')
                 setState({ class_list: [], heading: "Searching" });
                 // setState({ 
@@ -70,13 +182,14 @@ const Form = (prop) => {
                 const options = {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(formValue)
+                    body: JSON.stringify({...formValue, ...timeSelectList})
                 };
-                fetch('/post', options).then(res => {
+                fetch('/query', options).then(res => {
                     return res.json()
                 }).then((j) => {
+                    console.log('j', j);
                     
                     if (j.err == undefined) {
                         if (j.length == 0) {
@@ -89,7 +202,7 @@ const Form = (prop) => {
                         setState({ class_list: [], heading: "Err" })
                     }
 
-                    // console.log(j)
+                    console.log(j)
 
                 })
                     .catch(err => {
@@ -103,31 +216,27 @@ const Form = (prop) => {
 
     const setvalue = async(e) => {
         console.log("Hello", e.target.id)
-        if (e.target.id === "engTeach") {
+        if (e.target.id === "notFull") {
             setFormValue({
                 ...formValue,
-                [e.target.id]: e.target.checked === "on" ? "Y" : "N",
-                ['course_code']: '',
-                ['serial_number']: ''
+                [e.target.id]: e.target.checked === "on" ? "1" : "0",
+                ['serialNo']: ''
             })
-        } else if (e.target.id === "teacher" || e.target.id === "chn") {
+        } else if (e.target.id === "teacher" || e.target.id === "chnName") {
             setFormValue({
                 ...formValue,
                 [e.target.id]: encodeURI(e.target.value),
-                ['course_code']: '',
-                ['serial_number']: ''
+                ['serialNo']: ''
             })
         } else if (e.target.id === "formsubmit") {
             setFormValue({
-                ...formValue,
-                [e.target.id]: encodeURI(e.target.value)
+                ...formValue
             })
         }else {
             setFormValue({
                 ...formValue,
                 [e.target.id]: e.target.value,
-                ['course_code']: '',
-                ['serial_number']: ''
+                ['serialNo']: ''
             })
         }
     }
@@ -139,14 +248,15 @@ const Form = (prop) => {
         setSUBmit(true)
     }
     const onChangeFilter = (e) => {
-        
-        let depRes = Object.keys(customData[0]).filter(x => x.indexOf(e.target.value) > -1)
+        console.log('dep', dep)
+        let depRes = Object.keys(customData[0]).filter(x => customData[0][x].indexOf(e.target.value) > -1)
+        console.log('dep', dep)
         setDep(depRes)
 
         setDepFilter(e.target.value);
         setFormValue({
             ...formValue,
-            ["deptCode"]: customData[0][depRes[0]]
+            ["deptCode"]: depRes[0]
         })
     };
     // useEffect(() => {
@@ -155,12 +265,15 @@ const Form = (prop) => {
     const onChange = (e) => {
         // setvalue(e)
         // console.log(e.target.id )
-        if (e.target.id == 'course_code' || e.target.id == 'serial_number'){
+        if (e.target.id == 'serialNo'){
             setFormValue({
-                ...FormValueInite,
+                ...FormValueInitial,
                 [e.target.id]: e.target.value
             })
         }else{
+            if (e.target.id == "courseCode"){
+                setDis(e.target.value);
+            }
             setvalue(e)
         }
         
@@ -171,102 +284,126 @@ const Form = (prop) => {
     const reSetasd = (e) => {
         e.preventDefault()
         setFormValue({
-            ...FormValueInite
+            ...FormValueInitial
         })
         console.log(prop);
         
     }
-    // let abc = alert
     console.log('alert', alert)
-    // const ccc = (e) =>{
-    //     e.preventDefault()
-    //     return (<p>Hey success</p>)
-    // }
-    // useEffect(() => {
-    //     console.log(alert)
-    // })
-    // window.setTimeout(() => {}, 2000)
+
+    const timeshowF= (e)=>{
+        e.preventDefault()
+        setTimeShow(!timeShow)
+    }
     
     
     return (
         <React.Fragment>
             
             {/* {alert} */}
-            
+            {console.log('timeListFROM', timeList)}
+            {console.log('TimeSelectListFROM', timeSelectList)}
+            {/* TimeSelectList */}
             <div className="row ">
                 <div className="form-group col d-flex justify-content-end">
-                    <button className="btn btn-primary btn-sm " onClick={reSetasd}>
+                    <button className="btn btn-warning mr-1" onClick={timeshowF} type = "button">
+                        Time Select
+                    </button>
+                    <button className="btn btn-dark btn-sm " onClick={reSetasd} type="button">
                         Reset
-                        </button>
+                    </button>
                 </div>
             </div>
             <form onSubmit={findClass} id="formsubmit">
                 
                 <div className="row">
-                    <div className="form-group col">
+                    <div className="form-group col-xs-4 col-sm-3">
                         <label htmlFor="acadmYear">Acadm Year</label>
-                        <input type="text" className="form-control" id="acadmYear" onChange={onChange} value={formValue.acadmYear} readOnly/>
+                        <input type="text" className="form-control" id="acadmYear" onChange={onChange} value={108} readOnly/>
                     </div>
-                    <div className="form-group col">
+                    <div className="form-group col-xs-4 col-sm-3">
                         <label htmlFor="acadmTerm">Acadm Term</label>
-                        <input type="text" className="form-control" id="acadmTerm" onChange={onChange} value={formValue.acadmTerm} readOnly/>
+                        <input type="text" className="form-control" id="acadmTerm" onChange={onChange} value={2} readOnly />
+                    </div>
+                    <div className="clearfix visible-xs"></div>
+                    <div className="form-group col-xs-4 col-sm-6">
+                        <label htmlFor="courseCode">Course Type:</label>
+                        <select className="form-control select2 " id="courseCode" onChange={onChange} value={formValue.courseCode}>
+                            {/* {Object.keys(dep).map(i => <option key={customData[0][dep[i]]} value={customData[0][dep[i]]}>{dep[i]}</option>)} */}
+                            {['', '一班科目', '通識科目', '一班體育科目', '共同科目', '教育學程科目', '大一體育'].map((e, i) => <option key={i} value={(i>0)?(i):("")}>{e}</option>)}
+                        </select>
                     </div>
                 </div>
 
                 <div className="form-check" >
-                    <input className="form-check-input" type="checkbox" onChange={onChange} checked={formValue.engTeach} id="engTeach" />
-                    <label className="form-check-label" htmlFor="engTeach">
-                        Coures taught in english
+                    <input className="form-check-input" type="checkbox" onChange={onChange} checked={formValue.notFull} id="notFull" />
+                    <label className="form-check-label" htmlFor="notFull">
+                        Not Full Course
                     </label>
                 </div>
+                
                 <div className="row">
-                    <div className="form-group col-xs-7 col-sm-3 pr-sm-0 pr-xs-1" >
-                        <label htmlFor="depFilter">Dept. Filter:</label>
-                        <input type="text" className="form-control" id="acadmTerm" onChange={onChangeFilter} value={depFilter}/>
+                    <div className="form-group col">
+                        <label htmlFor="chnName">Course Name</label>
+                        <input type="text" className="form-control" id="chnName" placeholder="" onChange={onChange} value={decodeURI(formValue.chnName)} />
                     </div>
-                    <div className="form-group col-xs-7 col-sm-3 pl-sm-0 pl-xs-1">
+                    <div className="form-group col">
+                        <label htmlFor="teacher">Teacher:</label>
+                        <input type="text" className="form-control" id="teacher" placeholder="" onChange={onChange} value={decodeURI(formValue.teacher)}/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="form-group col-xs-3 col-sm-3 pr-sm-0 pr-xs-1" >
+                        <label htmlFor="depFilter">Dept. Filter:</label>
+                        <input type="text" className="form-control" id="acadmTerm" onChange={onChangeFilter} value={depFilter} placeholder="Keyword..." disabled={(dis == 2 || dis == 3 || dis == 4 || dis == 6) ? "disabled" : ""}/>
+                    </div>
+                    <div className="form-group col-xs-3 col-sm-3 pl-sm-0 pl-xs-1">
                         <label htmlFor="deptCode">Dept. Select:</label>
-                        <select className="form-control select2 "id="deptCode" onChange={onChange} value={formValue.deptCode}>
-                            {Object.keys(dep).map(i => <option key={customData[0][dep[i]]} value={customData[0][dep[i]]}>{dep[i]}</option>)}
+                        <select className="form-control select2 " id="deptCode" onChange={onChange} value={formValue.deptCode} disabled={(dis == 2 || dis == 3 || dis == 4 || dis == 6) ? "disabled" : ""}>
+                            {Object.keys(dep).map(i => <option key={dep[i]} value={dep[i]}>{customData[0][dep[i]]}</option>)}
                         </select>
                     </div>
-                    <div className="clearfix visible-xs"></div>
-                    <div className="form-group col-xs-7 col-sm-6">
-                        <label htmlFor="classCode">ClassName Select:</label>
-                        <select className="form-control form-control" id="classCode" onChange={onChange} value={formValue.classCode}>
+                    {/* <div className="clearfix visible-xs"></div> */}
+                    <div className="form-group col-xs-6 col-sm-3">
+                        <label htmlFor="formS">Year Select:</label>
+                        <select className="form-control form-control" id="formS" onChange={onChange} value={formValue.formS} disabled={(dis == 2 || dis == 3 || dis == 4 || dis == 6) ? "disabled" : ""}>
+                            {/* {Object.keys(classLevel).map(i => <option key={classLevel[i]} value={classLevel[i]}>{i}</option>)} */}
+                            {['', '1年級', '2年級', '3年級', '4年級', '5年級', '6年級', '7年級'].map((e, i) => <option key={i} value={i > 0 ? i : ""}>{e}</option>)}
+                        </select>
+                    </div>
+                    <div className="form-group col-xs-6 col-sm-3">
+                        <label htmlFor="class1">Class Select:</label>
+                        <select className="form-control form-control" id="class1" onChange={onChange} value={formValue.class1} disabled={(dis == 2 || dis == 3 || dis == 4 || dis == 6) ? "disabled" : ""}>
                             {Object.keys(classLevel).map(i => <option key={classLevel[i]} value={classLevel[i]}>{i}</option>)}
                         </select>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-group col">
-                        <label htmlFor="teacher">Teacher:</label>
-                        <input type="text" className="form-control" id="teacher" placeholder="" onChange={onChange} value={decodeURI(formValue.teacher)}/>
+                        <label htmlFor="serialNo">Serial Number</label>
+                        <input type="text" className="form-control" id="serialNo" placeholder="" onChange={onChange} value={formValue.serialNo}/>
                     </div>
                     <div className="form-group col">
-                        <label htmlFor="chn">Course Name</label>
-                        <input type="text" className="form-control" id="chn" placeholder="" onChange={onChange} value={decodeURI(formValue.chn)}/>
-                     </div>
-                </div>
-                <div className="row">
-                    <div className="form-group col">
-                        <label htmlFor="serial_number">Serial Number</label>
-                        <input type="text" className="form-control" id="serial_number" placeholder="" onChange={onChange} value={formValue.serial_number}/>
-                    </div>
-                    <div className="form-group col">
-                        <label htmlFor="course_code">Course Code</label>
-                        <input type="text" className="form-control" id="course_code" placeholder="" onChange={onChange} value={formValue.course_code}/>
+                        <label htmlFor="generalCore">Field Category:</label>
+                        <select className="form-control form-control" id="generalCore" onChange={onChange} value={formValue.generalCore} disabled={(dis != 6) ? "disabled" : ""}>
+                            {/* {Object.keys(classLevel).map(i => <option key={classLevel[i]} value={classLevel[i]}>{i}</option>)} */}
+                            {['', '藝術與美感', '哲學思維與道德推理', '公民素養與社會探究', '歷史與文化','數學與科學思維','科學與生命','一般通識','所有通識'].map((e, i) => <option key={i} value={i > 0 ? i : ""}>{e}</option>)}
+                            
+                        </select>
                     </div>
                 </div>
                 
                 
-                
-
+                {timeShow?(
+                    <Timeselect setTimeList={(i) => { setTimeList(i)}}/>
+                ):(
+                    <p></p>
+                )}
                 <button className="btn btn-primary btn-lg btn-block mb-5" >
                     Search...
                 </button>
             </form>
-            <Timeselect />
+            
 
             
         </React.Fragment>

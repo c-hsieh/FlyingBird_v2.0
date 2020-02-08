@@ -15,37 +15,42 @@ const formatterChnName = (cell, row) => {
     // console.log('row', row)
 
     const sp = cell.split('</br>')
-    // const jo = sp.join(`</br >`)
+    const jo = sp.join(`</br >`)
     return (
         <span>
-            <span class="badge badge-secondary" style={{ fontSize: "0.5em" }}>{row.serialNo}</span><br/>
-            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank"><strong>{sp[0]}</strong></a>
-            <br />
-            <span class="badge badge-pill badge-success" style={{ "backgroundColor": "#2ec4ff" }}>{Math.floor(row.credit)}</span>
-            <span class="badge badge-pill badge-warning" style={row.optionCode == "必修" ? ({ "backgroundColor": "#ff5aaa" }) : ({ "backgroundColor": "##ffd92e" })}>{row.optionCode == "必修" ? ("必") : ("選")}</span>
-            <span class="badge badge-pill badge-light" >{row.courseKind}</span>
+            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadm_year}&term=${row.acadm_term}&courseCode=${row.course_code}&deptCode=${row.dept_code}`} target="_blank">{sp[0]}</a>
             <br />
             <p>{sp[1]}</p>
         </span>
-
     )
 }
 
-
-const formatterCodeCredit = (cell, row) => {
+// const formatterCodeCredit = (cell, row) => {
+//     // console.log('cell', cell)
+//     // console.log('row', row)
+//     const sp = [row.credit, row.option_code]
+//     const jo = sp.join(` `)
+//     return (
+//         <span dangerouslySetInnerHTML={{ __html: jo }}>
+//         </span>
+//     )
+// }
+const formatterNoCodeCredit = (cell, row) => {
     // console.log('cell', cell)
     // console.log('row', row)
 
+    const sp = [row.credit, row.option_code]
+    let jo = sp.join(` `)
+    jo = row.serial_no + '</br>' + jo
     return (
-        <span>
-            <span class="badge badge-pill badge-success" style={{ "backgroundColor": "#2ec4ff" }}>{Math.floor(row.credit)}</span>
-            <span class="badge badge-pill badge-warning" style={row.optionCode == "必修" ? ({ "backgroundColor": "#ff5aaa" }) : ({ "backgroundColor": "##ffd92e" })}>{row.optionCode == "必修" ? ("必") : ("選")}</span>
-            <span class="badge badge-pill badge-light" >{row.courseKind}</span>
+
+        <span dangerouslySetInnerHTML={{ __html: jo }}>
         </span>
+
     )
 }
 const formatterNoDept = (cell, row) => {
-    const sp = [row.serialNo, row.v_deptChiabbr]
+    const sp = [row.serial_no, row.dept_chiabbr]
     const jo = sp.join(`</br >`)
     return (
 
@@ -53,43 +58,9 @@ const formatterNoDept = (cell, row) => {
         </span>
     )
 }
-const formatterStfseld = (cell, row) => {
-    if (row.v_stfseld >= row.limitCountH) {
-        return (<span><span className="badge badge-danger" style={{ fontSize: "0.5em" }}>{row.limitCountH}/{row.v_stfseld}</span> <span className="badge badge-pill badge-info" style={{ fontSize: "0.5em" }}> {row.authorizeP}</span></span>)
-    } else if (row.limitCountH - row.v_stfseld < 11) {
-        return (<span><span className="badge badge-warning" style={{ fontSize: "0.5em" }}>{row.limitCountH}/{row.v_stfseld}</span> <span className="badge badge-pill badge-info" style={{ fontSize: "0.5em" }}> {row.authorizeP}</span></span>)
-    } else {
-        return (<span><span className="badge badge-success" style={{ fontSize: "0.5em" }}>{row.limitCountH}/{row.v_stfseld}</span> <span className="badge badge-pill badge-info" style={{ fontSize: "0.5em" }}> {row.authorizeP}</span></span >)
-    }
-
-}
-const formatterv_class1 = (cell, row) => {
-    //'v_class1, courseGroup, formS
-    if (row.courseGroup == "") {
-        return (
-            <span style={{ fontSize: "0.5em" }}>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000" }}>{row.v_class1}</span>
-            </span>)
-    } else if (row.v_class1 == "") {
-        return (
-            <span style={{ fontSize: "0.5em" }}>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000" }}>{row.courseGroup}</span>
-            </span>)
-    } else {
-        return (
-            <span style={{ fontSize: "0.5em" }}>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ff5375" }}>{row.v_class1}</span>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000" }}>{row.courseGroup}</span>
-            </span>)
-    }
-}
 
 
-
-const DataTable = (prop) => {
+const DataTable = () => {
     const [state, setState] = useContext(Context);
     const { class_list, heading } = state;
     const [data, setData] = useState(class_list);
@@ -103,7 +74,7 @@ const DataTable = (prop) => {
             tdata = tdata.map((item1 => {
                 return {
                     ...item1,
-                    ['like']: likeList.some((item) => item.serialNo == item1.serialNo)
+                    ['like']: likeList.some((item) => item.serial_no == item1.serial_no)
                 }
             }))
             setData([
@@ -115,16 +86,16 @@ const DataTable = (prop) => {
     }, [])
     const addToLike = (cell, row) => {
 
-        if (!(likeList.some((item) => item.serialNo == row.serialNo))) {
+        if (!(likeList.some((item) => item.serial_no == row.serial_no))) {
             let cde = likeList
             const likeItem = {
-                acadm_year: row.acadmYear,
-                acadm_term: row.acadmTerm,
-                serial_no: row.serialNo,
-                course_code: row.courseCode,
-                dept_code: row.deptCode,
-                chn_name: row.chnName,
-                time_inf: row.timeInfo
+                acadm_year: row.acadm_year,
+                acadm_term: row.acadm_term,
+                serial_no: row.serial_no,
+                course_code: row.course_code,
+                dept_code: row.dept_code,
+                chn_name: row.chn_name,
+                time_inf: row.time_inf
             }
             // console.log('likeItem', likeItem)
             cde.push(likeItem)
@@ -138,15 +109,15 @@ const DataTable = (prop) => {
 
             setLikeList(abc =>
                 abc.filter((li) =>
-                    li.serialNo != row.serialNo
+                    li.serial_no != row.serial_no
                 ))
             localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         console.log('setData', data)
 
         setData(data => data.map((item => {
-            if (item.serialNo == row.serialNo) {
-                console.log('item.serialNo', item.serialNo)
+            if (item.serial_no == row.serial_no) {
+                console.log('item.serial_no', item.serial_no)
                 return {
                     ...item,
                     ['like']: !(item.like)
@@ -169,140 +140,60 @@ const DataTable = (prop) => {
     }
 
     const columns = [{
-        dataField: 'courseCode',
+        dataField: 'course_code',
         text: '開課序號 ID',
         sort: true,
         hidden: true
     }, {
-        dataField: 'serialNo',
+        dataField: 'serial_no',
         text: '開課代碼',
         formatter: formatterNoDept,
         sort: true,
         hidden: true
     }, {
-        dataField: 'credit',//row.credit, row.optionCode, courseKind
-        text: '學分',
-        sort: true,
-        hidden: true, headerStyle: (colum, colIndex) => {
-            return { width: '4em', textAlign: 'center', fontSize: "1em" };
-        }
-    }, {
-        dataField: 'optionCode',//row.credit, row.optionCode, courseKind
-        text: '必/選',
-        sort: true,
-        hidden: true,
-        hidden: true, headerStyle: (colum, colIndex) => {
-            return { width: '4em', textAlign: 'center', fontSize: "1em" };
-        }
-        // dataField: 'courseKind',
-        // text: '半/全',
-        // style: { width: 'auto' },
-        // sort: true,
-        // hidden: true
-    }, {
-        dataField: 'formS',
-        text: '開課年級',
-        style: { width: 'auto' },
-        sort: true,
-        hidden: true,
-        hidden: true,
-        headerStyle: (colum, colIndex) => {
-            return { width: '5em', textAlign: 'center', fontSize: "1em" };
-        }
-    }, {
-        dataField: 'chnName',
+        dataField: 'chn_name',
         text: '課程名稱',
         formatter: formatterChnName,
-        // style: { width: 'auto !important' },
-        headerStyle: (colum, colIndex) => {
-            return { width: '6.5em', textAlign: 'center', fontSize: "0.9em" };
-        },
+        style: { width: 'auto !important' },
         sort: true
     }, {
-        dataField: 'engName',
+        dataField: 'option_code',
+        text: '開課代碼 學分 必/選',
+        formatter: formatterNoCodeCredit,
+        sort: true
+    }, {
+        dataField: 'eng_name',
         text: '課程英文名稱',
         formatter: formatterChnName,
         style: { width: 'auto !important' },
         sort: true,
         hidden: true
     }, {
-        dataField: 'v_class1',//courseGroup, formS
-        text: '開課班級 / 年級 / 組別',
-        style: { width: 'auto' },
-        formatter: formatterv_class1,
-        sort: true,
-        headerStyle: (colum, colIndex) => {
-            return { width: '6em', textAlign: 'center', fontSize: "0.7em" };
-        },
-        hidden: true
-        // dataField: 'courseGroup',
-        // text: '科目組別',
-        // style: { width: 'auto' },
-        // sort: true,
-        // hidden: true
-    }, {
         dataField: 'teacher',
         text: '教師',
-        style:{ fontSize: "0.8em" },
-        headerStyle: (colum, colIndex) => {
-            return { width: '4em', textAlign: 'center', fontSize: "0.8em" };
-        },
         sort: true
     }, {
-        dataField: 'timeInfo',
+        dataField: 'time_inf',
         text: '時間地點',
-        style:{ fontSize: "0.8em" },
-        sort: true,
-        headerStyle: (colum, colIndex) => {
-            return { width: '8em', textAlign: 'center', fontSize: "0.8em" };
-        }
+        sort: true
     }, {
-        dataField: 'limitCountH',
-        text: '限修/選課人數 授權',
+        dataField: 'limit_count_h',
+        text: '限修人數',
         sort: true,
-        formatter: formatterStfseld,
-        headerStyle: (colum, colIndex) => {
-            return { width: '6em', textAlign: 'center', fontSize: "0.7em" };
-        }
-        // formatter: (cell, row) => (<span>{row.limitCountH}/{row.authorizeP}</span>)
-
-        // dataField: 'v_stfseld_deal',
-        // text: '已分發人數',
-        // style:  {  width: 'auto'},
-        // sort: true,
-        // hidden: true
-
-        // dataField: 'v_stfseld',//Here
-        // text: '選課人數',
-        // style:  {  width: 'auto'},
-        // formatter: formatterStfseld,
-        // sort: true,
-        // hidden: true
+        hidden: true
     }, {
-        dataField: 'authorizeP',
+        dataField: 'authorize_p',
         text: '授權碼人數',
         sort: true,
         hidden: true
     }, {
-        dataField: 'v_stfseld_undeal',
-        text: '未分發人數',
-        style: { width: 'auto' },
-        sort: true,
-        hidden: true
-    }, {
-        dataField: 'v_limitCourse',
+        dataField: 'restrict',
         text: '限修',
         style: { width: 'auto' },
         sort: true,
         hidden: true
     }, {
-        dataField: 'v_comment',
-        text: '備註',
-        style: { width: 'auto' },
-        sort: true,
-        hidden: true
-    }, {
-        dataField: 'applyCode',//serial_no
+        dataField: 'tcode',//serial_no
         text: 'Like',
         isDummyField: true,
         // style:  {  width: '10px'},
@@ -322,20 +213,10 @@ const DataTable = (prop) => {
             // console.log('rowIndexkkk', rowIndex)
             // <div>{`${row.credit == 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
             <div>
-                <span>Course Name: </span><a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank"><strong>{row.engName}</strong></a>
-                <br/>
-                <a href={`https://www.google.com/search?q=${encodeURI("師大")}+${encodeURI(row.chnName)}+${encodeURI(row.teacher)}`} target="_blank"  ><span classNames="badge badge-success" > GOOGLE~ </span></a>
-                <p>{`${row.v_limitCourse == '' ? '' : `限修條件:`}`}</p>
-                <p>{`${row.v_limitCourse == '' ? '' : `${row.v_limitCourse}`}`}</p>
-                <p>{`${row.v_comment == '' ? '' : `備註: `}`}</p>
-                <p>{`${row.v_comment == '' ? '' : `${row.v_comment}`}`}</p>
-                <p>{`${row.formS == '' ? '' : `年級:`}`}</p>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
-                <p>{`${row.v_class1 == '' ? '' : `開課班級:`}`}</p>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ff5375" }}>{row.v_class1}</span>
-                <p>{`${row.courseGroup == '' ? '' : `開課組別:`}`}</p>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000" }}>{row.courseGroup}</span>
-                
+                <p>{`${row.restrict == '' ? '無限修條件' : `限修條件:`}`}</p>
+                <p>{`${row.restrict == '' ? '' : `${row.restrict}`}`}</p>
+                <p>{`限修人數: ${row.limit_count_h}`}</p>
+                <p>{`授權碼人數: ${row.authorize_p}`}</p>
             </div>
 
         ),
