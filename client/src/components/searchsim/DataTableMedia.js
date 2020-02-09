@@ -6,6 +6,7 @@ import paginationFactory, { PaginationProvider, PaginationListStandalone } from 
 
 import { Context } from '../../context/context'
 import Spinner from '../layout/Spinner'
+import { ReactComponent as Logo } from '../layout/google.svg';
 
 import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
@@ -217,6 +218,15 @@ const DataTable = () => {
             // console.log('rowIndexkkk', rowIndex)
             // <div>{`${row.credit == 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
             <div>
+                <p>{"Google 評價: "}
+                    <a href={`https://www.google.com/search?q=${encodeURI("師大")}+${encodeURI(((row.chn_name).split('</br>'))[0])}+${encodeURI(row.teacher)}`} target="_blank"  >
+                        {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
+                        <Logo style={{
+                            height: '1.4em',
+                            width: '1.4em'
+                        }} />
+                    </a>
+                </p>
                 <p>{`${row.restrict == '' ? '無限修條件' : `限修條件:`}`}</p>
                 <p>{`${row.restrict == '' ? '' : `${row.restrict}`}`}</p>
                 <p>{`限修人數: ${row.limit_count_h}`}</p>

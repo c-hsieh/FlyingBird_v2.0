@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom';
 
-const Ap = (prop) => {
-    return (<p>{prop.abc}</p>)
-}
+import { ReactComponent as Logo } from './google.svg';
+
+
 const Index = () => {
     
 
@@ -12,13 +12,15 @@ const Index = () => {
             <div className="container">
                 <h1 className="  mt-5">NTNU Schedule of Course</h1>
                 
+                
                 <p className="lead text-muted">
                     哈嘍～我是數學系謝長霖
                     {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "font-size": "1em" }}></i> */}
                     <a
-                        href='#'
+                        href={'https://www.facebook.com/ChangLinHsiehx'}
                         target="button"
-                        onClick={(e) => { e.preventDefault()}}
+                        // onClick={(e) => { e.preventDefault()}}
+                        target="_blank"
                         style={{ "font-size": "1.2em" }}
                     >
                         <i className="fab fa-facebook"></i>
@@ -51,7 +53,11 @@ const Index = () => {
                     點擊Column Title可以<strong style={{ "color": "#000000" }}>排序</strong>
                 </li>
                 <li className="lead text-muted">
-                    點擊每一欄資料會跑出更多Detial，且有個<i class="fab fa-google"></i>
+                    點擊每一欄資料會跑出更多Detial，且有個
+                    <Logo style={{
+                        height: '1.3em',
+                        width: '1.3em'
+                    }} />
                     <span className="badge badge-light">Google</span>
                     關鍵字連結，可讓你快速搜尋評價。
                 </li>
@@ -119,9 +125,10 @@ const Index = () => {
                     {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "font-size": "1em" }}></i> */}
                     如果有其他問題歡迎連私密我
                     <a 
-                        href='#'
+                        href={'https://www.facebook.com/ChangLinHsiehx'}
                         target="button"
-                        onClick={(e) => { e.preventDefault() }}
+                        // onClick={(e) => { e.preventDefault() }}
+                        target="_blank"
                         style={{ "font-size": "1.2em" }}
                     >
                         <i className="fab fa-facebook" ></i>

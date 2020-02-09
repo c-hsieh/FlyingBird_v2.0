@@ -6,6 +6,7 @@ import paginationFactory, { PaginationProvider, PaginationListStandalone } from 
 
 import { Context } from '../../context/context'
 import Spinner from '../layout/Spinner'
+import { ReactComponent as Logo } from '../layout/google.svg';
 
 import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
@@ -329,7 +330,15 @@ const DataTable = (prop) => {
             <div>
                 <span>Course Name: </span><a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank"><strong>{row.engName}</strong></a>
                 <br/>
-                <a href={`https://www.google.com/search?q=${encodeURI("師大")}+${encodeURI(row.chnName)}+${encodeURI(row.teacher)}`} target="_blank"  ><span classNames="badge badge-success" > GOOGLE~ </span></a>
+                <p>{"Google 評價: "}
+                    <a href={`https://www.google.com/search?q=${encodeURI("師大")}+${encodeURI(row.chnName)}+${encodeURI(row.teacher)}`} target="_blank"  >
+                        {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
+                        <Logo style={{
+                            height: '1.4em',
+                            width: '1.4em'
+                        }} />
+                    </a>
+                </p>
                 <p>{`${row.v_limitCourse == '' ? '' : `限修條件:`}`}</p>
                 <p>{`${row.v_limitCourse == '' ? '' : `${row.v_limitCourse}`}`}</p>
                 <p>{`${row.v_comment == '' ? '' : `備註: `}`}</p>
