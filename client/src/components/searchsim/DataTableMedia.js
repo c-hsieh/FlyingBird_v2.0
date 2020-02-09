@@ -69,7 +69,7 @@ const DataTable = () => {
 
     useEffect(() => {
         if (class_list[0].like == undefined) {
-            console.log("fistTime")
+            // console.log("fistTime")
             let tdata = data;
             tdata = tdata.map((item1 => {
                 return {
@@ -81,7 +81,7 @@ const DataTable = () => {
                 ...tdata
             ])
 
-            console.log('dataInite', data)
+            // console.log('dataInite', data)
         }
     }, [])
     const addToLike = (cell, row) => {
@@ -113,11 +113,11 @@ const DataTable = () => {
                 ))
             localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
-        console.log('setData', data)
+        // console.log('setData', data)
 
         setData(data => data.map((item => {
             if (item.serial_no == row.serial_no) {
-                console.log('item.serial_no', item.serial_no)
+                // console.log('item.serial_no', item.serial_no)
                 return {
                     ...item,
                     ['like']: !(item.like)
@@ -130,7 +130,7 @@ const DataTable = () => {
     }
 
     const formatterLike = (cell, row) => {
-        console.log('formatterLike', row)
+        // console.log('formatterLike', row)
 
         if (row.like) {
             return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size": "0.8em" }}><i className="fas fa-heart"></i></a>
@@ -254,7 +254,7 @@ const DataTable = () => {
         clickToExpand: true,
         // bgColor: '#00BFFF'
         onSelect: (row, isSelect, rowIndex, e) => {
-            console.log('rowIndex', rowIndex)
+            // console.log('rowIndex', rowIndex)
         }
     };
 

@@ -19,14 +19,14 @@ const Timeselect = (prop) => {
         boundaries: ['.box-wrap']
     }))
     useEffect(() => {
-        console.log("hi")
+        // console.log("hi")
 
         // Initialize selectionjs
 
         // const selection = 
         selection.on('beforestart', evt => {
             // This function can return "false" to abort the selection
-            console.log('beforestart', evt);
+            // console.log('beforestart', evt);
         })
         selection.on('start', ({ inst, selected, oe }) => {
 
@@ -67,10 +67,10 @@ const Timeselect = (prop) => {
             // since the last selection
             for (const el of removed) {
                 // console.log("removed", el.classList.value)
-                console.log("?", el.classList.value.includes('selected'))
+                // console.log("?", el.classList.value.includes('selected'))
                 if (el.classList.value.includes('selected')) {
 
-                    console.log("T")
+                    // console.log("T")
                     el.classList.remove('selected');
                 } else {
                     el.classList.add('selected');
@@ -80,7 +80,7 @@ const Timeselect = (prop) => {
 
         }).on('stop', ({ inst }) => {
             inst.keepSelection();
-            console.log('inst', inst)
+            // console.log('inst', inst)
             // setSelection(inst)
             let se = []
             inst.h.forEach((value, i) => {
@@ -89,7 +89,7 @@ const Timeselect = (prop) => {
                     
                     let c = (Math.floor(i / 6)).toString()
                     let w = ((i % 6) + 1).toString()
-                    console.log('w: ', w, 'c: ', c);
+                    // console.log('w: ', w, 'c: ', c);
                     se.push("checkWkSection".concat(w).concat(c))
                     
                     // se.push(i)
@@ -116,7 +116,7 @@ const Timeselect = (prop) => {
         //     // console.log('stop', evt.inst.h);
         // })
     }, [])
-    console.log("TimeSelect Hello")
+    // console.log("TimeSelect Hello")
     return (
         <>
             <main>

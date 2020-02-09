@@ -60,21 +60,21 @@ const List = (prop) => {
 }
 const  Like = () => {
     const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
-    console.log("like")
+    // console.log("like")
 
     const del = async (code) => {
-        console.log(code, code)
+        // console.log(code, code)
         setLikeList(likeList.filter((li) => li.serial_no != code));
     }
     useEffect(() => {
-        console.log('likeList', likeList)
+        // console.log('likeList', likeList)
         localStorage.setItem('LikeList', JSON.stringify(likeList))
     }, [likeList])
     return (
         <React.Fragment>
             <h3 className="text-center mt-2 mb-4"><i className="fas fa-heart"></i>Like</h3>
             <div className="row">
-                {console.log('maplikeList', likeList)}
+                {/* {console.log('maplikeList', likeList)} */}
                 {likeList.map(item => (
                     <List key={item.serial_no} likeItem={item} del={del}/>
                 ))}

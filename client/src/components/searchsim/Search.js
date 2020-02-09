@@ -25,7 +25,7 @@ const Search = () => {
     // const [alert, setAlert] = useState();
     let chi = undefined;
 
-    console.log('class_list', class_list)
+    // console.log('class_list', class_list)
     console.log('heading', heading)
     const handleBlock = () => {
         if (block == true) {
@@ -50,13 +50,13 @@ const Search = () => {
             })
         }
         window.addEventListener("resize", updateSize);
-        console.log('class_list', class_list.lenth)
+        // console.log('class_list', class_list.lenth)
         if (class_list.length != 0){
             setBlock(false)
         }
     }, [])
     const updateSize = ()=>{
-        console.log(window.innerWidth)
+        // console.log(window.innerWidth)
         // size = window.innerWidth
         setSize(window.innerWidth)
     }
@@ -120,7 +120,7 @@ const Search = () => {
     return (
         <React.Fragment>
             <br />
-            {console.log(size)}
+            {/* {console.log(size)} */}
             <button className="btn btn-primary mb-3" type="button"  onClick={handleBlock}>
                 Filter
             </button>
@@ -147,7 +147,7 @@ const Search = () => {
             <br />
             <div >
                 {chi}
-                {console.log('chi', chi)}
+                {/* {console.log('chi', chi)} */}
                 
                 {/* {console.log('abc', abc(heading))} */}
             </div>

@@ -53,14 +53,14 @@ const Form = (prop) => {
             if (formValue.chn == "" && formValue.engTeach == "" && formValue.deptCode == "" 
                 && formValue.classCode == "" && formValue.teacher == "" && formValue.serial_number == ""
                 && formValue.course_code == ""){
-                    console.log('emepty')
+                    // console.log('emepty')
                     // alert = <p>Try again</p> 
                 prop.setAlert(prop.alertFun('warning','Warning! ',' Please enter something...'))
                 window.setTimeout(() => { prop.setAlert(null) }, 2500)
             }else{
                 prop.handleBlock();
-                console.log('formValue', formValue)
-                console.log('FormValueInite', FormValueInite)
+                // console.log('formValue', formValue)
+                // console.log('FormValueInite', FormValueInite)
                 console.log('get a submit')
                 setState({ class_list: [], heading: "Searching" });
                 // setState({ 
@@ -80,7 +80,7 @@ const Form = (prop) => {
                     
                     if (j.err == undefined) {
                         if (j.length == 0) {
-                            console.log(j.length)
+                            // console.log(j.length)
                             setState({ class_list: [], heading: "Empty" })
                         }else{
                             setState({ class_list: j, heading: "Finish" })
@@ -102,7 +102,7 @@ const Form = (prop) => {
     }, [formValue, alert])
 
     const setvalue = async(e) => {
-        console.log("Hello", e.target.id)
+        //console.log("Hello", e.target.id)
         if (e.target.id === "engTeach") {
             setFormValue({
                 ...formValue,
@@ -173,11 +173,11 @@ const Form = (prop) => {
         setFormValue({
             ...FormValueInite
         })
-        console.log(prop);
+        //console.log(prop);
         
     }
     // let abc = alert
-    console.log('alert', alert)
+    //console.log('alert', alert)
     // const ccc = (e) =>{
     //     e.preventDefault()
     //     return (<p>Hey success</p>)
