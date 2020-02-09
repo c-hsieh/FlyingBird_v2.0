@@ -54,7 +54,7 @@ const DataTable = () => {
     
     
     useEffect(() => {
-        if (typeof class_list[0].like == undefined) {
+        if (data[0].like == undefined) {
             // console.log("fistTime")
             let tdata = data;
             tdata = tdata.map((item1 => {
@@ -88,16 +88,20 @@ const DataTable = () => {
             setLikeList(cde)
             
             // console.log('likeListADD', likeList)
-            localStorage.setItem('LikeList', JSON.stringify(cde));
+            // localStorage.setItem('LikeList', JSON.stringify(cde));
             // console.log('likeList', likeList)
             
         }else{
             
-            setLikeList(abc => 
-                abc.filter((li) => 
-                    li.serial_no != row.serial_no
-            ))
-            localStorage.setItem('LikeList', JSON.stringify(likeList));
+            // setLikeList(abc => 
+            //     abc.filter((li) => 
+            //         li.serial_no != row.serial_no
+            // ))
+            setLikeList(
+                likeList.filter((li) =>
+                    li.serial_no != row.serialNo
+                ))
+            // localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         // console.log('setData', data)
         
@@ -114,14 +118,19 @@ const DataTable = () => {
 
         )
     }
+    useEffect(() => {
+        // console.log("LikeListSETT")
+        // console.log(likeList)
+        localStorage.setItem('LikeList', JSON.stringify(likeList));
+    }, [data])
  
     const formatterLike = (cell, row) => {
         // console.log('formatterLike', row)
         
         if (row.like) {
-            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size":"0.8em"}}><i className="fas fa-heart"></i></a>
+            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size":"0.8em"}}><i className="fas fa-heart"></i></a>
         } else {
-            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
         }
     }
     

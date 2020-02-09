@@ -19,7 +19,7 @@ const formatterChnName = (cell, row) => {
     return (
         <span>
             <span class="badge badge-secondary" style={{ fontSize: "0.5em" }}>{row.serialNo}</span><br/>
-            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank"><strong>{sp[0]}</strong></a>
+            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank" style={{ fontSize: "0.8em" }}><strong>{sp[0]}</strong></a>
             <br />
             <span class="badge badge-pill badge-success" style={{ "backgroundColor": "#2ec4ff" }}>{Math.floor(row.credit)}</span>
             <span class="badge badge-pill badge-warning" style={row.optionCode == "必修" ? ({ "backgroundColor": "#ff5aaa" }) : ({ "backgroundColor": "##ffd92e" })}>{row.optionCode == "必修" ? ("必") : ("選")}</span>
@@ -97,13 +97,13 @@ const DataTable = (prop) => {
 
 
     useEffect(() => {
-        if (class_list[0].like == undefined) {
+        if (data[0].like == undefined) {
             // console.log("fistTime")
             let tdata = data;
             tdata = tdata.map((item1 => {
                 return {
                     ...item1,
-                    ['like']: likeList.some((item) => item.serialNo == item1.serialNo)
+                    ['like']: likeList.some((item) => item.serial_no == item1.serialNo)
                 }
             }))
             setData([
@@ -115,7 +115,7 @@ const DataTable = (prop) => {
     }, [])
     const addToLike = (cell, row) => {
 
-        if (!(likeList.some((item) => item.serialNo == row.serialNo))) {
+        if (!(likeList.some((item) => item.serial_no == row.serialNo))) {
             let cde = likeList
             const likeItem = {
                 acadm_year: row.acadmYear,
@@ -131,16 +131,16 @@ const DataTable = (prop) => {
             setLikeList(cde)
 
             // console.log('likeListADD', likeList)
-            localStorage.setItem('LikeList', JSON.stringify(cde));
+            // localStorage.setItem('LikeList', JSON.stringify(cde));
             // console.log('likeList', likeList)
 
         } else {
 
-            setLikeList(abc =>
-                abc.filter((li) =>
-                    li.serialNo != row.serialNo
+            setLikeList(
+                likeList.filter((li) =>
+                    li.serial_no != row.serialNo
                 ))
-            localStorage.setItem('LikeList', JSON.stringify(likeList));
+            // localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         // console.log('setData', data)
 
@@ -157,6 +157,11 @@ const DataTable = (prop) => {
 
         )
     }
+    useEffect(() => {
+        // console.log("LikeListSETT")
+        // console.log(likeList)
+        localStorage.setItem('LikeList', JSON.stringify(likeList));
+    }, [data])
 
     const formatterLike = (cell, row) => {
         // console.log('formatterLike', row)
@@ -254,7 +259,7 @@ const DataTable = (prop) => {
         style:{ fontSize: "0.8em" },
         sort: true,
         headerStyle: (colum, colIndex) => {
-            return { width: '8em', textAlign: 'center', fontSize: "0.8em" };
+            return { width: '7em', textAlign: 'center', fontSize: "0.8em" };
         }
     }, {
         dataField: 'limitCountH',
@@ -309,7 +314,7 @@ const DataTable = (prop) => {
         formatter: formatterLike,
         sort: false,
         headerStyle: (colum, colIndex) => {
-            return { width: '5em', textAlign: 'center', fontSize: "0.8em" };
+            return { width: '4em', textAlign: 'center', fontSize: "0.7em" };
         },
         style: {
             textAlign: 'center',

@@ -13,8 +13,13 @@ const { SearchBar } = Search;
 const formatterChnName = (cell, row) =>{
     // console.log('cell', cell)
     // console.log('row', row)
-
-    const sp = cell.split('</br>')
+    console.log("cell", typeof cell);
+    let sp = []
+    if (cell.includes('</br>')){
+        sp = cell.split('</br>')
+    }else{
+        sp = [cell]
+    }
     const jo = sp.join(`</br >`)
     return(
         <span>
@@ -95,13 +100,15 @@ const DataTable = () => {
     
     
     useEffect(() => {
-        if (typeof class_list[0].like == undefined) {
+
+        if (data[0].like == undefined) {
             // console.log("fistTime")
+            // console.log(likeList)
             let tdata = data;
             tdata = tdata.map((item1 => {
                 return {
                     ...item1,
-                    ['like']: likeList.some((item) => item.serialNo == item1.serialNo)
+                    ['like']: likeList.some((item) => item.serial_no == item1.serialNo)
                 }
             }))
             setData([
@@ -113,7 +120,8 @@ const DataTable = () => {
     }, [])
     const addToLike = (cell, row) => {
         
-        if (!(likeList.some((item) => item.serialNo == row.serialNo))){
+        if (!(likeList.some((item) => item.serial_no == row.serialNo))){
+            // console.log('likeListADD')
             let cde = likeList
             const likeItem = {
                 acadm_year: row.acadmYear,
@@ -129,16 +137,20 @@ const DataTable = () => {
             setLikeList(cde)
             
             // console.log('likeListADD', likeList)
-            localStorage.setItem('LikeList', JSON.stringify(cde));
+            // localStorage.setItem('LikeList', JSON.stringify(cde));
             // console.log('likeList', likeList)
             
         }else{
-            
-            setLikeList(abc => 
-                abc.filter((li) => 
-                    li.serialNo != row.serialNo
-            ))
-            localStorage.setItem('LikeList', JSON.stringify(likeList));
+            // console.log('likeListDELE')
+            // setLikeList(abc => 
+            //     abc.filter((li) => 
+            //         li.serial_no != row.serialNo
+            // ))
+            setLikeList(
+                likeList.filter((li) =>
+                    li.serial_no != row.serialNo
+                ))
+            // localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         // console.log('setData', data)
         
@@ -155,6 +167,11 @@ const DataTable = () => {
 
         )
     }
+    useEffect(() => {
+        // console.log("LikeListSETT")
+        // console.log(likeList)
+        localStorage.setItem('LikeList', JSON.stringify(likeList));
+    }, [data])
  
     const formatterLike = (cell, row) => {
         // console.log('formatterLike', row)
