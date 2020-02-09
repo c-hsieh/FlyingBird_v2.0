@@ -115,7 +115,7 @@ const Timeselect = () => {
                         <div className="table"></div>
                         <div className="table"></div>
                         <div className="table"></div>
-                        <div className="colrow">01<br />09:10 - 10:00</div>
+                        <div className="colrow">02<br />09:10 - 10:00</div>
                         <div className="table"></div>
                         <div className="table"></div>
                         <div className="table"></div>
