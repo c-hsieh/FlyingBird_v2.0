@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom';
 import $ from "jquery";
 
 
@@ -119,9 +120,17 @@ const Search = () => {
 
     return (
         <React.Fragment>
-            <br />
+            {/* <div className="row mt-2 md-2">
+                <div className="form-group col d-flex justify-content">
+                    <Link className="btn btn-primary btn-sm" to="/searchsim">
+                        Simple Search
+                        <i className="fas fa-search"></i>
+                    </Link>
+                </div>
+            </div> */}
+            
             {/* {console.log(size)} */}
-            <button className="btn btn-primary mb-3" type="button"  onClick={handleBlock}>
+            <button className="btn btn-primary mb-3 mt-3" type="button"  onClick={handleBlock}>
                 Filter
             </button>
             {alert}

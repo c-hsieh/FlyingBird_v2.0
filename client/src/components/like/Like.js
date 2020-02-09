@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import TimeSelect from '../search/TimeSelect'
 const List = (prop) => {
     const { likeItem, del } = prop;
+    // console.log(prop.prevPath)
     
 
     return (
@@ -12,7 +13,7 @@ const List = (prop) => {
                     <div className="card-body">
                         <div className="row ">
                             <div class="col-sm-10 col-12">
-                                <h5 className="float-left">{likeItem.chn_name}</h5>
+                                <h5 className="float-left">{((likeItem.chn_name).split('</br>'))[0]}</h5>
                             </div>
                             <div class="col-sm-2 col-12">
                                 <button type="button" className="btn btn-sm btn-warning float-right" id={likeItem.serial_no} onClick={e => del(e.target.id)} >Delete</button>
@@ -72,7 +73,26 @@ const  Like = () => {
     }, [likeList])
     return (
         <React.Fragment>
+            {console.log('likeList', likeList)}
             <h3 className="text-center mt-2 mb-4"><i className="fas fa-heart"></i>Like</h3>
+            {(likeList.length !=0)?
+                (<div className="row mt-2 md-2">
+                    <div className="form-group col d-flex justify-content-end">
+                        <button 
+                            className="btn btn-warning btn-sm mr-1"
+                            onClick={(e) => { e.preventDefault(); setLikeList([]);localStorage.removeItem('LikeList')}}
+                            type="button"
+                        >
+                            Clear All
+                        </button>
+                        {/* <Link className="btn btn-primary btn-sm" to="/searchsim">
+                            Clear All
+                            <i className="fas fa-search"></i>
+                        </Link> */}
+                    </div>
+                </div>):
+                (<div></div>)
+            }
             <div className="row">
                 {/* {console.log('maplikeList', likeList)} */}
                 {likeList.map(item => (

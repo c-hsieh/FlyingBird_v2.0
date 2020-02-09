@@ -119,9 +119,9 @@ const Search = () => {
 
     return (
         <React.Fragment>
-            <br />
+            {/* <br /> */}
             {/* {console.log(size)} */}
-            <button className="btn btn-primary mb-3" type="button"  onClick={handleBlock}>
+            <button className="btn btn-primary mb-3 mt-3" type="button"  onClick={handleBlock}>
                 Filter
             </button>
             {alert}

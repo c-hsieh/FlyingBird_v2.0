@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = (prop) => {
     return (
         <nav className="navbar navbar-expand-md navbar-light " style={{ "backgroundColor": "#e3f2fd"}}>
             <Link className="navbar-brand" to="/">
@@ -21,7 +21,16 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/like">
+                        <Link 
+                            className="nav-link"
+                            // to="/like"
+                            to={{
+                                pathname: '/like',
+                                state: { prevPath: window.location.pathname } 
+                            }}
+                            prevPath={prop.prevPath}
+                            
+                    >
                             <i className="fas fa-heart"></i>
                             Like
                         </Link>
