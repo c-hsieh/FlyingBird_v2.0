@@ -269,13 +269,20 @@ const Form = (prop) => {
         if (e.target.id == 'serialNo'){
             setFormValue({
                 ...FormValueInitial,
-                [e.target.id]: e.target.value
+                [e.target.id]: e.target.value,
+                ["courseCode"]: formValue.courseCode
             })
         }else{
             if (e.target.id == "courseCode"){
                 setDis(e.target.value);
+                setFormValue({
+                    ...FormValueInitial,
+                    [e.target.id]: e.target.value
+                })
+            }else{
+                setvalue(e)
             }
-            setvalue(e)
+            
         }
         
         // console.log('e.target.value', e.target.value)
@@ -331,7 +338,7 @@ const Form = (prop) => {
                         <label htmlFor="courseCode">Course Type:</label>
                         <select className="form-control select2 " id="courseCode" onChange={onChange} value={formValue.courseCode}>
                             {/* {Object.keys(dep).map(i => <option key={customData[0][dep[i]]} value={customData[0][dep[i]]}>{dep[i]}</option>)} */}
-                            {['', '一班科目', '通識科目', '一班體育科目', '共同科目', '教育學程科目', '大一體育'].map((e, i) => <option key={i} value={(i>0)?(i):("")}>{e}</option>)}
+                            {['', '一般科目', '通識科目', '一般體育科目', '共同科目', '教育學程科目', '大一體育'].map((e, i) => <option key={i} value={(i>0)?(i):("")}>{e}</option>)}
                         </select>
                     </div>
                 </div>
@@ -386,7 +393,7 @@ const Form = (prop) => {
                     </div>
                     <div className="form-group col">
                         <label htmlFor="generalCore">Field Category:</label>
-                        <select className="form-control form-control" id="generalCore" onChange={onChange} value={formValue.generalCore} disabled={(dis != 6) ? "disabled" : ""}>
+                        <select className="form-control form-control" id="generalCore" onChange={onChange} value={formValue.generalCore} disabled={(dis != 2) ? "disabled" : ""}>
                             {/* {Object.keys(classLevel).map(i => <option key={classLevel[i]} value={classLevel[i]}>{i}</option>)} */}
                             {['', '藝術與美感', '哲學思維與道德推理', '公民素養與社會探究', '歷史與文化','數學與科學思維','科學與生命','一般通識','所有通識'].map((e, i) => <option key={i} value={i > 0 ? i : ""}>{e}</option>)}
                             
