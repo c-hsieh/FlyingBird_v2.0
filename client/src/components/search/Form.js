@@ -160,20 +160,21 @@ const Form = (prop) => {
     
 
     useEffect(() => {
-        console.log('formValue', formValue)
+        //console.log('formValue', formValue)
         if(SUBmit){
             if (formValue.chnName == "" && formValue.serialNo == "" && formValue.teacher == "" 
-                && formValue.deptCode == "" && formValue.generalCore == "" && formValue.courseCode == ""
-                && formValue.course_code == ""){
-                    console.log('emepty')
+                && formValue.deptCode == "" && formValue.generalCore == "" && (formValue.courseCode == ""
+                || formValue.courseCode == "1")
+                ){
+                    //console.log('emepty')
                     // alert = <p>Try again</p> 
                 prop.setAlert(prop.alertFun('warning','Warning! ',' Please enter something...'))
                 window.setTimeout(() => { prop.setAlert(null) }, 2500)
             }else{
                 prop.handleBlock();
-                console.log('formValue', formValue)
-                console.log('FormValueInitial', FormValueInitial)
-                console.log('get a submit')
+                //console.log('formValue', formValue)
+                //console.log('FormValueInitial', FormValueInitial)
+                //console.log('get a submit')
                 setState({ class_list: [], heading: "Searching" });
                 // setState({ 
                 //     ...state,
@@ -189,7 +190,7 @@ const Form = (prop) => {
                 fetch('/query', options).then(res => {
                     return res.json()
                 }).then((j) => {
-                    console.log('j', j);
+                    //console.log('j', j);
                     
                     if (j.err == undefined) {
                         if (j.length == 0) {
@@ -202,7 +203,7 @@ const Form = (prop) => {
                         setState({ class_list: [], heading: "Err" })
                     }
 
-                    console.log(j)
+                    //console.log(j)
 
                 })
                     .catch(err => {
@@ -215,7 +216,7 @@ const Form = (prop) => {
     }, [formValue, alert])
 
     const setvalue = async(e) => {
-        console.log("Hello", e.target.id)
+        //console.log("Hello", e.target.id)
         if (e.target.id === "notFull") {
             setFormValue({
                 ...formValue,
@@ -225,7 +226,7 @@ const Form = (prop) => {
         } else if (e.target.id === "teacher" || e.target.id === "chnName") {
             setFormValue({
                 ...formValue,
-                [e.target.id]: encodeURI(e.target.value),
+                [e.target.id]: (e.target.value),
                 ['serialNo']: ''
             })
         } else if (e.target.id === "formsubmit") {
@@ -248,9 +249,9 @@ const Form = (prop) => {
         setSUBmit(true)
     }
     const onChangeFilter = (e) => {
-        console.log('dep', dep)
+        //console.log('dep', dep)
         let depRes = Object.keys(customData[0]).filter(x => customData[0][x].indexOf(e.target.value) > -1)
-        console.log('dep', dep)
+        //console.log('dep', dep)
         setDep(depRes)
 
         setDepFilter(e.target.value);
@@ -286,10 +287,10 @@ const Form = (prop) => {
         setFormValue({
             ...FormValueInitial
         })
-        console.log(prop);
+        //console.log(prop);
         
     }
-    console.log('alert', alert)
+    //console.log('alert', alert)
 
     const timeshowF= (e)=>{
         e.preventDefault()
@@ -299,10 +300,10 @@ const Form = (prop) => {
     
     return (
         <React.Fragment>
-            
+            {console.log("formValue", formValue)}
             {/* {alert} */}
-            {console.log('timeListFROM', timeList)}
-            {console.log('TimeSelectListFROM', timeSelectList)}
+            {/* {console.log('timeListFROM', timeList)} */}
+            {/* {console.log('TimeSelectListFROM', timeSelectList)} */}
             {/* TimeSelectList */}
             <div className="row ">
                 <div className="form-group col d-flex justify-content-end">
@@ -345,11 +346,11 @@ const Form = (prop) => {
                 <div className="row">
                     <div className="form-group col">
                         <label htmlFor="chnName">Course Name</label>
-                        <input type="text" className="form-control" id="chnName" placeholder="" onChange={onChange} value={decodeURI(formValue.chnName)} />
+                        <input type="text" className="form-control" id="chnName" placeholder="" onChange={onChange} value={(formValue.chnName)} />
                     </div>
                     <div className="form-group col">
                         <label htmlFor="teacher">Teacher:</label>
-                        <input type="text" className="form-control" id="teacher" placeholder="" onChange={onChange} value={decodeURI(formValue.teacher)}/>
+                        <input type="text" className="form-control" id="teacher" placeholder="" onChange={onChange} value={(formValue.teacher)}/>
                     </div>
                 </div>
                 <div className="row">

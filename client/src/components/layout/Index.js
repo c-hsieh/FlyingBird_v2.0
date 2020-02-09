@@ -13,12 +13,17 @@ const Index = () => {
                 <h1 className="  mt-5">NTNU Schedule of Course</h1>
                 
                 <p className="lead text-muted">
-                    哈嘍～我是數學系謝長霖<a
-                        href={'https://www.facebook.com/profile.php?viewas=100000686899395&privacy_source=timeline_gear_menu&entry_point=action_bar'} target="_blank"
+                    哈嘍～我是數學系謝長霖
+                    {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "font-size": "1em" }}></i> */}
+                    <a
+                        href='#'
                         target="button"
+                        onClick={(e) => { e.preventDefault()}}
                         style={{ "font-size": "1.2em" }}
                     >
-                        <i className="fab fa-facebook"></i></a>，由於選課網站不是很容易操作，所以做了一個選課搜尋網。希望大家能喜歡～
+                        <i className="fab fa-facebook"></i>
+                    </a>
+                        ，由於選課網站不是很容易操作，所以做了一個選課搜尋網。希望大家能喜歡～
                 </p>
                 <h5 className="  mt-5">操作簡介：</h5>
                 <p className="lead text-muted">
@@ -46,7 +51,12 @@ const Index = () => {
                     點擊Column Title可以<strong style={{ "color": "#000000" }}>排序</strong>
                 </li>
                 <li className="lead text-muted">
-                    點擊每一欄資料會跑出更多Detial，且有個Ｇoogle關鍵字連結，可讓你快速搜尋評價。
+                    點擊每一欄資料會跑出更多Detial，且有個<i class="fab fa-google"></i>
+                    <span className="badge badge-light">Google</span>
+                    關鍵字連結，可讓你快速搜尋評價。
+                </li>
+                <li className="lead text-muted">
+                    點擊課程名稱，會連結去課程綱要。
                 </li>
                 <li className="lead text-muted">
                     <span className="badge badge-light">限修/選課人數 授權 </span> 那欄紅色
@@ -106,13 +116,16 @@ const Index = () => {
                     </Link>這個使用。<strong style={{ "color": "#000000" }}>希望學校能給我穩定的API</strong>。
                 </li>
                 <li className="lead text-muted">
+                    {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "font-size": "1em" }}></i> */}
                     如果有其他問題歡迎連私密我
                     <a 
-                    href={'https://www.facebook.com/profile.php?viewas=100000686899395&privacy_source=timeline_gear_menu&entry_point=action_bar'} target="_blank"
-                    target="button"
-                    style={{"font-size": "2em" }}
+                        href='#'
+                        target="button"
+                        onClick={(e) => { e.preventDefault() }}
+                        style={{ "font-size": "1.2em" }}
                     >
-                        <i className="fab fa-facebook"></i></a>
+                        <i className="fab fa-facebook" ></i>
+                    </a>
                 </li>
                 <h5 className="  mt-5">未來：</h5>
                 <p className="lead text-muted">

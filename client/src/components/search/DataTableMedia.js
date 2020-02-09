@@ -162,9 +162,9 @@ const DataTable = (prop) => {
         console.log('formatterLike', row)
 
         if (row.like) {
-            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size": "0.8em" }}><i className="fas fa-heart"></i></a>
+            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="fas fa-heart"></i></a>
         } else {
-            return <a href='#' onClick={() => addToLike(cell, row)} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
         }
     }
 
