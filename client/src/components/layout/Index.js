@@ -88,13 +88,14 @@ const Index = () => {
                         href={'http://cos1.ntnu.edu.tw/AasEnrollStudent/LoginCheckCtrl?language=TW'} target="_blank"
                         target="button"
                         style={{ "font-size": "1.2em" }}
+                        className="mr-2"
                     >
                         <i className="fas fa-link"></i>
-                        學校選課連結   
+                        師大選課連結   
                     </a>
-                    <p>
+                    {/* <p>
                        {"    "}
-                    </p>
+                    </p> */}
                     <a
                         href={'http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/index.jsp'} target="_blank"
                         target="button"
@@ -102,7 +103,7 @@ const Index = () => {
                         className="ml-2"
                     >
                         <i className="fas fa-link"></i>
-                        學校課程搜尋連結
+                        師大課程搜尋連結
                     </a>
                 </div>
 
@@ -137,7 +138,7 @@ const Index = () => {
                 </li>
                 <h5 className="  mt-5">未來：</h5>
                 <p className="lead text-muted">
-                    未來希望能整合課程評價與加退選課程。歡迎有興趣的同學，能一起協作。
+                    未來希望能整合課程評價、推薦課程與加退選功能。歡迎有興趣的同學，能一起協作。
                     <a
                         href={'https://github.com/Aaron3141/FlyingBird_v2.0'}
                         target="button"
