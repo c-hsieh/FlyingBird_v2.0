@@ -36,8 +36,8 @@ const Index = () => {
                     ，輸入系所關鍵字能快速搜尋。
                 </li>
                 <li className="lead text-muted">
-                    上方黃色按鈕 <button className="btn btn-warning btn-sm" type="button">Time Select</button> 按下後
-                    會跑出時間表，可以滑鼠拖拉選取多個。
+                    上方黃色按鈕<button className="btn btn-warning btn-sm ml-1 mr-1" type="button">Time Select</button>
+                    按下後會跑出時間表，可以使用滑鼠拖拉一次選取多個。
                 </li>
                 <li className="lead text-muted">
                     按下搜尋<button className="btn btn-primary btn-sm" type="button">Search...</button>
@@ -119,11 +119,12 @@ const Index = () => {
                     <Link className="btn btn-success btn-sm" to="/searchsim">
                         Simple Search
                         <i className="fas fa-search"></i>
-                    </Link>這個使用。<strong style={{ "color": "#000000" }}>希望學校能給我穩定的API</strong>。
+                    </Link>這個使用。
+                    {/* <strong style={{ "color": "#000000" }}>希望學校能給我穩定的API</strong>。 */}
                 </li>
                 <li className="lead text-muted">
                     {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "font-size": "1em" }}></i> */}
-                    如果有其他問題歡迎連私密我
+                    如果有其他問題歡迎聯絡我
                     <a 
                         href={'https://www.facebook.com/ChangLinHsiehx'}
                         target="button"
@@ -136,7 +137,17 @@ const Index = () => {
                 </li>
                 <h5 className="  mt-5">未來：</h5>
                 <p className="lead text-muted">
-                    未來會希望能重網站登入學校課，並且在此加退選。如果有什麼建議的歡迎跟我說。
+                    未來希望能整合課程評價與加退選課程。歡迎有興趣的同學，能一起協作。
+                    <a
+                        href={'https://github.com/Aaron3141/FlyingBird_v2.0'}
+                        target="button"
+                        // onClick={(e) => { e.preventDefault() }}
+                        target="_blank"
+                        style={{ "font-size": "1.2em", "color": "#000000" }}
+                    >
+                        <i class="fab fa-github"></i>
+                    </a>
+                    
                 </p>
                 <br />
                 
