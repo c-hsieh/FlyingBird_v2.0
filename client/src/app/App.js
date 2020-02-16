@@ -6,6 +6,7 @@ import Index from '../components/layout/Index';
 import Search from '../components/search/Search';
 import Searchsim from '../components/searchsim/Search';
 import Like from '../components/like/Like';
+// import Schedule from '../components/schedule/Schedule'
 
 import {ContextController} from '../context/context';
 import './App.css';
@@ -22,6 +23,7 @@ function App() {
               <Route exact path="/search" component={Search} />
               <Route exact path="/like" component={Like} />
               <Route exact path="/searchsim" component={Searchsim} />
+              {/* <Route exact path="/schedule" component={Schedule} /> */}
             </Switch>
           </div>
         </>

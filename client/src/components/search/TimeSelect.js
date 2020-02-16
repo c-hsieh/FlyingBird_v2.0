@@ -10,8 +10,6 @@ const Timeselect = (prop) => {
         // Class for the selection-area
         class: 'selection',
 
-        frame: document,
-
         // All elements in this container can be selected
         selectables: ['.box-wrap > div.table'],
 
@@ -19,15 +17,18 @@ const Timeselect = (prop) => {
         boundaries: ['.box-wrap']
     }))
     useEffect(() => {
-        // console.log("hi")
-
         // Initialize selectionjs
+        // const selection = Selection.create({
 
-        // const selection = 
-        selection.on('beforestart', evt => {
-            // This function can return "false" to abort the selection
-            // console.log('beforestart', evt);
-        })
+        //     // Class for the selection-area
+        //     class: 'selection',
+
+        //     // All elements in this container can be selected
+        //     selectables: ['.box-wrap > div'],
+
+        //     // The container is also the boundary in this case
+        //     boundaries: ['.box-wrap']
+        // })
         selection.on('start', ({ inst, selected, oe }) => {
 
             // Remove class if the user isn't pressing the control key or ⌘ key
@@ -97,7 +98,11 @@ const Timeselect = (prop) => {
                 
                 // console.log(value.className, i)
             });
+            // console.log(se)
             prop.setTimeList(se)
+            return(()=>{
+                prop.setTimeList([])
+            })
         });
         // selection.on('stop', evt => {
         //     // for (i of evt.inst.h){
@@ -115,6 +120,10 @@ const Timeselect = (prop) => {
         //     // console.log("HH")
         //     // console.log('stop', evt.inst.h);
         // })
+        // return(()=>{
+        //     setSelection(null)
+        // })
+        return(()=>{})
     }, [])
     // console.log("TimeSelect Hello")
     return (

@@ -75,8 +75,8 @@ app.post('/query', async (request, response) => {
         const fetch_response = await fetch(url, options);
         fetch_response.type = 'basic'
         const rr = await fetch_response.json();
-        console.log(fetch_response.text)
-        console.log('rr', rr)
+        console.log("text", fetch_response.text())
+        // console.log('rr', rr)
         response.json(rr['List']);
     } catch (error) {
         console.log(error)
