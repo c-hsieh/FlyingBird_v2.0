@@ -4,11 +4,11 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 
-import { Context } from '../../context/context'
+import { Context } from "../../flux/store";
 import Spinner from '../layout/Spinner'
 import { ReactComponent as Logo } from '../layout/google.svg';
 
-import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
+// import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
 const { SearchBar } = Search;
 const formatterChnName = (cell, row) => {
@@ -16,14 +16,20 @@ const formatterChnName = (cell, row) => {
     // console.log('row', row)
 
     const sp = cell.split('</br>')
-    const jo = sp.join(`</br >`)
+    // const jo = sp.join(`</br >`)
     return (
-        <span>
-            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadm_year}&term=${row.acadm_term}&courseCode=${row.course_code}&deptCode=${row.dept_code}`} target="_blank">{sp[0]}</a>
-            <br />
-            <p>{sp[1]}</p>
-        </span>
-    )
+      <span>
+        <a
+          href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadm_year}&term=${row.acadm_term}&courseCode=${row.course_code}&deptCode=${row.dept_code}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {sp[0]}
+        </a>
+        <br />
+        <p>{sp[1]}</p>
+      </span>
+    );
 }
 
 // const formatterCodeCredit = (cell, row) => {
@@ -62,20 +68,21 @@ const formatterNoDept = (cell, row) => {
 
 
 const DataTable = () => {
-    const [state, setState] = useContext(Context);
+    const { query } = useContext(Context);
+    const [state, setState] = query;
     const { class_list, heading } = state;
     const [data, setData] = useState(class_list);
     const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
 
 
     useEffect(() => {
-        if (data[0].like == undefined) {
+        if (data[0].like === undefined) {
             // console.log("fistTime")
             let tdata = data;
             tdata = tdata.map((item1 => {
                 return {
                     ...item1,
-                    ['like']: likeList.some((item) => item.serial_no == item1.serial_no)
+                    ['like']: likeList.some((item) => item.serial_no === item1.serial_no)
                 }
             }))
             setData([
@@ -87,7 +94,7 @@ const DataTable = () => {
     }, [])
     const addToLike = (cell, row) => {
 
-        if (!(likeList.some((item) => item.serial_no == row.serial_no))) {
+        if (!(likeList.some((item) => item.serial_no === row.serial_no))) {
             let cde = likeList
             const likeItem = {
                 acadm_year: row.acadm_year,
@@ -110,14 +117,14 @@ const DataTable = () => {
 
             setLikeList(
                 likeList.filter((li) =>
-                    li.serial_no != row.serialNo
+                    li.serial_no !== row.serialNo
                 ))
             localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         // console.log('setData', data)
 
         setData(data => data.map((item => {
-            if (item.serial_no == row.serial_no) {
+            if (item.serial_no === row.serial_no) {
                 // console.log('item.serial_no', item.serial_no)
                 return {
                     ...item,
@@ -216,7 +223,7 @@ const DataTable = () => {
 
         renderer: (row, rowIndex) => (
             // console.log('rowIndexkkk', rowIndex)
-            // <div>{`${row.credit == 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
+            // <div>{`${row.credit === 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
             <div>
                 <p>{"Google 評價: "}
                     <a href={`https://www.google.com/search?q=${encodeURI("師大")}+${encodeURI(((row.chn_name).split('</br>'))[0])}+${encodeURI(row.teacher)}`} target="_blank"  >
@@ -227,8 +234,8 @@ const DataTable = () => {
                         }} />
                     </a>
                 </p>
-                <p>{`${row.restrict == '' ? '無限修條件' : `限修條件:`}`}</p>
-                <p>{`${row.restrict == '' ? '' : `${row.restrict}`}`}</p>
+                <p>{`${row.restrict === '' ? '無限修條件' : `限修條件:`}`}</p>
+                <p>{`${row.restrict === '' ? '' : `${row.restrict}`}`}</p>
                 <p>{`限修人數: ${row.limit_count_h}`}</p>
                 <p>{`授權碼人數: ${row.authorize_p}`}</p>
             </div>

@@ -4,10 +4,10 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, PaginationListStandalone} from 'react-bootstrap-table2-paginator';
 
-import { Context } from '../../context/context'
+import { Context } from '../../flux/store'
 import Spinner from '../layout/Spinner'
 import { ReactComponent as Logo } from '../layout/google.svg';
-import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
+// import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
 const { SearchBar } = Search;
 const formatterChnName = (cell, row) =>{
@@ -20,19 +20,38 @@ const formatterChnName = (cell, row) =>{
     }else{
         sp = [cell]
     }
-    const jo = sp.join(`</br >`)
-    return(
-        <span>
-            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank"><strong>{sp[0]}</strong></a>
-            <br />
-            <span class="badge badge-pill badge-success" style={{ "backgroundColor": "#2ec4ff" }}>{Math.floor(row.credit)}</span>
-            <span class="badge badge-pill badge-warning" style={row.optionCode == "必修" ? ({ "backgroundColor": "#ff5aaa" }) : ({ "backgroundColor": "##ffd92e" })}>{row.optionCode == "必修" ? ("必") : ("選")}</span>
-            <span class="badge badge-pill badge-light" >{row.courseKind}</span>
-            <br />
-            <p>{sp[1]}</p>
+    // const jo = sp.join(`</br >`)
+    return (
+      <span>
+        <a
+          href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <strong>{sp[0]}</strong>
+        </a>
+        <br />
+        <span
+          class="badge badge-pill badge-success"
+          style={{ backgroundColor: "#2ec4ff" }}
+        >
+          {Math.floor(row.credit)}
         </span>
-        
-    )
+        <span
+          class="badge badge-pill badge-warning"
+          style={
+            row.optionCode === "必修"
+              ? { backgroundColor: "#ff5aaa" }
+              : { backgroundColor: "##ffd92e" }
+          }
+        >
+          {row.optionCode === "必修" ? "必" : "選"}
+        </span>
+        <span class="badge badge-pill badge-light">{row.courseKind}</span>
+        <br />
+        <p>{sp[1]}</p>
+      </span>
+    );
 }
 
 
@@ -43,7 +62,7 @@ const formatterCodeCredit = (cell, row) => {
     return (
         <span>
             <span class="badge badge-pill badge-success" style={{ "backgroundColor": "#2ec4ff" }}>{Math.floor(row.credit)}</span>
-            <span class="badge badge-pill badge-warning" style={row.optionCode == "必修" ? ({ "backgroundColor": "#ff5aaa" }) : ({ "backgroundColor": "##ffd92e" })}>{row.optionCode == "必修" ? ("必") : ("選")}</span>
+            <span class="badge badge-pill badge-warning" style={row.optionCode === "必修" ? ({ "backgroundColor": "#ff5aaa" }) : ({ "backgroundColor": "##ffd92e" })}>{row.optionCode === "必修" ? ("必") : ("選")}</span>
             <span class="badge badge-pill badge-light" >{row.courseKind}</span>
         </span>
     )
@@ -69,22 +88,22 @@ const formatterStfseld = (cell, row) => {
 }
 const formatterv_class1 = (cell, row) => {
     //'v_class1, courseGroup, formS
-    if (row.courseGroup == "") {
+    if (row.courseGroup === "") {
         return (
             <span>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? (""): ( "年級")}</span>
+                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS === "" ? (""): ( "年級")}</span>
                 <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000"}}>{row.v_class1}</span>
             </span>)
-    } else if (row.v_class1 == "") {
+    } else if (row.v_class1 === "") {
         return (
             <span>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
+                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS === "" ? ("") : ("年級")}</span>
                 <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000"}}>{row.courseGroup}</span>
             </span>)
     } else {
         return (
             <span>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
+                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS === "" ? ("") : ("年級")}</span>
                 <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ff5375" }}>{row.v_class1}</span>
                 <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000"}}>{row.courseGroup}</span>
             </span>)
@@ -93,7 +112,8 @@ const formatterv_class1 = (cell, row) => {
 
 
 const DataTable = () => {
-    const [state, setState] = useContext(Context);
+    const { query } = useContext(Context);
+    const [state, setState] = query;
     const { class_list, heading} = state;
     const [data, setData] = useState(class_list);
     const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
@@ -101,14 +121,14 @@ const DataTable = () => {
     
     useEffect(() => {
 
-        if (data[0].like == undefined) {
+        if (data[0].like === undefined) {
             // console.log("fistTime")
             // console.log(likeList)
             let tdata = data;
             tdata = tdata.map((item1 => {
                 return {
                     ...item1,
-                    ['like']: likeList.some((item) => item.serial_no == item1.serialNo)
+                    ['like']: likeList.some((item) => item.serial_no === item1.serialNo)
                 }
             }))
             setData([
@@ -120,7 +140,7 @@ const DataTable = () => {
     }, [])
     const addToLike = (cell, row) => {
         
-        if (!(likeList.some((item) => item.serial_no == row.serialNo))){
+        if (!(likeList.some((item) => item.serial_no === row.serialNo))){
             // console.log('likeListADD')
             let cde = likeList
             const likeItem = {
@@ -144,18 +164,18 @@ const DataTable = () => {
             // console.log('likeListDELE')
             // setLikeList(abc => 
             //     abc.filter((li) => 
-            //         li.serial_no != row.serialNo
+            //         li.serial_no !== row.serialNo
             // ))
             setLikeList(
                 likeList.filter((li) =>
-                    li.serial_no != row.serialNo
+                    li.serial_no !== row.serialNo
                 ))
             // localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         // console.log('setData', data)
         
         setData(data => data.map((item => {
-            if (item.serialNo == row.serialNo) {
+            if (item.serialNo === row.serialNo) {
                 // console.log('item.serialNo', item.serialNo)
                 return {
                     ...item,
@@ -315,45 +335,65 @@ const DataTable = () => {
     }];
 
     const expandRow = {
-        
-        renderer: (row, rowIndex) => (
-            // console.log('rowIndexkkk', rowIndex)
-            // <div>{`${row.credit == 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
-            <div>
-                {/* <span>Course Name: </span><a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank"><strong>{row.engName}</strong></a> */}
-                {/* <br /> */}
-                <p>{"Google 評價: "}
-                    <a href={`https://www.google.com/search?q=${encodeURI("師大")}+${encodeURI(row.chnName)}+${encodeURI(row.teacher)}`} target="_blank"  >
-                        {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
-                        <Logo style={{
-                            height: '1.4em',
-                            width: '1.4em'
-                        }} />
+      renderer: (row, rowIndex) => (
+        // console.log('rowIndexkkk', rowIndex)
+        // <div>{`${row.credit === 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
+        <div>
+          {/* <span>Course Name: </span><a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank"><strong>{row.engName}</strong></a> */}
+          {/* <br /> */}
+          <p>
+            {"Google 評價: "}
+            <a
+              href={`https://www.google.com/search?q=${encodeURI(
+                "師大"
+              )}+${encodeURI(row.chnName)}+${encodeURI(row.teacher)}`}
+              target="_blank"
+            >
+              {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
+              <Logo
+                style={{
+                  height: "1.4em",
+                  width: "1.4em"
+                }}
+              />
+            </a>
+          </p>
+          {/* <p>{"Facebook選課沒地雷 評價: "}
+                    <a
+                        href='#'
+                        target="button"
+                        onClick={(e) => { e.preventDefault()}}
+                        target="_blank"
+                        style={{ "font-size": "1.2em" }}
+                    >
+                        <i className="fab fa-facebook"></i>
+                        
                     </a>
-                </p>
-                <p>{`${row.v_limitCourse == '' ? '' : `限修條件:`}`}</p>
-                <p>{`${row.v_limitCourse == '' ? '' : `${row.v_limitCourse}`}`}</p>
-                <p>{`${row.v_comment == '' ? '' : `備註: `}`}</p>
-                <p>{`${row.v_comment == '' ? '' : `${row.v_comment}`}`}</p>
-            </div>
-            
-        ),
-        className: (isExpanded, row, rowIndex) => {
-            // if (rowIndex > 2) return 'foo';
-            return '';
-        },
-        parentClassName: (isExpanded, row, rowIndex) => {
-            if (rowIndex > 2) return 'foo';
-            return '';
-        },
-        // onlyOneExpanding: true,
-        expanded: [1, 3],
-        // onExpand: (row, isExpand, rowIndex, e) => {
-        //     console.log('row', row, 'isExpand', isExpand, 'rowIndex', rowIndex, 'e', e)
-        // },
-        // expandColumnRenderer: ({ expanded, rowKey, expandable }) => (
-        //     console.log('expanded', expanded, 'rowKey', rowKey, 'expandable', expandable)
-        // )
+                    <span style={{ "font-size": "0.9em", 'color': '#6b6b6b' }}>搜尋社團內與課程名稱有關評論</span>
+                </p> */}
+
+          <p>{`${row.v_limitCourse === "" ? "" : `限修條件:`}`}</p>
+          <p>{`${row.v_limitCourse === "" ? "" : `${row.v_limitCourse}`}`}</p>
+          <p>{`${row.v_comment === "" ? "" : `備註: `}`}</p>
+          <p>{`${row.v_comment === "" ? "" : `${row.v_comment}`}`}</p>
+        </div>
+      ),
+      className: (isExpanded, row, rowIndex) => {
+        // if (rowIndex > 2) return 'foo';
+        return "";
+      },
+      parentClassName: (isExpanded, row, rowIndex) => {
+        if (rowIndex > 2) return "foo";
+        return "";
+      },
+      // onlyOneExpanding: true,
+      expanded: [1, 3]
+      // onExpand: (row, isExpand, rowIndex, e) => {
+      //     console.log('row', row, 'isExpand', isExpand, 'rowIndex', rowIndex, 'e', e)
+      // },
+      // expandColumnRenderer: ({ expanded, rowKey, expandable }) => (
+      //     console.log('expanded', expanded, 'rowKey', rowKey, 'expandable', expandable)
+      // )
     };
     // let ttable = <BootstrapTable keyField='id' data={class_list} columns={columns} />
     // useEffect(() => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Navbar from '../components/layout/Navbar';
@@ -8,10 +8,12 @@ import Searchsim from '../components/searchsim/Search';
 import Like from '../components/like/Like';
 // import Schedule from '../components/schedule/Schedule'
 
-import {ContextController} from '../context/context';
+
+import { ContextController, Context } from "../flux/store";
 import './App.css';
 
 function App() {
+  
   return (
     <ContextController>
       <Router>

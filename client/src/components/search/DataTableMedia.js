@@ -4,11 +4,11 @@ import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 
-import { Context } from '../../context/context'
+import { Context } from "../../flux/store";
 import Spinner from '../layout/Spinner'
 import { ReactComponent as Logo } from '../layout/google.svg';
 
-import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
+// import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
 const { SearchBar } = Search;
 const formatterChnName = (cell, row) => {
@@ -18,18 +18,41 @@ const formatterChnName = (cell, row) => {
     const sp = cell.split('</br>')
     // const jo = sp.join(`</br >`)
     return (
-        <span>
-            <span class="badge badge-secondary" style={{ fontSize: "0.5em" }}>{row.serialNo}</span><br/>
-            <a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank" style={{ fontSize: "0.8em" }}><strong>{sp[0]}</strong></a>
-            <br />
-            <span class="badge badge-pill badge-success" style={{ "backgroundColor": "#2ec4ff" }}>{Math.floor(row.credit)}</span>
-            <span class="badge badge-pill badge-warning" style={row.optionCode == "必修" ? ({ "backgroundColor": "#ff5aaa" }) : ({ "backgroundColor": "##ffd92e" })}>{row.optionCode == "必修" ? ("必") : ("選")}</span>
-            <span class="badge badge-pill badge-light" >{row.courseKind}</span>
-            <br />
-            <p>{sp[1]}</p>
+      <span>
+        <span class="badge badge-secondary" style={{ fontSize: "0.5em" }}>
+          {row.serialNo}
         </span>
-
-    )
+        <br />
+        <a
+          href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`}
+          target="_blank"
+          style={{ fontSize: "0.8em" }}
+          rel="noopener noreferrer"
+        >
+          <strong>{sp[0]}</strong>
+        </a>
+        <br />
+        <span
+          class="badge badge-pill badge-success"
+          style={{ backgroundColor: "#2ec4ff" }}
+        >
+          {Math.floor(row.credit)}
+        </span>
+        <span
+          class="badge badge-pill badge-warning"
+          style={
+            row.optionCode === "必修"
+              ? { backgroundColor: "#ff5aaa" }
+              : { backgroundColor: "##ffd92e" }
+          }
+        >
+          {row.optionCode === "必修" ? "必" : "選"}
+        </span>
+        <span class="badge badge-pill badge-light">{row.courseKind}</span>
+        <br />
+        <p>{sp[1]}</p>
+      </span>
+    );
 }
 
 
@@ -38,12 +61,26 @@ const formatterCodeCredit = (cell, row) => {
     // console.log('row', row)
 
     return (
-        <span>
-            <span class="badge badge-pill badge-success" style={{ "backgroundColor": "#2ec4ff" }}>{Math.floor(row.credit)}</span>
-            <span class="badge badge-pill badge-warning" style={row.optionCode == "必修" ? ({ "backgroundColor": "#ff5aaa" }) : ({ "backgroundColor": "##ffd92e" })}>{row.optionCode == "必修" ? ("必") : ("選")}</span>
-            <span class="badge badge-pill badge-light" >{row.courseKind}</span>
+      <span>
+        <span
+          class="badge badge-pill badge-success"
+          style={{ backgroundColor: "#2ec4ff" }}
+        >
+          {Math.floor(row.credit)}
         </span>
-    )
+        <span
+          class="badge badge-pill badge-warning"
+          style={
+            row.optionCode === "必修"
+              ? { backgroundColor: "#ff5aaa" }
+              : { backgroundColor: "##ffd92e" }
+          }
+        >
+          {row.optionCode === "必修" ? "必" : "選"}
+        </span>
+        <span class="badge badge-pill badge-light">{row.courseKind}</span>
+      </span>
+    );
 }
 const formatterNoDept = (cell, row) => {
     const sp = [row.serialNo, row.v_deptChiabbr]
@@ -66,87 +103,122 @@ const formatterStfseld = (cell, row) => {
 }
 const formatterv_class1 = (cell, row) => {
     //'v_class1, courseGroup, formS
-    if (row.courseGroup == "") {
-        return (
-            <span style={{ fontSize: "0.5em" }}>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000" }}>{row.v_class1}</span>
-            </span>)
-    } else if (row.v_class1 == "") {
-        return (
-            <span style={{ fontSize: "0.5em" }}>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000" }}>{row.courseGroup}</span>
-            </span>)
-    } else {
-        return (
-            <span style={{ fontSize: "0.5em" }}>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ff5375" }}>{row.v_class1}</span>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000" }}>{row.courseGroup}</span>
-            </span>)
-    }
+    if (row.courseGroup === "") {
+      return (
+        <span style={{ fontSize: "0.5em" }}>
+          <span
+            className="badge badge-danger"
+            style={{ backgroundColor: "#3bbaff" }}
+          >
+            {row.formS}
+            {row.formS === "" ? "" : "年級"}
+          </span>
+          <span
+            className="badge badge-pill badge-info"
+            style={{ backgroundColor: "#ffdb28", color: "#000000" }}
+          >
+            {row.v_class1}
+          </span>
+        </span>
+      );
+    } else if (row.v_class1 === "") {
+             return (
+               <span style={{ fontSize: "0.5em" }}>
+                 <span
+                   className="badge badge-danger"
+                   style={{ backgroundColor: "#3bbaff" }}
+                 >
+                   {row.formS}
+                   {row.formS === "" ? "" : "年級"}
+                 </span>
+                 <span
+                   className="badge badge-pill badge-info"
+                   style={{ backgroundColor: "#ffdb28", color: "#000000" }}
+                 >
+                   {row.courseGroup}
+                 </span>
+               </span>
+             );
+           } else {
+             return (
+               <span style={{ fontSize: "0.5em" }}>
+                 <span
+                   className="badge badge-danger"
+                   style={{ backgroundColor: "#3bbaff" }}
+                 >
+                   {row.formS}
+                   {row.formS === "" ? "" : "年級"}
+                 </span>
+                 <span
+                   className="badge badge-pill badge-info"
+                   style={{ backgroundColor: "#ff5375" }}
+                 >
+                   {row.v_class1}
+                 </span>
+                 <span
+                   className="badge badge-pill badge-info"
+                   style={{ backgroundColor: "#ffdb28", color: "#000000" }}
+                 >
+                   {row.courseGroup}
+                 </span>
+               </span>
+             );
+           }
 }
 
 
 
 const DataTable = (prop) => {
-    const [state, setState] = useContext(Context);
+    const { query } = useContext(Context);
+    const [state, setState] = query;
     const { class_list, heading } = state;
     const [data, setData] = useState(class_list);
     const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
 
 
     useEffect(() => {
-        if (data[0].like == undefined) {
-            // console.log("fistTime")
-            let tdata = data;
-            tdata = tdata.map((item1 => {
-                return {
-                    ...item1,
-                    ['like']: likeList.some((item) => item.serial_no == item1.serialNo)
-                }
-            }))
-            setData([
-                ...tdata
-            ])
+        if (data[0].like === undefined) {
+          // console.log("fistTime")
+          let tdata = data;
+          tdata = tdata.map(item1 => {
+            return {
+              ...item1,
+              ["like"]: likeList.some(item => item.serial_no === item1.serialNo)
+            };
+          });
+          setData([...tdata]);
 
-            // console.log('dataInite', data)
+          // console.log('dataInite', data)
         }
     }, [])
     const addToLike = (cell, row) => {
 
-        if (!(likeList.some((item) => item.serial_no == row.serialNo))) {
-            let cde = likeList
-            const likeItem = {
-                acadm_year: row.acadmYear,
-                acadm_term: row.acadmTerm,
-                serial_no: row.serialNo,
-                course_code: row.courseCode,
-                dept_code: row.deptCode,
-                chn_name: row.chnName,
-                time_inf: row.timeInfo
-            }
-            // console.log('likeItem', likeItem)
-            cde.push(likeItem)
-            setLikeList(cde)
+        if (!likeList.some(item => item.serial_no === row.serialNo)) {
+          let cde = likeList;
+          const likeItem = {
+            acadm_year: row.acadmYear,
+            acadm_term: row.acadmTerm,
+            serial_no: row.serialNo,
+            course_code: row.courseCode,
+            dept_code: row.deptCode,
+            chn_name: row.chnName,
+            time_inf: row.timeInfo
+          };
+          // console.log('likeItem', likeItem)
+          cde.push(likeItem);
+          setLikeList(cde);
 
-            // console.log('likeListADD', likeList)
-            // localStorage.setItem('LikeList', JSON.stringify(cde));
-            // console.log('likeList', likeList)
-
+          // console.log('likeListADD', likeList)
+          // localStorage.setItem('LikeList', JSON.stringify(cde));
+          // console.log('likeList', likeList)
         } else {
-
-            setLikeList(
-                likeList.filter((li) =>
-                    li.serial_no != row.serialNo
-                ))
-            // localStorage.setItem('LikeList', JSON.stringify(likeList));
+          setLikeList(likeList.filter(li => li.serial_no !== row.serialNo));
+          // localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         // console.log('setData', data)
 
         setData(data => data.map((item => {
-            if (item.serialNo == row.serialNo) {
+            if (item.serialNo === row.serialNo) {
                 console.log('item.serialNo', item.serialNo)
                 return {
                     ...item,
@@ -323,52 +395,79 @@ const DataTable = (prop) => {
     }];
 
     const expandRow = {
-
-        renderer: (row, rowIndex) => (
-            // console.log('rowIndexkkk', rowIndex)
-            // <div>{`${row.credit == 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
-            <div>
-                <span>Course Name: </span><a href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`} target="_blank"><strong>{row.engName}</strong></a>
-                <br/>
-                <p>{"Google 評價: "}
-                    <a href={`https://www.google.com/search?q=${encodeURI("師大")}+${encodeURI(row.chnName)}+${encodeURI(row.teacher)}`} target="_blank"  >
-                        {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
-                        <Logo style={{
-                            height: '1.4em',
-                            width: '1.4em'
-                        }} />
-                    </a>
-                </p>
-                <p>{`${row.v_limitCourse == '' ? '' : `限修條件:`}`}</p>
-                <p>{`${row.v_limitCourse == '' ? '' : `${row.v_limitCourse}`}`}</p>
-                <p>{`${row.v_comment == '' ? '' : `備註: `}`}</p>
-                <p>{`${row.v_comment == '' ? '' : `${row.v_comment}`}`}</p>
-                <p>{`${row.formS == '' ? '' : `年級:`}`}</p>
-                <span className="badge badge-danger" style={{ "backgroundColor": "#3bbaff" }}>{row.formS}{row.formS == "" ? ("") : ("年級")}</span>
-                <p>{`${row.v_class1 == '' ? '' : `開課班級:`}`}</p>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ff5375" }}>{row.v_class1}</span>
-                <p>{`${row.courseGroup == '' ? '' : `開課組別:`}`}</p>
-                <span className="badge badge-pill badge-info" style={{ "backgroundColor": "#ffdb28", "color": "#000000" }}>{row.courseGroup}</span>
-                
-            </div>
-
-        ),
-        className: (isExpanded, row, rowIndex) => {
-            // if (rowIndex > 2) return 'foo';
-            return '';
-        },
-        parentClassName: (isExpanded, row, rowIndex) => {
-            if (rowIndex > 2) return 'foo';
-            return '';
-        },
-        // onlyOneExpanding: true,
-        expanded: [1, 3],
-        // onExpand: (row, isExpand, rowIndex, e) => {
-        //     console.log('row', row, 'isExpand', isExpand, 'rowIndex', rowIndex, 'e', e)
-        // },
-        // expandColumnRenderer: ({ expanded, rowKey, expandable }) => (
-        //     console.log('expanded', expanded, 'rowKey', rowKey, 'expandable', expandable)
-        // )
+      renderer: (row, rowIndex) => (
+        // console.log('rowIndexkkk', rowIndex)
+        // <div>{`${row.credit === 2 ? 'This Expand row is belong to rowKey ' : ''}`}</div>
+        <div>
+          <span>Course Name: </span>
+          <a
+            href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`}
+            target="_blank"
+          >
+            <strong>{row.engName}</strong>
+          </a>
+          <br />
+          <p>
+            {"Google 評價: "}
+            <a
+              href={`https://www.google.com/search?q=${encodeURI(
+                "師大"
+              )}+${encodeURI(row.chnName)}+${encodeURI(row.teacher)}`}
+              target="_blank"
+            >
+              {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
+              <Logo
+                style={{
+                  height: "1.4em",
+                  width: "1.4em"
+                }}
+              />
+            </a>
+          </p>
+          <p>{`${row.v_limitCourse === "" ? "" : `限修條件:`}`}</p>
+          <p>{`${row.v_limitCourse === "" ? "" : `${row.v_limitCourse}`}`}</p>
+          <p>{`${row.v_comment === "" ? "" : `備註: `}`}</p>
+          <p>{`${row.v_comment === "" ? "" : `${row.v_comment}`}`}</p>
+          <p>{`${row.formS === "" ? "" : `年級:`}`}</p>
+          <span
+            className="badge badge-danger"
+            style={{ backgroundColor: "#3bbaff" }}
+          >
+            {row.formS}
+            {row.formS === "" ? "" : "年級"}
+          </span>
+          <p>{`${row.v_class1 === "" ? "" : `開課班級:`}`}</p>
+          <span
+            className="badge badge-pill badge-info"
+            style={{ backgroundColor: "#ff5375" }}
+          >
+            {row.v_class1}
+          </span>
+          <p>{`${row.courseGroup === "" ? "" : `開課組別:`}`}</p>
+          <span
+            className="badge badge-pill badge-info"
+            style={{ backgroundColor: "#ffdb28", color: "#000000" }}
+          >
+            {row.courseGroup}
+          </span>
+        </div>
+      ),
+      className: (isExpanded, row, rowIndex) => {
+        // if (rowIndex > 2) return 'foo';
+        return "";
+      },
+      parentClassName: (isExpanded, row, rowIndex) => {
+        if (rowIndex > 2) return "foo";
+        return "";
+      },
+      // onlyOneExpanding: true,
+      expanded: [1, 3]
+      // onExpand: (row, isExpand, rowIndex, e) => {
+      //     console.log('row', row, 'isExpand', isExpand, 'rowIndex', rowIndex, 'e', e)
+      // },
+      // expandColumnRenderer: ({ expanded, rowKey, expandable }) => (
+      //     console.log('expanded', expanded, 'rowKey', rowKey, 'expandable', expandable)
+      // )
     };
     // let ttable = <BootstrapTable keyField='id' data={class_list} columns={columns} />
     // useEffect(() => {

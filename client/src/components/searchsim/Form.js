@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import customData from './listdep.json';
-import { Context } from '../../context/context'
-import Timeselect from './TimeSelect';
-import { CSSTransitionGroup } from 'react-transition-group'
+import { Context } from "../../flux/store";
+// import Timeselect from './TimeSelect';
+// import { CSSTransitionGroup } from 'react-transition-group'
 
 import './time.css'
 
@@ -10,7 +10,8 @@ const Form = (prop) => {
     const [depFilter, setDepFilter] = useState("");
     const [dep, setDep] = useState(Object.keys(customData[0]));
     const [SUBmit, setSUBmit] = useState(false);
-    const [state, setState] = useContext(Context);
+    const { query } = useContext(Context);
+    const [state, setState] = query;
 
     const FormValueInite = {
         'acadmYear': '108',
@@ -50,9 +51,9 @@ const Form = (prop) => {
 
     useEffect(() => {
         if(SUBmit){
-            if (formValue.chn == "" && formValue.engTeach == "" && formValue.deptCode == "" 
-                && formValue.classCode == "" && formValue.teacher == "" && formValue.serial_number == ""
-                && formValue.course_code == ""){
+            if (formValue.chn === "" && formValue.engTeach === "" && formValue.deptCode === "" 
+                && formValue.classCode === "" && formValue.teacher === "" && formValue.serial_number === ""
+                && formValue.course_code === ""){
                     // console.log('emepty')
                     // alert = <p>Try again</p> 
                 prop.setAlert(prop.alertFun('warning','Warning! ',' Please enter something...'))
@@ -74,12 +75,12 @@ const Form = (prop) => {
                     },
                     body: JSON.stringify(formValue)
                 };
-                fetch('/post', options).then(res => {
+                fetch('/api/search/post', options).then(res => {
                     return res.json()
                 }).then((j) => {
                     
-                    if (j.err == undefined) {
-                        if (j.length == 0) {
+                    if (j.err === undefined) {
+                        if (j.length === 0) {
                             // console.log(j.length)
                             setState({ class_list: [], heading: "Empty" })
                         }else{
@@ -155,7 +156,7 @@ const Form = (prop) => {
     const onChange = (e) => {
         // setvalue(e)
         // console.log(e.target.id )
-        if (e.target.id == 'course_code' || e.target.id == 'serial_number'){
+        if (e.target.id === 'course_code' || e.target.id === 'serial_number'){
             setFormValue({
                 ...FormValueInite,
                 [e.target.id]: e.target.value

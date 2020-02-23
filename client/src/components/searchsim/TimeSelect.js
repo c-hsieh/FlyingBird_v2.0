@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect } from 'react'
 
 
 import Selection from '@simonwep/selection-js/dist/selection.min.js'
@@ -77,7 +77,7 @@ const Timeselect = () => {
             // }
             let se = []
             evt.inst.h.forEach((value, i) => {
-                if (value.className == "table selected") {
+                if (value.className === "table selected") {
                     // console.log(i)
                     se.push(i)
                 }

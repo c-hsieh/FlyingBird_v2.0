@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom';
-import $ from "jquery";
+// import { Link } from 'react-router-dom';
+// import $ from "jquery";
 
 
-import { Context } from '../../context/context'
+import { Context } from "../../flux/store";
 import Form from './Form'
 import DataTable from './DataTable'
 import DataTableMedia from './DataTableMedia'
@@ -18,18 +18,20 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import './time.css'
 
 const Search = () => {
-    const [state, setState] = useContext(Context);
+    const { query } = useContext(Context);
+    const [state, setState] = query;
     const { class_list, heading } = state;
     const [ block, setBlock ] = useState(true);
     const [alert, setAlert] = useState();
     const [size, setSize] = useState(window.innerWidth);
     // const [alert, setAlert] = useState();
-    let chi = undefined;
+    // let chi = undefined;
+    const [chi, setChi] = useState(<span></span>);
 
     // console.log('class_list', class_list)
     console.log('heading', heading)
     const handleBlock = () => {
-        if (block == true) {
+        if (block === true) {
             setBlock(false)
         } else {
             setBlock(true)
@@ -44,78 +46,67 @@ const Search = () => {
     }
     // heading !== "Typing"
     useEffect(() => {
-        if (heading === "Inital") {
-            setState({
-                ...state,
-                ['heading']: 'Typing'
-            })
-        }
-        window.addEventListener("resize", updateSize);
-        // console.log('class_list', class_list.lenth)
-        if (class_list.length != 0){
-            setBlock(false)
-        }
-    }, [])
-    const updateSize = ()=>{
-        // console.log(window.innerWidth)
-        // size = window.innerWidth
-        setSize(window.innerWidth)
-    }
-    
-    // const abc = (heading) => {
-    //     if (heading === "Finish") {
-    //         chi = <DataTable />
-    //     } else if (heading === "Searching") {
-    //         chi = <Spinner />
-    //     } else if (heading === "Err") {
-    //         console.log('Please Try Again')
-    //         chi = <p>Please Try Again</p>
-    //     } else {
-    //         console.log('sfwfewfwe Try Again')
-    //         chi = undefined
-    //     }
-    //     return(chi)
-    // }
-    if (heading === "Finish") {
+      window.addEventListener("resize", () => {
+        setSize(window.innerWidth);
+        console.log("setSize");
+      });
+      if (class_list.length !== 0) {
+        setBlock(false);
+      }
+    }, []);
+    useEffect(() => {
+      console.log("heading", heading);
+      if (heading === "Inital") {
+        setState({
+          ...state,
+          ["heading"]: "Typing"
+        });
+      }
+      if (heading === "Finish") {
         // DataTableMedia
-        if (size > 850){
-            chi = <DataTable />
-        }else{
-            chi = <DataTableMedia />
+        if (size > 750) {
+          // chi = <DataTable />;
+          setChi(<DataTable />);
+        } else {
+          // chi = <DataTableMedia />;
+          setChi(<DataTableMedia />);
         }
-    }else if (heading === "Searching") {
-        chi = <Spinner />
-    } else if (heading === "Err") {
-        // console.log('Please Try Again')
-        // handleBlock()
+      } else if (heading === "Searching") {
+        //   chi = <Spinner />;
+        setChi(<Spinner />);
+      } else if (heading === "Err") {
+        console.log("Please Try Again");
+        handleBlock();
         // window.setTimeout(() => { handleBlock() }, 1000)
         // chi = <h1>Please Try Again</h1>
-        chi = undefined
-    }else {
-        chi = undefined
-    }
-    useEffect(() => {
-        if (heading === "Err") {
-            console.log('Please Try Again')
-            handleBlock()
-            // window.setTimeout(() => { handleBlock() }, 1000)
-            // chi = <h1>Please Try Again</h1>
-            setAlert(alertFun('danger', 'Error! ', ' Please try again...'))
-            window.setTimeout(() => { setAlert(null) }, 2700)
-            chi = undefined
-        } else if (heading === "Empty") {
-            console.log('Result is Empty')
-            handleBlock()
-            // window.setTimeout(() => { handleBlock() }, 1000)
-            // chi = <h1>Please Try Again</h1>
-            setAlert(alertFun('warning', 'Empty! ', ' Result Is Empty. Please try again...'))
-            window.setTimeout(() => { setAlert(null) }, 2700)
-            chi = undefined
-        }else {
-            chi = undefined
-        }
-        
-    }, [heading])
+        setAlert(alertFun("danger", "Error! ", " Please try again..."));
+        window.setTimeout(() => {
+          setAlert(null);
+        }, 2700);
+        //   chi = undefined;
+        setChi(<span></span>);
+      } else if (heading === "Empty") {
+        console.log("Result is Empty");
+        handleBlock();
+        // window.setTimeout(() => { handleBlock() }, 1000)
+        // chi = <h1>Please Try Again</h1>
+        setAlert(
+          alertFun(
+            "warning",
+            "Empty! ",
+            " Result Is Empty. Please try again..."
+          )
+        );
+        window.setTimeout(() => {
+          setAlert(null);
+        }, 2700);
+        //   chi = undefined;
+        setChi(<span></span>);
+      } else {
+        //   chi = undefined;
+        setChi(<span></span>);
+      }
+    }, [heading, size]);
 
 
     return (
