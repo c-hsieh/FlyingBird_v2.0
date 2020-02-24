@@ -6,6 +6,7 @@ import DataTable from "./DataTable";
 import DataTableMedia from "./DataTableMedia";
 import Spinner from "../layout/Spinner";
 import { CSSTransitionGroup } from "react-transition-group";
+import { addLike, deleteLike, getLikes } from "../../flux/actions/likeActions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
@@ -15,7 +16,7 @@ import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import "./time.css";
 
 const Search = () => {
-  const { query } = useContext(Context);
+  const { query, dispatch, auth, error, like } = useContext(Context);
   const [state, setState] = query;
   const { class_list, heading } = state;
   const [block, setBlock] = useState(true);
@@ -39,6 +40,12 @@ const Search = () => {
       </div>
     );
   };
+  useEffect(() => {
+    console.log("like.initial", like.initial);
+    if ((like.initial === false) & (auth.user !== null)) {
+      getLikes(auth.user.email, dispatch, auth.token);
+    }
+  }, [auth]);
   
   useEffect(() => {
     window.addEventListener("resize", () => {setSize(window.innerWidth); console.log('setSize')});

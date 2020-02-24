@@ -33,6 +33,7 @@ mongoose
 app.use("/api/search", require("./routes/api/search"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/like", require("./routes/api/like"));
 
 
 // deploy

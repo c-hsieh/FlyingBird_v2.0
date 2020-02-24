@@ -53,7 +53,8 @@ router.post("/", (req, res) => {
 router.get("/user", auth, (req, res) => {
   User.findById(req.user.id)
     .select("-password")
-    .then(user => res.json(user));
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json({ msg: `Invalid credentials, ${err}` }));
 });
 
 module.exports = router;

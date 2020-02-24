@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { Context } from "../../flux/store";
+import { getLikes, deleteALLLike } from "../../flux/actions/likeActions";
 
 const List = (prop) => {
     const { likeItem, del } = prop;
@@ -11,12 +13,31 @@ const List = (prop) => {
           <div className="card mb-4 shadow-sm">
             <div className="card-body">
               <div className="row ">
-                <div class="col-sm-10 col-12">
-                  <h5 className="float-left">
+                <div class="col-sm-8 col-10">
+                  <h5 className="float-left" style={{ "font-size": "1.5em" }}>
                     {likeItem.chn_name.split("</br>")[0]}
                   </h5>
                 </div>
-                <div class="col-sm-2 col-12">
+                <div class="col-sm-2 col-8">
+                  <button
+                    type="button"
+                    className={
+                      likeItem.isJoin
+                        ? "btn btn-sm   btn-success float-right mr-2"
+                        : "btn btn-sm   btn-secondary float-right mr-2"
+                    }
+                    // style={
+                    //   likeItem.isJoin
+                    //     ? { backgroundColor: "#00FF00", borderColor: "#64fa64" }
+                    //     : { backgroundColor: "#98999B", borderColor: "#64fa64" }
+                    // }
+                    id={likeItem.serial_no}
+                    // onClick={e => del(e.target.id)}
+                  >
+                    Join
+                  </button>
+                </div>
+                <div class="col-sm-2 col-8 ">
                   <button
                     type="button"
                     className="btn btn-sm btn-warning float-right"
@@ -65,51 +86,77 @@ const List = (prop) => {
       </React.Fragment>
     );
 }
-const  Like = () => {
-    const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
-    // console.log("like")
+const Like = () => {
+  const { query, dispatch, auth, error, like } = useContext(Context);
+  // const [likeList, setLikeList] = useState(
+  //   localStorage.getItem("LikeList")
+  //     ? JSON.parse(localStorage.getItem("LikeList"))
+  //     : []
+  // );
+  const [likeList, setLikeList] = useState(like.likes);
 
-    const del = async (code) => {
-        // console.log(code, code)
-        setLikeList(likeList.filter((li) => li.serial_no !== code));
+  // console.log("like")
+
+  const del = async code => {
+    // console.log(code, code)
+    setLikeList(likeList.filter(li => li.serial_no !== code));
+  };
+  useEffect(() => {
+    // console.log('likeList', likeList)
+    localStorage.setItem("LikeList", JSON.stringify(likeList));
+  }, [likeList]);
+
+  useEffect(() => {
+    if (auth.user === null) {
+      console.log("auth.token", auth.token);
+    } else if(like.initial===false) {
+      getLikes(auth.user.email, dispatch, auth.token);
+      console.log("Email", auth.user.email);
     }
-    useEffect(() => {
-        // console.log('likeList', likeList)
-        localStorage.setItem('LikeList', JSON.stringify(likeList))
-    }, [likeList])
-    return (
-        <React.Fragment>
-            {console.log('likeList', likeList)}
-            <h3 className="text-center mt-2 mb-4"><i className="fas fa-heart"></i>Like</h3>
-            {(likeList.length !== 0)?
-                (<div className="row mt-2 md-2">
-                    <div className="form-group col d-flex justify-content-end">
-                        <button 
-                            className="btn btn-warning btn-sm mr-1"
-                            onClick={(e) => { e.preventDefault(); setLikeList([]);localStorage.removeItem('LikeList')}}
-                            type="button"
-                        >
-                            Clear All
-                        </button>
-                        {/* <Link className="btn btn-primary btn-sm" to="/searchsim">
+    
+    // getLikes(auth.user.email, dispatch, auth.token);
+  }, [auth]);
+  useEffect(()=>{
+    setLikeList(like.likes);
+  },[like])
+  return (
+    <React.Fragment>
+      {console.log("likeList", likeList)}
+      <h3 className="text-center mt-2 mb-4">
+        <i className="fas fa-heart"></i>Like
+      </h3>
+      {likeList.length !== 0 ? (
+        <div className="row mt-2 md-2">
+          <div className="form-group col d-flex justify-content-end">
+            <button
+              className="btn btn-warning btn-sm mr-1"
+              onClick={e => {
+                e.preventDefault();
+                setLikeList([]);
+                // localStorage.removeItem("LikeList");
+                deleteALLLike(auth.user.email, dispatch, auth);
+              }}
+              type="button"
+            >
+              Clear All
+            </button>
+            {/* <Link className="btn btn-primary btn-sm" to="/searchsim">
                             Clear All
                             <i className="fas fa-search"></i>
                         </Link> */}
-                    </div>
-                </div>):
-                (<div></div>)
-            }
-            <div className="row">
-                {/* {console.log('maplikeList', likeList)} */}
-                {likeList.map(item => (
-                    <List key={item.serial_no} likeItem={item} del={del}/>
-                ))}
-            </div>
-            
-        </React.Fragment>
-    )
-}
-
-
+          </div>
+        </div>
+      ) : (
+        <div></div>
+      )}
+      <div className="row">
+        {/* {console.log('maplikeList', likeList)} */}
+        {likeList.map(item => (
+          <List key={item.serial_no} likeItem={item} del={del} />
+        ))}
+      </div>
+    </React.Fragment>
+  );
+};
 
 export default Like;

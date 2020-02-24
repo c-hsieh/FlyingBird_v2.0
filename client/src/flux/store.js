@@ -1,8 +1,11 @@
 import React, { useState, useReducer, useEffect } from "react";
-// import axios from "axios";
+
 import authReducer, {authInitialState} from "./reducers/authReducer";
 import errorReducer, { errorInitialState } from "./reducers/errorReducer";
+import likeReducer, { likeInitialState } from "./reducers/likeReducer";
+
 import { loadUser } from "../flux/actions/authActions";
+import { getLikes } from "../flux/actions/likeActions";
 
 export const Context = React.createContext();
 
@@ -14,17 +17,16 @@ const combineDispatchs = (dispatchs) => {
   };
 }
 
+
 export function ContextController({ children }) {
     let intialState = {
         class_list: [],
         heading: "Inital"
     };
-    const [auth, authDispatch] = useReducer(
-      authReducer,
-      authInitialState
-    );
-    const [error, errorDispatch] = useReducer(errorReducer, errorInitialState);
     const [state, setState] = useState(intialState);
+    const [auth, authDispatch] = useReducer(authReducer, authInitialState);
+    const [error, errorDispatch] = useReducer(errorReducer, errorInitialState);
+    const [like, likeDispatch] = useReducer(likeReducer, likeInitialState);
     // setState(i=>{i.heading='Start'});
     
     console.log('state', state)
@@ -44,7 +46,12 @@ export function ContextController({ children }) {
           query: [state, setState],
           error: error,
           auth: auth,
-          dispatch: combineDispatchs([authDispatch, errorDispatch])
+          like: like,
+          dispatch: combineDispatchs([
+            authDispatch,
+            errorDispatch,
+            likeDispatch
+          ])
         }}
       >
         {children}

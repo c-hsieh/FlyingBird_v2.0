@@ -1,7 +1,8 @@
-// export const GET_ITEMS = "GET_ITEMS";
-// export const ADD_ITEM = "ADD_ITEM";
-// export const DELETE_ITEM = "DELETE_ITEM";
-// export const ITEMS_LOADING = "ITEMS_LOADING";
+export const GET_LIKES = "GET_LIKES";
+export const ADD_LIKE = "ADD_LIKE";
+export const DELETE_LIKE = "DELETE_LIKE";
+export const LIKES_LOADING = "LIKES_LOADING";
+export const DELETE_ALL_LIKE = "DELETE_ALL_LIKE";
 
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";

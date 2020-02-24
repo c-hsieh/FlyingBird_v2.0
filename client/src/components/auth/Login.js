@@ -89,8 +89,8 @@ const Login = () => {
           className="btn btn-primary btn-block"
           style={
             hover
-              ? { backgroundColor: "#0d84d9", borderColor: "#0d84d9" }
-              : { backgroundColor: "#66bcfa", borderColor: "#66bcfa" }
+              ? { backgroundColor: "#66bcfa", borderColor: "#66bcfa" }
+              : { backgroundColor: "#0d84d9", borderColor: "#0d84d9" }
           }
           onMouseEnter={() => {
             setHover(i => !i);
@@ -98,9 +98,12 @@ const Login = () => {
           onMouseLeave={() => {
             setHover(i => !i);
           }}
-          onClick={e => {
-                  e.preventDefault();
-                }, setModalL01Toggle}
+          onClick={
+            (e => {
+              e.preventDefault();
+            },
+            setModalL01Toggle)
+          }
         >
           Login
         </button>
@@ -133,9 +136,12 @@ const Login = () => {
               <button
                 type="button"
                 className="close"
-                onClick={e => {
-                  e.preventDefault();
-                }, setModalL01Toggle}
+                onClick={
+                  (e => {
+                    e.preventDefault();
+                  },
+                  setModalL01Toggle)
+                }
               >
                 &times;
               </button>
@@ -192,14 +198,11 @@ const Login = () => {
                     // data-dismiss="modal"
                     href="#"
                     // onMouseEnter={() => this.setState({ showSomething: true })}
-                    onClick={
-                      (e )=> {
-                        e.preventDefault();
-                        setModalL01Toggle();
-                        setModalR01(i => !i);
-                      }
-                      
-                    }
+                    onClick={e => {
+                      e.preventDefault();
+                      setModalL01Toggle();
+                      setModalR01(i => !i);
+                    }}
                   >
                     Sign Up
                   </a>

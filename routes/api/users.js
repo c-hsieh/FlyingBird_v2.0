@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 
 // User Model
 const User = require("../../models/User");
+const Like = require("../../models/Like");
 
 // @route   POST api/users
 // @desc    Register new user
@@ -40,10 +41,17 @@ router.post("/", (req, res) => {
         newUser.password = hash;
         newUser.save().then(user => {
             // console.log("id", user.id);
+              const newLike = new Like({
+                email,
+                like: []
+              });
+              newLike.save().then(like => {
+                res.json(like.like);
+              });
               jwt.sign(
                 { id: user.id },
                 process.env.JWTSECRECT,
-                { expiresIn: 3600 },
+                { expiresIn: 60*24*7 },
                 (err, token) => {
                   if (err) throw err;
                   res.json({

@@ -7,6 +7,7 @@ import paginationFactory, { PaginationProvider, PaginationListStandalone} from '
 import { Context } from "../../flux/store";
 import Spinner from '../layout/Spinner'
 import { ReactComponent as Logo } from '../layout/google.svg';
+import { addLike, deleteLike, getLikes } from "../../flux/actions/likeActions";
 
 // import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
@@ -54,21 +55,23 @@ const formatterNoDept =(cell, row)=>{
 
 
 const DataTable = () => {
-    const { query } = useContext(Context);
+    const { query, dispatch, auth, error, like } = useContext(Context);
     const [state, setState] = query;
     const { class_list, heading} = state;
     const [data, setData] = useState(class_list);
-    const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
+    // const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
+    const [likeList, setLikeList] = useState(like.likes)
     
     
     useEffect(() => {
+      if (auth.isAuthenticated === true) {
         if (data[0].like === undefined) {
           // console.log("fistTime")
           let tdata = data;
           tdata = tdata.map(item1 => {
             return {
               ...item1,
-              ["like"]: likeList.some(
+              ["like"]: (like.likes).some(
                 item => item.serial_no === item1.serial_no
               )
             };
@@ -77,64 +80,79 @@ const DataTable = () => {
 
           // console.log('dataInite', data)
         }
-    }, [])
+      }
+    }, [auth]);
     const addToLike = (cell, row) => {
-        
-        if (!likeList.some(item => item.serial_no === row.serial_no)) {
-          let cde = likeList;
-          const likeItem = {
-            acadm_year: row.acadm_year,
-            acadm_term: row.acadm_term,
-            serial_no: row.serial_no,
-            course_code: row.course_code,
-            dept_code: row.dept_code,
-            chn_name: row.chn_name,
-            time_inf: row.time_inf
-          };
-          // console.log('likeItem', likeItem)
-          cde.push(likeItem);
-          setLikeList(cde);
+      // console.log("like.likes", like.likes);
+      // console.log("like.likes type", typeof like.likes);
+      console.log(
+        "01",
+        likeList.some(item => item.serial_no === row.serial_no)
+      );
+      // console.log("likes111111", like.likes);
+      if (!likeList.some(item => item.serial_no === row.serial_no)) {
+        // let cde = likeList;
+        const likeItem = {
+          acadm_year: row.acadm_year,
+          acadm_term: row.acadm_term,
+          serial_no: row.serial_no,
+          course_code: row.course_code,
+          dept_code: row.dept_code,
+          chn_name: row.chn_name,
+          time_inf: row.time_inf,
+          isJoin: false
+        };
+        // console.log("likeItem", likeItem);
+        // cde.push(likeItem);
+        // setLikeList(cde);
 
-          // console.log('likeListADD', likeList)
-          // localStorage.setItem('LikeList', JSON.stringify(cde));
-          // console.log('likeList', likeList)
-        } else {
-          // setLikeList(abc =>
-          //     abc.filter((li) =>
-          //         li.serial_no !== row.serial_no
-          // ))
-          setLikeList(likeList.filter(li => li.serial_no !== row.serialNo));
-          // localStorage.setItem('LikeList', JSON.stringify(likeList));
-        }
-        // console.log('setData', data)
-        
-        setData(data => data.map((item => {
-            if (item.serial_no === row.serial_no) {
-              // console.log('item.serial_no', item.serial_no)
-              return {
-                ...item,
-                ["like"]: !item.like
-              };
-            }
-            return item
-        }))
+        setLikeList([likeItem, ...likeList]);
+        addLike(auth.user.email, likeItem, dispatch, auth);
 
-        )
-    }
+        // console.log('likeListADD', likeList)
+        // localStorage.setItem('LikeList', JSON.stringify(cde));
+        // console.log('likeList', likeList)
+      } else {
+        // setLikeList(abc => abc.filter(li => li.serial_no !== row.serial_no));
+        setLikeList(likeList.filter(li => li.serial_no !== row.serial_no));
+        console.log("HI  deleteLike");
+        deleteLike(auth.user.email, row.serial_no, dispatch, auth);
+        // localStorage.setItem('LikeList', JSON.stringify(likeList));
+      }
+      // console.log('setData', data)
+    //   console.log("likes222222", likeList);
+      setData(data =>
+        data.map(item => {
+          if (item.serial_no === row.serial_no) {
+            // console.log('item.serial_no', item.serial_no)
+            return {
+              ...item,
+              ["like"]: !item.like
+            };
+          }
+          return item;
+        })
+      );
+    };
     useEffect(() => {
         // console.log("LikeListSETT")
         // console.log(likeList)
-        localStorage.setItem('LikeList', JSON.stringify(likeList));
+        // localStorage.setItem('LikeList', JSON.stringify(likeList));
     }, [data])
  
     const formatterLike = (cell, row) => {
         // console.log('formatterLike', row)
-        
-        if (row.like) {
+        if (auth.isAuthenticated) {
+            if (row.like) {
             return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size":"0.8em"}}><i className="fas fa-heart"></i></a>
-        } else {
-            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+            } else {
+                return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+            }
+        }else{
+            return <p style={{ "font-size": "0.5em" }}>Please Login...</p>;
         }
+        
+        
     }
     
     const columns = [{
@@ -194,6 +212,8 @@ const DataTable = () => {
         // style:  {  width: '10px'},
         formatter: formatterLike,
         sort: false,
+        // `${auth.isAuthenticated} ? ${false} : ${true}`
+        hidden: auth.isAuthenticated ? false : true,
         headerStyle: (colum, colIndex) => {
             return { width: '5em', textAlign: 'center', fontSize: "0.8em"};
         },

@@ -7,6 +7,7 @@ import paginationFactory, { PaginationProvider, PaginationListStandalone } from 
 import { Context } from "../../flux/store";
 import Spinner from '../layout/Spinner'
 import { ReactComponent as Logo } from '../layout/google.svg';
+import { addLike, deleteLike, getLikes } from "../../flux/actions/likeActions";
 
 // import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
@@ -169,14 +170,16 @@ const formatterv_class1 = (cell, row) => {
 
 
 const DataTable = (prop) => {
-    const { query } = useContext(Context);
+    const { query, dispatch, auth, error, like } = useContext(Context);
     const [state, setState] = query;
     const { class_list, heading } = state;
     const [data, setData] = useState(class_list);
-    const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
+    // const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
+    const [likeList, setLikeList] = useState(like.likes);
 
 
     useEffect(() => {
+      if (auth.isAuthenticated === true) {
         if (data[0].like === undefined) {
           // console.log("fistTime")
           let tdata = data;
@@ -190,11 +193,12 @@ const DataTable = (prop) => {
 
           // console.log('dataInite', data)
         }
-    }, [])
+      }
+    }, [auth]);
     const addToLike = (cell, row) => {
 
         if (!likeList.some(item => item.serial_no === row.serialNo)) {
-          let cde = likeList;
+          // let cde = likeList;
           const likeItem = {
             acadm_year: row.acadmYear,
             acadm_term: row.acadmTerm,
@@ -202,17 +206,21 @@ const DataTable = (prop) => {
             course_code: row.courseCode,
             dept_code: row.deptCode,
             chn_name: row.chnName,
-            time_inf: row.timeInfo
+            time_inf: row.timeInfo,
+            isJoin: false
           };
           // console.log('likeItem', likeItem)
-          cde.push(likeItem);
-          setLikeList(cde);
+          // cde.push(likeItem);
+          // setLikeList(cde);
+          setLikeList([likeItem, ...likeList]);
+          addLike(auth.user.email, likeItem, dispatch, auth);
 
           // console.log('likeListADD', likeList)
           // localStorage.setItem('LikeList', JSON.stringify(cde));
           // console.log('likeList', likeList)
         } else {
           setLikeList(likeList.filter(li => li.serial_no !== row.serialNo));
+          deleteLike(auth.user.email, row.serialNo, dispatch, auth);
           // localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         // console.log('setData', data)
@@ -230,87 +238,101 @@ const DataTable = (prop) => {
 
         )
     }
-    useEffect(() => {
-        // console.log("LikeListSETT")
-        // console.log(likeList)
-        localStorage.setItem('LikeList', JSON.stringify(likeList));
-    }, [data])
+    // useEffect(() => {
+    //     // console.log("LikeListSETT")
+    //     // console.log(likeList)
+    //     localStorage.setItem('LikeList', JSON.stringify(likeList));
+    // }, [data])
 
     const formatterLike = (cell, row) => {
         // console.log('formatterLike', row)
-
-        if (row.like) {
+        if (auth.isAuthenticated) {
+          if (row.like) {
             return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="fas fa-heart"></i></a>
-        } else {
-            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+          } else {
+              return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+          }
+        }else{
+            return <p style={{ "font-size": "0.5em" }}>Please Login...</p>;
         }
+        
     }
 
-    const columns = [{
-        dataField: 'courseCode',
-        text: '開課序號 ID',
+    const columns = [
+      {
+        dataField: "courseCode",
+        text: "開課序號 ID",
         sort: true,
         hidden: true
-    }, {
-        dataField: 'serialNo',
-        text: '開課代碼',
+      },
+      {
+        dataField: "serialNo",
+        text: "開課代碼",
         formatter: formatterNoDept,
         sort: true,
         hidden: true
-    }, {
-        dataField: 'credit',//row.credit, row.optionCode, courseKind
-        text: '學分',
-        sort: true,
-        hidden: true, headerStyle: (colum, colIndex) => {
-            return { width: '4em', textAlign: 'center', fontSize: "1em" };
-        }
-    }, {
-        dataField: 'optionCode',//row.credit, row.optionCode, courseKind
-        text: '必/選',
+      },
+      {
+        dataField: "credit", //row.credit, row.optionCode, courseKind
+        text: "學分",
         sort: true,
         hidden: true,
-        hidden: true, headerStyle: (colum, colIndex) => {
-            return { width: '4em', textAlign: 'center', fontSize: "1em" };
+        headerStyle: (colum, colIndex) => {
+          return { width: "4em", textAlign: "center", fontSize: "1em" };
+        }
+      },
+      {
+        dataField: "optionCode", //row.credit, row.optionCode, courseKind
+        text: "必/選",
+        sort: true,
+        hidden: true,
+        hidden: true,
+        headerStyle: (colum, colIndex) => {
+          return { width: "4em", textAlign: "center", fontSize: "1em" };
         }
         // dataField: 'courseKind',
         // text: '半/全',
         // style: { width: 'auto' },
         // sort: true,
         // hidden: true
-    }, {
-        dataField: 'formS',
-        text: '開課年級',
-        style: { width: 'auto' },
+      },
+      {
+        dataField: "formS",
+        text: "開課年級",
+        style: { width: "auto" },
         sort: true,
         hidden: true,
         hidden: true,
         headerStyle: (colum, colIndex) => {
-            return { width: '5em', textAlign: 'center', fontSize: "1em" };
+          return { width: "5em", textAlign: "center", fontSize: "1em" };
         }
-    }, {
-        dataField: 'chnName',
-        text: '課程名稱',
+      },
+      {
+        dataField: "chnName",
+        text: "課程名稱",
         formatter: formatterChnName,
         // style: { width: 'auto !important' },
         headerStyle: (colum, colIndex) => {
-            return { width: '6.5em', textAlign: 'center', fontSize: "0.9em" };
+          return { width: "6.5em", textAlign: "center", fontSize: "0.9em" };
         },
         sort: true
-    }, {
-        dataField: 'engName',
-        text: '課程英文名稱',
+      },
+      {
+        dataField: "engName",
+        text: "課程英文名稱",
         formatter: formatterChnName,
-        style: { width: 'auto !important' },
+        style: { width: "auto !important" },
         sort: true,
         hidden: true
-    }, {
-        dataField: 'v_class1',//courseGroup, formS
-        text: '開課班級 / 年級 / 組別',
-        style: { width: 'auto' },
+      },
+      {
+        dataField: "v_class1", //courseGroup, formS
+        text: "開課班級 / 年級 / 組別",
+        style: { width: "auto" },
         formatter: formatterv_class1,
         sort: true,
         headerStyle: (colum, colIndex) => {
-            return { width: '6em', textAlign: 'center', fontSize: "0.7em" };
+          return { width: "6em", textAlign: "center", fontSize: "0.7em" };
         },
         hidden: true
         // dataField: 'courseGroup',
@@ -318,29 +340,32 @@ const DataTable = (prop) => {
         // style: { width: 'auto' },
         // sort: true,
         // hidden: true
-    }, {
-        dataField: 'teacher',
-        text: '教師',
-        style:{ fontSize: "0.8em" },
+      },
+      {
+        dataField: "teacher",
+        text: "教師",
+        style: { fontSize: "0.8em" },
         headerStyle: (colum, colIndex) => {
-            return { width: '4em', textAlign: 'center', fontSize: "0.8em" };
+          return { width: "4em", textAlign: "center", fontSize: "0.8em" };
         },
         sort: true
-    }, {
-        dataField: 'timeInfo',
-        text: '時間地點',
-        style:{ fontSize: "0.8em" },
+      },
+      {
+        dataField: "timeInfo",
+        text: "時間地點",
+        style: { fontSize: "0.8em" },
         sort: true,
         headerStyle: (colum, colIndex) => {
-            return { width: '7em', textAlign: 'center', fontSize: "0.8em" };
+          return { width: "7em", textAlign: "center", fontSize: "0.8em" };
         }
-    }, {
-        dataField: 'limitCountH',
-        text: '限修/選課人數 授權',
+      },
+      {
+        dataField: "limitCountH",
+        text: "限修/選課人數 授權",
         sort: true,
         formatter: formatterStfseld,
         headerStyle: (colum, colIndex) => {
-            return { width: '6em', textAlign: 'center', fontSize: "0.7em" };
+          return { width: "6em", textAlign: "center", fontSize: "0.7em" };
         }
         // formatter: (cell, row) => (<span>{row.limitCountH}/{row.authorizeP}</span>)
 
@@ -356,43 +381,50 @@ const DataTable = (prop) => {
         // formatter: formatterStfseld,
         // sort: true,
         // hidden: true
-    }, {
-        dataField: 'authorizeP',
-        text: '授權碼人數',
+      },
+      {
+        dataField: "authorizeP",
+        text: "授權碼人數",
         sort: true,
         hidden: true
-    }, {
-        dataField: 'v_stfseld_undeal',
-        text: '未分發人數',
-        style: { width: 'auto' },
+      },
+      {
+        dataField: "v_stfseld_undeal",
+        text: "未分發人數",
+        style: { width: "auto" },
         sort: true,
         hidden: true
-    }, {
-        dataField: 'v_limitCourse',
-        text: '限修',
-        style: { width: 'auto' },
+      },
+      {
+        dataField: "v_limitCourse",
+        text: "限修",
+        style: { width: "auto" },
         sort: true,
         hidden: true
-    }, {
-        dataField: 'v_comment',
-        text: '備註',
-        style: { width: 'auto' },
+      },
+      {
+        dataField: "v_comment",
+        text: "備註",
+        style: { width: "auto" },
         sort: true,
         hidden: true
-    }, {
-        dataField: 'applyCode',//serial_no
-        text: 'Like',
+      },
+      {
+        dataField: "applyCode", //serial_no
+        text: "Like",
         isDummyField: true,
         // style:  {  width: '10px'},
         formatter: formatterLike,
         sort: false,
+        hidden: auth.isAuthenticated ? false : true,
         headerStyle: (colum, colIndex) => {
-            return { width: '4em', textAlign: 'center', fontSize: "0.7em" };
+          return { width: "4em", textAlign: "center", fontSize: "0.7em" };
         },
         style: {
-            textAlign: 'center',
+          textAlign: "center"
         }
-    }];
+      }
+    ];
 
     const expandRow = {
       renderer: (row, rowIndex) => (

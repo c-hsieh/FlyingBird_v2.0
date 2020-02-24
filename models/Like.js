@@ -8,8 +8,8 @@ const LikeSchema = new Schema({
     required: true,
     unique: true
   },
-  password: {
-    type: String,
+  like: {
+    type: Array,
     required: true
   },
   date: {

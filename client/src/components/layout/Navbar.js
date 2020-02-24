@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
 import Login from '../../components/auth/Login'
 import Logout from "../../components/auth/Logout";
@@ -6,7 +6,17 @@ import { Context } from "../../flux/store";
 
 const Navbar = (prop) => {
     const { dispatch, auth, error } = useContext(Context);
-    
+    const [authButton, serAuthButton] = useState(<span></span>)
+
+    useEffect(() => {
+      if (auth.isAuthenticated === true) {
+        serAuthButton(<Logout />);
+      } else if (auth.isAuthenticated === false) {
+        serAuthButton(<Login />);
+      } else {
+        serAuthButton(<i class="fas fa-baby-carriage"></i>);
+      }
+    }, [auth]);
     return (
       <nav
         className="navbar navbar-expand-md navbar-light "
@@ -52,10 +62,10 @@ const Navbar = (prop) => {
           </ul>
           <ul className="nav navbar-nav navbar-right ml-auto">
             <li className="nav-item">
-              {auth.isAuthenticated
+              {/* {auth.isAuthenticated
               ?<Logout />
-              :<Login />}
-              
+              :<Login />} */}
+              {authButton}
             </li>
           </ul>
         </div>
