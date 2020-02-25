@@ -110,15 +110,15 @@ const Form = prop => {
   const { query } = useContext(Context);
   const [state, setState] = query;
 
-  const selection = new Selection({
-    class: "selection",
+  // const selection = new Selection({
+  //   class: "selection",
 
-    // All elements in this container can be selected
-    selectables: [".box-wrap > div.table"],
+  //   // All elements in this container can be selected
+  //   selectables: [".box-wrap > div.table"],
 
-    // The container is also the boundary in this case
-    boundaries: [".box-wrap"]
-  });
+  //   // The container is also the boundary in this case
+  //   boundaries: [".box-wrap"]
+  // });
 
   useEffect(() => {
     let t = TimeSelectListInital;
@@ -285,7 +285,7 @@ const Form = prop => {
       });
     } else {
       if (e.target.id === "courseCode") {
-        setDis(e.target.value);
+        setDis(parseInt(e.target.value));
         setFormValue({
           ...FormValueInitial,
           [e.target.id]: e.target.value
@@ -304,13 +304,15 @@ const Form = prop => {
     setFormValue({
       ...FormValueInitial
     });
+     setTimeShow(false);
     //console.log(prop);
   };
   //console.log('alert', alert)
 
   const timeshowF = e => {
     e.preventDefault();
-    setTimeShow(!timeShow);
+    // setTimeShow(!timeShow);
+    setTimeShow(true);
   };
 
   return (

@@ -89,8 +89,8 @@ const Login = () => {
           className="btn btn-primary btn-block"
           style={
             hover
-              ? { backgroundColor: "#66bcfa", borderColor: "#66bcfa" }
-              : { backgroundColor: "#0d84d9", borderColor: "#0d84d9" }
+              ? { backgroundColor: "#0d84d9", borderColor: "#0d84d9" }
+              : { backgroundColor: "#66bcfa", borderColor: "#66bcfa" }
           }
           onMouseEnter={() => {
             setHover(i => !i);
@@ -191,10 +191,11 @@ const Login = () => {
                 </button>
               </form>
               <div className="row">
-                <div className="col d-flex justify-content-center">
+                <div className="col d-flex justify-content-center mt-1 md-1">
+                  <span className="mr-1">No account? </span>
                   <a
-                    type="button"
-                    className="align-middle"
+                    // type="button"
+                    // className="align-middle"
                     // data-dismiss="modal"
                     href="#"
                     // onMouseEnter={() => this.setState({ showSomething: true })}

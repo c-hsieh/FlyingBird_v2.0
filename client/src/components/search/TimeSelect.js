@@ -88,6 +88,9 @@ const Timeselect = (prop) => {
       //     setSelection(null)
       // })
     //   return () => {};
+      return () => {
+        selection.destroy();
+      };
     }, [selection]);
     // console.log("TimeSelect Hello")
     return (
