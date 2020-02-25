@@ -3,6 +3,7 @@ export const ADD_LIKE = "ADD_LIKE";
 export const DELETE_LIKE = "DELETE_LIKE";
 export const LIKES_LOADING = "LIKES_LOADING";
 export const DELETE_ALL_LIKE = "DELETE_ALL_LIKE";
+export const SET_JOIN = "SET_JOIN";
 
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";

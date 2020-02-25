@@ -3,7 +3,8 @@ import {
   ADD_LIKE,
   DELETE_LIKE,
   LIKES_LOADING,
-  DELETE_ALL_LIKE
+  DELETE_ALL_LIKE,
+  SET_JOIN
 } from "../actions/types";
 
 export const likeInitialState = {
@@ -35,6 +36,11 @@ export default function(state, action) {
       return {
         ...state,
         likes: [action.payload, ...state.likes]
+      };
+    case SET_JOIN:
+      return {
+        ...state,
+        likes: state.likes.map(item=>{if(item.serial_no == action.payload){item.isJoin=!(item.isJoin)}return item})
       };
     case LIKES_LOADING:
       return {

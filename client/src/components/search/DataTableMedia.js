@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { useHistory } from "react-router-dom";
 
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -176,6 +177,7 @@ const DataTable = (prop) => {
     const [data, setData] = useState(class_list);
     // const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
     const [likeList, setLikeList] = useState(like.likes);
+    const history = useHistory();
 
 
     useEffect(() => {
@@ -626,6 +628,10 @@ const DataTable = (prop) => {
     if (class_list === undefined || class_list.length === 0) {
         console.log("class_list", class_list)
         return <Spinner />;
+    }else if (class_list[0].serialNo === undefined){
+      console.log("searchsim");
+      history.push("/searchsim");
+      return<></>
     } else {
         return (
             <>

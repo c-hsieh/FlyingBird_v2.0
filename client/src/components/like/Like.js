@@ -1,9 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Context } from "../../flux/store";
-import { getLikes, deleteALLLike } from "../../flux/actions/likeActions";
+import {
+  getLikes,
+  deleteALLLike,
+  setJoin,
+  deleteLike
+} from "../../flux/actions/likeActions";
 
 const List = (prop) => {
-    const { likeItem, del } = prop;
+    const { likeItem, del, toSetJoin } = prop;
     // console.log(prop.prevPath)
     
 
@@ -13,39 +18,21 @@ const List = (prop) => {
           <div className="card mb-4 shadow-sm">
             <div className="card-body">
               <div className="row ">
-                <div class="col-sm-8 col-10">
-                  <h5 className="float-left" style={{ "font-size": "1.5em" }}>
-                    {likeItem.chn_name.split("</br>")[0]}
-                  </h5>
-                </div>
-                <div class="col-sm-2 col-8">
-                  <button
-                    type="button"
-                    className={
-                      likeItem.isJoin
-                        ? "btn btn-sm   btn-success float-right mr-2"
-                        : "btn btn-sm   btn-secondary float-right mr-2"
-                    }
-                    // style={
-                    //   likeItem.isJoin
-                    //     ? { backgroundColor: "#00FF00", borderColor: "#64fa64" }
-                    //     : { backgroundColor: "#98999B", borderColor: "#64fa64" }
-                    // }
-                    id={likeItem.serial_no}
-                    // onClick={e => del(e.target.id)}
+                <div class="col-sm-8 col-8">
+                  {/* <h5 className="float-left" style={{ "font-size": "1.2em" }}> */}
+                  {/* {console.log("likeItem", likeItem)} */}
+                  {/* {likeItem.chn_name.toString().split("</br>")[0]} */}
+                  {/* </h5> */}
+                  <a
+                    // className="btn btn-dark btn-block"
+                    href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=&deptCode=${likeItem.dept_code}&formS=&classes1=&deptGroup=`}
+                    rel="noopener noreferrer"
+                    style={{ "font-size": "1em" }}
+                    target="_blank"
+                    role="button"
                   >
-                    Join
-                  </button>
-                </div>
-                <div class="col-sm-2 col-8 ">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-warning float-right"
-                    id={likeItem.serial_no}
-                    onClick={e => del(e.target.id)}
-                  >
-                    Delete
-                  </button>
+                    {likeItem.chn_name.toString().split("</br>")[0]}
+                  </a>
                 </div>
 
                 {/* <div className="float-right">
@@ -71,15 +58,41 @@ const List = (prop) => {
                         >
                             <i className="fas fa-chevron-right" /> View Lyrics
                         </Link> */}
-              <a
-                className="btn btn-dark btn-block"
-                href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=&deptCode=${likeItem.dept_code}&formS=&classes1=&deptGroup=`}
-                rel="noopener noreferrer"
-                target="_blank"
-                role="button"
-              >
-                Detial
-              </a>
+              <div className="row ">
+                <div class="col-sm-6 col-6">
+                  <button
+                    type="button"
+                    className={
+                      likeItem.isJoin
+                        ? "btn btn-sm btn-success btn-block"
+                        : "btn btn-sm btn-secondary btn-block"
+                    }
+                    // float-right mr-1
+                    // style={
+                    //   likeItem.isJoin
+                    //     ? { backgroundColor: "#00FF00", borderColor: "#64fa64" }
+                    //     : { backgroundColor: "#98999B", borderColor: "#64fa64" }
+                    // }
+                    id={likeItem.serial_no}
+                    onClick={e => {
+                      e.preventDefault();
+                      toSetJoin(likeItem.serial_no, !likeItem.isJoin);
+                    }}
+                  >
+                    Join
+                  </button>
+                </div>
+                <div class="col-sm-6 col-6 ">
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-warning btn-block"
+                    id={likeItem.serial_no}
+                    onClick={e => del(e.target.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -96,29 +109,59 @@ const Like = () => {
   const [likeList, setLikeList] = useState(like.likes);
 
   // console.log("like")
+  // const toSetJoin = useCallback((serial_no, isJoin) => {
+    
+  // });
+  const toSetJoin = (serial_no, isJoin) => {
+    console.log("toSetJoin");
+    console.log("isJoin: ", isJoin);
+   setJoin(auth.user.email, serial_no, isJoin, dispatch, auth);
+  //   let abc = likeList.map(item => {
+  //     if (item.serial_no === serial_no) {
+  //       console.log("toSetJoin MAP");
+  //       item.isJoin = !item.isJoin;
+  //     }
+  //     return item;
+  //   });
+  //   console.log(abc);
+  //  setLikeList(abc); 
+  }
 
-  const del = async code => {
+  const del =  code => {
     // console.log(code, code)
+    deleteLike(auth.user.email, code, dispatch, auth);
     setLikeList(likeList.filter(li => li.serial_no !== code));
+
   };
-  useEffect(() => {
-    // console.log('likeList', likeList)
-    localStorage.setItem("LikeList", JSON.stringify(likeList));
-  }, [likeList]);
+  // useEffect(() => {
+  //   // console.log('likeList', likeList)
+  //   localStorage.setItem("LikeList", JSON.stringify(likeList));
+  // }, [likeList]);
 
   useEffect(() => {
     if (auth.user === null) {
       console.log("auth.token", auth.token);
     } else if(like.initial===false) {
-      getLikes(auth.user.email, dispatch, auth.token);
+      
+      (async function banana() {
+        await getLikes(auth.user.email, dispatch, auth.token);
+        setLikeList(like.likes);
+      })();
       console.log("Email", auth.user.email);
     }
     
     // getLikes(auth.user.email, dispatch, auth.token);
   }, [auth]);
-  useEffect(()=>{
-    setLikeList(like.likes);
-  },[like])
+  // useEffect(()=>{
+    
+  // },[like])
+
+  // const toSetJoin = useCallback(
+  //   (serial_no, isJoin) => {
+  //   setJoin(auth.user.email, serial_no, isJoin, dispatch, auth);
+  //   setlik
+  // })
+
   return (
     <React.Fragment>
       {console.log("likeList", likeList)}
@@ -151,8 +194,13 @@ const Like = () => {
       )}
       <div className="row">
         {/* {console.log('maplikeList', likeList)} */}
-        {likeList.map(item => (
-          <List key={item.serial_no} likeItem={item} del={del} />
+        {like.likes.map(item => (
+          <List
+            key={item.serial_no}
+            likeItem={item}
+            del={del}
+            toSetJoin={toSetJoin}
+          />
         ))}
       </div>
     </React.Fragment>

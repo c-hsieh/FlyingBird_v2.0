@@ -406,23 +406,32 @@ const DataTable = () => {
         return <Spinner />;
     } else {
         return (
-            <>
-                {/* <h2>{heading}</h2> */}
-                {/* <ColoredLine color="red" /> */}
-                {/* <hr style={{
+          <>
+            <div className="mb-3">
+              <a
+                href="/search"
+                // target="button "
+                // rel="noopener noreferrer"
+                style={{ "font-size": "1.2em" }}
+              >
+                <i className="fas fa-link"></i>
+                Go Back to Search
+              </a>
+            </div>
+            {/* <h2>{heading}</h2> */}
+            {/* <ColoredLine color="red" /> */}
+            {/* <hr style={{
                     color: '#808080',
                     backgroundColor: '#808080',
                     height: .5
                 }} /> */}
-                <PaginationProvider
-                    bootstrap4
-                    pagination={
-                        paginationFactory(options)
-                    }
-                >
-                    {contentTable}
-                </PaginationProvider>
-                {/* <BootstrapTable
+            <PaginationProvider
+              bootstrap4
+              pagination={paginationFactory(options)}
+            >
+              {contentTable}
+            </PaginationProvider>
+            {/* <BootstrapTable
                     keyField='id'
                     bootstrap4
                     // striped
@@ -431,8 +440,8 @@ const DataTable = () => {
                     data={data}
                     columns={columns}
                 /> */}
-            </ >
-        )
+          </>
+        );
     }
 
 }

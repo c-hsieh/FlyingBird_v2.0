@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { useHistory } from "react-router-dom";
 
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -119,8 +120,14 @@ const DataTable = () => {
     const [data, setData] = useState(class_list);
     // const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
     const [likeList, setLikeList] = useState(like.likes);
+    const history = useHistory();
     
-    
+    // useEffect(() => {
+    //   console.log("class_listwefewifjweif", class_list[0].serialNo);
+    //   if (class_list[0].serialNo === undefined){
+    //   console.log("searchsim");
+    //   history.push("/searchsim");}
+    // }, [])
     useEffect(() => {
       if (auth.isAuthenticated === true) {
         if (data[0].like === undefined) {
@@ -547,25 +554,29 @@ const DataTable = () => {
     if (class_list === undefined || class_list.length === 0) {
         console.log("class_list", class_list)
         return <Spinner />;
+    }else if (class_list[0].serialNo === undefined){
+      console.log("searchsim");
+      history.push("/searchsim");
+      return<></>
     }else{
+        
         return (
-            <>
-                {/* <h2>{heading}</h2> */}
-                {/* <ColoredLine color="red" /> */}
-                {/* <hr style={{
+          <>
+            
+            {/* <h2>{heading}</h2> */}
+            {/* <ColoredLine color="red" /> */}
+            {/* <hr style={{
                     color: '#808080',
                     backgroundColor: '#808080',
                     height: .5
                 }} /> */}
-                <PaginationProvider
-                    bootstrap4
-                    pagination={
-                        paginationFactory(options)
-                    }
-                >
-                    {contentTable}
-                </PaginationProvider>
-                {/* <BootstrapTable
+            <PaginationProvider
+              bootstrap4
+              pagination={paginationFactory(options)}
+            >
+              {contentTable}
+            </PaginationProvider>
+            {/* <BootstrapTable
                     keyField='id'
                     bootstrap4
                     // striped
@@ -574,8 +585,8 @@ const DataTable = () => {
                     data={data}
                     columns={columns}
                 /> */}
-            </ >
-        )
+          </>
+        );
     }
     
 }

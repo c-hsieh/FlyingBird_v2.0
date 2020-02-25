@@ -4,7 +4,8 @@ import {
   ADD_LIKE,
   DELETE_LIKE,
   LIKES_LOADING,
-  DELETE_ALL_LIKE
+  DELETE_ALL_LIKE,
+  SET_JOIN
 } from "./types";
 
 import { tokenConfig } from "./authActions";
@@ -41,6 +42,22 @@ export const addLike = (email, like, dispatch, auth) => {
       dispatch({
         type: ADD_LIKE,
         payload: like
+      })
+    )
+    .catch(err =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
+};
+export const setJoin = (email, serial_no, isJoin, dispatch, auth) => {
+  // Request body
+  const body = JSON.stringify({ email, serial_no, isJoin });
+  console.log("setJoin", body);
+  axios
+    .post("/api/like/setJoin", body, tokenConfig(auth.token))
+    .then(res =>
+      dispatch({
+        type: SET_JOIN,
+        payload: serial_no
       })
     )
     .catch(err =>

@@ -65,26 +65,27 @@ router.post('/addLike', auth, (req, res) => {
 // @access  Private
 // unFinish
 router.post("/setJoin", auth, (req, res) => {
-  const { email, serial_no } = req.body;
-  console.log('deleteLike', req.body);
-  const query = { email: email.toString() };
+  const { email, serial_no, isJoin } = req.body;
+  console.log("typeof", typeof isJoin)
+  console.log("setJoin", req.body);
+  const query = { email: email.toString(), "like.serial_no": serial_no.toString() };
   const update = {
-    $pull: {
-      like: { serial_no: serial_no.toString()}
-      // like: { "id": "10"}
+    $set: {
+      // serial_no: true
+      "like.$.isJoin": isJoin
     }
   };
   Like.updateOne(query, update, { multi: true })
     .then(result => {
       const { ok } = result;
       if (ok) {
-        console.log(`Successfully deleted a like.`);
+        console.log(`Successfully set isJoin.`);
       }
       res.json(result);
     })
     .catch(err => {
-      console.error(`Failed to delete review: ${err}`)
-      return res.status(400).json({ msg: `Failed to delete review: ${err}` });
+      console.error(`Failed to set isJoin review: ${err}`);
+      return res.status(400).json({ msg: `Failed to set isJoin review: ${err}` });
     });
 });
 // @route   POST api/like
