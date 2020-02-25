@@ -147,10 +147,10 @@ const Index = () => {
             <span className="badge badge-danger">Error!</span>
             {/* <div className="alert alert-danger d-inline mb-5 mt-2" role="alert">Error!</div> */}
             ，可能是我跟學校連結的API掛掉，請連結
-            <Link className="btn btn-success btn-sm" to="/searchsim">
+            <a className="btn btn-success btn-sm" href="/searchsim">
               Simple Search
               <i className="fas fa-search"></i>
-            </Link>
+            </a>
             這個使用。
             {/* <strong style={{ "color": "#000000" }}>希望學校能給我穩定的API</strong>。 */}
           </li>

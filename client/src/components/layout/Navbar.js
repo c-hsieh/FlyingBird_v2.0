@@ -61,6 +61,7 @@ const Navbar = (prop) => {
             </li>
           </ul>
           <ul className="nav navbar-nav navbar-right ml-auto">
+            {auth.isAuthenticated === true ? <span class="navbar-text mr-2">Hello {auth.user.name}</span> : null}
             <li className="nav-item">
               {/* {auth.isAuthenticated
               ?<Logout />

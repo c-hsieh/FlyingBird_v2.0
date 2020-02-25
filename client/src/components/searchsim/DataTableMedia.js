@@ -414,7 +414,7 @@ const DataTable = () => {
                 // rel="noopener noreferrer"
                 style={{ "font-size": "1.2em" }}
               >
-                <i className="fas fa-link"></i>
+                <i class="far fa-hand-point-left"></i>
                 Go Back to Search
               </a>
             </div>
