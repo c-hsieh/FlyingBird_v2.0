@@ -111,68 +111,82 @@ const MyCourses =  () =>{
 
   
     return (
-      <div className="myCourses">
-        <div className="timetable">
-          <section className="timeWrapper">
-            {[
-              "00<br/>07:10 - 08:00",
-              "01<br/>08:10 - 09:00",
-              "02<br/>09:10 - 10:00",
-              "03<br/>10:20 - 11:10",
-              "04<br/>11:20 - 12:10",
-              "05<br/>12:20 - 13:10",
-              "06<br/>13:20 - 14:10",
-              "07<br/>14:20 - 15:10",
-              "08<br/>15:30 - 16:20",
-              "09<br/>16:30 - 17:20",
-              "10<br/>17:30 - 18:20",
-              "A<br/>18:40 - 19:30",
-              "B<br/>19:35 - 20:25",
-              "C<br/>20:30 - 21:20",
-              "D<br/>21:25 - 22:15"
-            ].map(i => (
-              <div className="timeWrapperDIV">
-                <div
-                  className="timeWrapperDIVDIV"
-                  dangerouslySetInnerHTML={{ __html: i }}
-                ></div>
+      <>
+        {auth.isAuthenticated ? (
+          null
+        ) : (
+          <h2
+            className="text-center mt-2 md-2 "
+            style={{ color: "#d6d6d6", verticalAlign: "middle" }}
+          >
+            Please Login.....
+          </h2>
+        )}
+        <div className="myCourses">
+          <div className="timetable">
+            <section className="timeWrapper">
+              {[
+                "00<br/>07:10 - 08:00",
+                "01<br/>08:10 - 09:00",
+                "02<br/>09:10 - 10:00",
+                "03<br/>10:20 - 11:10",
+                "04<br/>11:20 - 12:10",
+                "05<br/>12:20 - 13:10",
+                "06<br/>13:20 - 14:10",
+                "07<br/>14:20 - 15:10",
+                "08<br/>15:30 - 16:20",
+                "09<br/>16:30 - 17:20",
+                "10<br/>17:30 - 18:20",
+                "A<br/>18:40 - 19:30",
+                "B<br/>19:35 - 20:25",
+                "C<br/>20:30 - 21:20",
+                "D<br/>21:25 - 22:15"
+              ].map(i => (
+                <div className="timeWrapperDIV">
+                  <div
+                    className="timeWrapperDIVDIV"
+                    dangerouslySetInnerHTML={{ __html: i }}
+                  ></div>
+                </div>
+              ))}
+            </section>
+            <section className="titleWrapper">
+              <div className="titleWrapperDIV timeColumn">
+                <p className="titleWrapperP">TIME</p>
               </div>
+              {/* <p>TIME</p> */}
+              {["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"].map(
+                i => (
+                  <div className="titleWrapperDIV">
+                    <p className="titleWrapperP">{i}</p>
+                  </div>
+                )
+              )}
+            </section>
+            {[...Array(emptyBox).keys()].map(i => (
+              <div className="gridBox"></div>
             ))}
-          </section>
-          <section className="titleWrapper">
-            <div className="titleWrapperDIV timeColumn">
-              <p className="titleWrapperP">TIME</p>
-            </div>
-            {/* <p>TIME</p> */}
-            {["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"].map(i => (
-              <div className="titleWrapperDIV">
-                <p className="titleWrapperP">{i}</p>
-              </div>
+            {console.log("emptyBox", emptyBox)}
+            {courseBlock.map(course => (
+              <TableData
+                key={course.serial_no}
+                id={course.serial_no}
+                color={course.color}
+                course={course}
+                //   type={course.Type}
+                day={course.week}
+                startTime={course.timeSession0}
+                endTime={course.timeSession1}
+                //   room={course.Room}
+                onMouseOver={() => onTableMouseOver(course.serial_no)}
+                onMouseLeave={onTableMouseLeave}
+                onClick={() => onTableMouseOver(course.serial_no)}
+                display={display}
+              />
             ))}
-          </section>
-          {[...Array(emptyBox).keys()].map(i => (
-            <div className="gridBox"></div>
-          ))}
-          {console.log("emptyBox", emptyBox)}
-          {courseBlock.map(course => (
-            <TableData
-              key={course.serial_no}
-              id={course.serial_no}
-              color={course.color}
-              course={course}
-              //   type={course.Type}
-              day={course.week}
-              startTime={course.timeSession0}
-              endTime={course.timeSession1}
-              //   room={course.Room}
-              onMouseOver={() => onTableMouseOver(course.serial_no)}
-              onMouseLeave={onTableMouseLeave}
-              onClick={() => onTableMouseOver(course.serial_no)}
-              display={display}
-            />
-          ))}
+          </div>
         </div>
-      </div>
+      </>
     );
   
 }

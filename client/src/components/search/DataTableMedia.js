@@ -9,6 +9,7 @@ import { Context } from "../../flux/store";
 import Spinner from '../layout/Spinner'
 import { ReactComponent as Logo } from '../layout/google.svg';
 import { addLike, deleteLike, getLikes } from "../../flux/actions/likeActions";
+import { useAlert } from "react-alert";
 
 // import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
 
@@ -178,7 +179,7 @@ const DataTable = (prop) => {
     // const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
     const [likeList, setLikeList] = useState(like.likes);
     const history = useHistory();
-
+    const alert = useAlert();
 
     useEffect(() => {
       if (auth.isAuthenticated === true) {
@@ -255,7 +256,7 @@ const DataTable = (prop) => {
               return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
           }
         }else{
-            return <p style={{ "font-size": "0.5em" }}>Please Login...</p>;
+            return <a href='#' onClick={(e) => { e.preventDefault(); alert.show("Please Login..") }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>  
         }
         
     }
@@ -418,7 +419,7 @@ const DataTable = (prop) => {
         // style:  {  width: '10px'},
         formatter: formatterLike,
         sort: false,
-        hidden: auth.isAuthenticated ? false : true,
+        // hidden: auth.isAuthenticated ? false : true,
         headerStyle: (colum, colIndex) => {
           return { width: "4em", textAlign: "center", fontSize: "0.7em" };
         },

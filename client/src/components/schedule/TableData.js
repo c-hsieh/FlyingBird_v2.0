@@ -150,10 +150,10 @@ const TableData = props => {
                   </div>
               </div> */}
             {size > 800 & divHeight > 80? (
-              <div class="card-body " style={{ padding: "1px" }}>
+              <div class="card-body p-1 pt-2" >
                 <p
                   className="card-text"
-                  style={{ textAlign: "left", fontSize: "0.8em" }}
+                  style={{ textAlign: "left", fontSize: "1em" }}
                 >
                   <strong>
                     <i className="fas fa-play float-left" /> 時間/地點

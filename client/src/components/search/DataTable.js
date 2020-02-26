@@ -10,6 +10,7 @@ import Spinner from '../layout/Spinner'
 import { ReactComponent as Logo } from '../layout/google.svg';
 import { addLike, deleteLike, getLikes } from "../../flux/actions/likeActions";
 // import selectpicker from 'bootstrap-select/dist/js/bootstrap-select'
+import { useAlert } from "react-alert";
 
 const { SearchBar } = Search;
 const formatterChnName = (cell, row) =>{
@@ -121,6 +122,7 @@ const DataTable = () => {
     // const [likeList, setLikeList] = useState(localStorage.getItem('LikeList') ? JSON.parse(localStorage.getItem('LikeList')) : [])
     const [likeList, setLikeList] = useState(like.likes);
     const history = useHistory();
+    const alert = useAlert();
     
     // useEffect(() => {
     //   console.log("class_listwefewifjweif", class_list[0].serialNo);
@@ -211,7 +213,8 @@ const DataTable = () => {
               return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
           }
         }else{
-            return <p style={{ "font-size": "0.5em" }}>Please Login...</p>;
+            return <a href='#' onClick={(e) => { e.preventDefault(); alert.show("Please Login..") }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>  
+          // return <p style={{ "font-size": "0.5em" }}>Please Login...</p>;
         }
         
     }
@@ -357,7 +360,7 @@ const DataTable = () => {
         isDummyField: true,
         // style:  {  width: '10px'},
         formatter: formatterLike,
-        hidden: auth.isAuthenticated ? false : true,
+        // hidden: auth.isAuthenticated ? false : true,
         sort: false,
         headerStyle: (colum, colIndex) => {
           return { width: "5em", textAlign: "center", fontSize: "0.8em" };

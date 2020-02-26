@@ -206,9 +206,19 @@ const Like = () => {
   return (
     <React.Fragment>
       {console.log("likeList", likeList)}
-      <h3 className="text-center mt-2 mb-4">
-        <i className="fas fa-heart"></i>Like
-      </h3>
+      {auth.isAuthenticated ? (
+        <h3 className="text-center mt-2 mb-4">
+          <i className="fas fa-heart"></i>Like
+        </h3>
+      ) : (
+        <h2
+          className="text-center mt-5 "
+          style={{ color: "#d6d6d6", verticalAlign: "middle" }}
+        >
+          Please Login.....
+        </h2>
+      )}
+
       {likeList.length !== 0 ? (
         <div className="row mt-2 md-2">
           <div className="form-group col d-flex justify-content-end">
