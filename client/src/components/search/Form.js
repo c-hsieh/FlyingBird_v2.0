@@ -121,9 +121,19 @@ const Form = prop => {
   // });
 
   useEffect(() => {
-    let t = TimeSelectListInital;
-    timeList.forEach(i => (t[i] = "1"));
+    let t = Object.assign(TimeSelectListInital)
+    // console.log("TimeSelectListInital", t);
+    Object.keys(t).forEach((item) => {
+      if (timeList.some(ele=>ele===item)){
+         t[item] = "1"
+      }else{
+         t[item] = "0"
+      };
+    });
+    // timeList.forEach(i => (t[i] = "1"));
+
     setTimeSelectList(t);
+    console.log("setTimeList", t)
   }, [timeList]);
 
   const FormValueInitial = {
@@ -213,7 +223,8 @@ const Form = prop => {
             } else {
               setState({ class_list: [], heading: "Err" });
             }
-
+            // setFormValue(FormValueInitial);
+            // setTimeSelectList(TimeSelectListInital);
             //console.log(j)
           })
           .catch(err => {
@@ -304,7 +315,14 @@ const Form = prop => {
     setFormValue({
       ...FormValueInitial
     });
-     setTimeShow(false);
+    setFormValue({...TimeSelectListInital})
+    
+    setTimeShow(false);
+    let t = Object.assign(TimeSelectListInital);
+    Object.keys(t).forEach(item => {
+      t[item] = "0";
+    });
+    setTimeSelectList(t);
     //console.log(prop);
   };
   //console.log('alert', alert)
