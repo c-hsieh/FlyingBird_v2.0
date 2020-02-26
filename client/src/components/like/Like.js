@@ -6,6 +6,7 @@ import {
   setJoin,
   deleteLike
 } from "../../flux/actions/likeActions";
+import { useAlert } from "react-alert";
 
 const List = (prop) => {
     const { likeItem, del, toSetJoin } = prop;
@@ -76,7 +77,7 @@ const List = (prop) => {
                     id={likeItem.serial_no}
                     onClick={e => {
                       e.preventDefault();
-                      toSetJoin(likeItem.serial_no, !likeItem.isJoin);
+                      toSetJoin(likeItem.serial_no, !likeItem.isJoin, likeItem.time_inf);
                     }}
                   >
                     Join
@@ -101,66 +102,106 @@ const List = (prop) => {
 }
 const Like = () => {
   const { query, dispatch, auth, error, like } = useContext(Context);
-  // const [likeList, setLikeList] = useState(
-  //   localStorage.getItem("LikeList")
-  //     ? JSON.parse(localStorage.getItem("LikeList"))
-  //     : []
-  // );
   const [likeList, setLikeList] = useState(like.likes);
+  const [joinCourse, setJoinCourse] = useState([]);
+  const alert = useAlert();
 
   // console.log("like")
   // const toSetJoin = useCallback((serial_no, isJoin) => {
     
   // });
-  const toSetJoin = (serial_no, isJoin) => {
-    console.log("toSetJoin");
-    console.log("isJoin: ", isJoin);
-   setJoin(auth.user.email, serial_no, isJoin, dispatch, auth);
-  //   let abc = likeList.map(item => {
-  //     if (item.serial_no === serial_no) {
-  //       console.log("toSetJoin MAP");
-  //       item.isJoin = !item.isJoin;
-  //     }
-  //     return item;
-  //   });
-  //   console.log(abc);
-  //  setLikeList(abc); 
+  const coverToNum = w => {
+    if (w === "一") {
+      return 1;
+    } else if (w === "二") {
+      return 2;
+    } else if (w === "三") {
+      return 3;
+    } else if (w === "四") {
+      return 4;
+    } else if (w === "五") {
+      return 5;
+    } else if (w === "六") {
+      return 6;
+    }
+  };
+  const toSetJoin = (serial_no, isJoin, time_inf) => {
+    // console.log("toSetJoin");
+    // console.log("isJoin: ", isJoin);
+    
+    if (isJoin===true) {
+      let joinCourseArr = [];
+      let times = time_inf.split(", ");
+      times.map(itemT => {
+        
+        // let sessionBlock = item;
+        let time = itemT.split(" ");
+        let week = (coverToNum(time[0]) - 1) * 15;
+        let timeSession = time[1].split("-");
+        let timeSession0 = timeSession[0]; //toNumber
+        let timeSession1 = timeSession[timeSession.length - 1]; //toNumber
+        console.log("qwqw", timeSession0);
+        [...Array(timeSession1 - timeSession0 + 1).keys()].map(i =>
+          joinCourseArr.push(
+            parseInt(week) + parseInt(timeSession0) + parseInt(i)
+          )
+        );
+      });
+      let abc = joinCourseArr.some(ele => joinCourse.some(e=>e===ele));
+      if(!abc){
+        setJoin(auth.user.email, serial_no, isJoin, dispatch, auth);
+      }else{
+        console.log("Exists")
+        alert.show("Time conflicts!");
+      }
+    }else{
+      setJoin(auth.user.email, serial_no, isJoin, dispatch, auth);
+    }
+
+   
   }
 
   const del =  code => {
     // console.log(code, code)
     deleteLike(auth.user.email, code, dispatch, auth);
-    setLikeList(likeList.filter(li => li.serial_no !== code));
+    // setLikeList(likeList.filter(li => li.serial_no !== code));
 
   };
-  // useEffect(() => {
-  //   // console.log('likeList', likeList)
-  //   localStorage.setItem("LikeList", JSON.stringify(likeList));
-  // }, [likeList]);
 
   useEffect(() => {
     if (auth.user === null) {
       console.log("auth.token", auth.token);
     } else if(like.initial===false) {
-      
       (async function banana() {
         await getLikes(auth.user.email, dispatch, auth.token);
         setLikeList(like.likes);
       })();
-      console.log("Email", auth.user.email);
     }
-    
-    // getLikes(auth.user.email, dispatch, auth.token);
   }, [auth]);
-  // useEffect(()=>{
-    
-  // },[like])
-
-  // const toSetJoin = useCallback(
-  //   (serial_no, isJoin) => {
-  //   setJoin(auth.user.email, serial_no, isJoin, dispatch, auth);
-  //   setlik
-  // })
+  useEffect(() => {
+    let joinCourseArr = [];
+    like.likes.forEach(item => {
+      if (item.isJoin === true) {
+        let times = item.time_inf.split(", ");
+        times.map(itemT => {
+          // let sessionBlock = item;
+          let time = itemT.split(" ");
+          let week = (coverToNum(time[0])-1)*15;
+          let timeSession = time[1].split("-");
+          let timeSession0 = timeSession[0]; //toNumber
+          let timeSession1 = timeSession[timeSession.length - 1]; //toNumber
+          console.log("qwqw", timeSession0);
+          [...Array(timeSession1 - timeSession0 + 1).keys()].map(i =>
+            joinCourseArr.push(
+              parseInt(week) + parseInt(timeSession0) + (parseInt(i))
+            )
+          );
+        });
+      }
+    });
+    console.log("joinCourseArr", joinCourseArr);
+    setJoinCourse(joinCourseArr);
+  }, [like.likes]);
 
   return (
     <React.Fragment>

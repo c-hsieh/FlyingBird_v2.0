@@ -59,9 +59,25 @@ const Navbar = (prop) => {
                 Like
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                className="nav-link"
+                // to="/like"
+                to={{
+                  pathname: "/schedule",
+                  state: { prevPath: window.location.pathname }
+                }}
+                prevPath={prop.prevPath}
+              >
+                <i class="far fa-calendar-alt"></i>
+                schedule
+              </NavLink>
+            </li>
           </ul>
           <ul className="nav navbar-nav navbar-right ml-auto">
-            {auth.isAuthenticated === true ? <span class="navbar-text mr-2">Hello {auth.user.name}</span> : null}
+            {auth.isAuthenticated === true ? (
+              <span class="navbar-text mr-2">Hello {auth.user.name}</span>
+            ) : null}
             <li className="nav-item">
               {/* {auth.isAuthenticated
               ?<Logout />

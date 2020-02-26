@@ -1,0 +1,422 @@
+.button {
+  height: 30px;
+  width: 100px;
+  margin: 0 5px;
+  background-color: gainsboro;
+  font-variant: small-caps;
+  font-size: 14px;
+  border-radius: 6px;
+  box-shadow: 2px 5px rgb(92, 92, 92);
+}
+
+.button:hover {
+  background-color: rgb(148, 148, 148);
+}
+
+.button:active {
+  transform: translateY(2px);
+}
+
+.myCourses {
+    width: 100%;
+    margin-bottom: 10px;
+  /* margin-left: 10px; */
+}
+
+/* .titleStyle {
+  color: #2c2e33;
+  font-variant: small-caps;
+  width: 1100px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.sectionSelectors {
+  margin-bottom: 20px;
+  font-variant: small-caps;
+  width: 1100px;
+  text-align: center;
+}
+
+.sectionTitle {
+  margin-bottom: 20px;
+  font-variant: small-caps;
+  width: 1100px;
+  text-align: center;
+  font-size: 22px;
+} */
+
+.timetable {
+  display: grid;
+  /* width: 90%; */
+  /* grid-gap: 1px; */
+  grid-template-columns: 1fr repeat(5, 1.8fr);
+  grid-template-rows: repeat(16, 5em);
+  margin-top: 10px;
+  /* minmax(5em, 1fr) */
+}
+/* .timetable > div{
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+} */
+
+
+.titleWrapper {
+  display: grid;
+  grid-column: 1 / 7;
+  /* width: 90%; */
+  /* grid-gap: 10px; */
+  
+  grid-template-columns: 1fr repeat(5, 1.8fr);
+  /* margin-bottom: 10px; */
+  /* border-bottom: 1px solid black; */
+  /* justify-items: center; */
+}
+.titleWrapperDIV {
+    display: flex;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+    border-top: 1px solid;
+    text-align: center;
+    font-size: 1em;
+}
+.titleWrapperP{
+    margin: auto;
+}
+
+.timeWrapper {
+  display: grid;
+  /* grid-row: 2 / 21; */
+  /* grid-column: 1 / 2; */
+  grid-row: 2/17;
+  /* grid-gap: 10px; */
+  /* grid-template-columns: 1fr ; */
+  grid-template-rows: repeat(15, 5em);
+  
+
+}
+.timeWrapperDIV{
+    display: flex;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+    border-left: 1px solid;
+    background-color:#E3F2FD;
+    text-align: center;
+    font-size: 0.8em;
+}
+.timeWrapperDIVDIV{
+    /* justify-items: center; */
+    margin: auto;
+}
+
+@media (max-width: 700px) {
+    .timeWrapper {
+    display: grid;
+    grid-row: 2 / 17;
+    /* grid-gap: 10px; */
+    grid-template-rows: repeat(15,  5em);
+    } 
+    .timeWrapperDIV{
+    font-size: 0.6em;
+  }
+  .titleWrapperDIV {
+    font-size: 0.6em;
+}
+}
+p {
+  margin: 0;
+  padding: 0;
+  size: 0.5em;
+}
+.courseElement{
+    display: flex;
+    padding: 4px  ;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid;
+    text-align: center;
+    border-right: 1px solid;
+    /* background-color: aqua; */
+}
+.tableElement {
+  /* width: 80%; */
+  /* display: inline-block; */
+  /* margin: 0 auto ;
+  text-align: center;
+  vertical-align: middle; */
+  border: solid black;
+  border-width: 2px 2px;
+  padding: 4px;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  border-radius: 10px;
+}
+.gridBox{
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+}
+
+.tableElement:hover{
+  animation: pulse 0.3s linear 1;
+  cursor: pointer;
+}
+
+@keyframes pulse{
+  50%  {transform: scale(0.97);}
+}
+
+.timeWrapper div:nth-of-type(1) {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+.timeWrapper div:nth-of-type(2) {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+.timeWrapper div:nth-of-type(3) {
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+}
+.timeWrapper div:nth-of-type(4) {
+  grid-column: 1 / 2;
+  grid-row: 4 / 5;
+}
+.timeWrapper div:nth-of-type(5) {
+  grid-column: 1 / 2;
+  grid-row: 5 / 6;
+}
+.timeWrapper div:nth-of-type(6) {
+  grid-column: 1 / 2;
+  grid-row: 6 / 7;
+}
+.timeWrapper div:nth-of-type(7) {
+  grid-column: 1 / 2;
+  grid-row: 7 / 8;
+}
+.timeWrapper div:nth-of-type(8) {
+  grid-column: 1 / 2;
+  grid-row: 8 / 9;
+}
+.timeWrapper div:nth-of-type(9) {
+  grid-column: 1 / 2;
+  grid-row: 9 / 10;
+}
+.timeWrapper div:nth-of-type(10) {
+  grid-column: 1 / 2;
+  grid-row: 10 / 11;
+}
+.timeWrapper div:nth-of-type(11) {
+  grid-column: 1 / 2;
+  grid-row: 11 / 12;
+}
+.timeWrapper div:nth-of-type(12) {
+  grid-column: 1 / 2;
+  grid-row: 12 / 13;
+}
+.timeWrapper div:nth-of-type(13) {
+  grid-column: 1 / 2;
+  grid-row: 13 / 14;
+}
+.timeWrapper div:nth-of-type(14) {
+  grid-column: 1 / 2;
+  grid-row: 14 / 15;
+}
+.timeWrapper div:nth-of-type(15) {
+  grid-column: 1 / 2;
+  grid-row: 15 / 16;
+}
+/* .timeWrapper div:nth-of-type(16) {
+  grid-column: 1 / 2;
+  grid-row: 16 / 17;
+}
+.timeWrapper div:nth-of-type(17) {
+  grid-column: 1 / 2;
+  grid-row: 17 / 18;
+}
+.timeWrapper div:nth-of-type(18) {
+  grid-column: 1 / 2;
+  grid-row: 18 / 19;
+}
+.timeWrapper div:nth-of-type(19) {
+  grid-column: 1 / 2;
+  grid-row: 19 / 20;
+}
+.timeWrapper div:nth-of-type(20) {
+  grid-column: 1 / 2;
+  grid-row: 20 / 21;
+} */
+
+.timeColumn {
+  border-left: 1px solid;
+}
+
+.monday {
+  grid-column: 2 / 3;
+}
+
+.tuesday {
+  grid-column: 3 / 4;
+}
+
+.wednesday {
+  grid-column: 4 / 5;
+}
+
+.thursday {
+  grid-column: 5 / 6;
+}
+
+.friday {
+  grid-column: 6 / 7;
+}
+
+/* start times */
+
+.eightThirty {
+  grid-row-start: 2;
+}
+
+.nineOclock {
+  grid-row-start: 3; 
+}
+
+.nineThirty {
+  grid-row-start: 4; 
+}
+
+.tenOclock {
+  grid-row-start: 5; 
+}
+
+.tenThirty {
+  grid-row-start: 6;
+}
+
+.elevenOclock {
+  grid-row-start: 7;
+}
+
+.elevenThirty {
+  grid-row-start: 8;
+}
+
+.twelveOclock {
+  grid-row-start: 9;
+}
+
+.twelveThirty {
+  grid-row-start: 10;
+}
+
+.oneOclock {
+  grid-row-start: 11;
+}
+
+.oneThirty {
+  grid-row-start: 12;
+}
+
+.twoOclock {
+  grid-row-start: 13;
+}
+
+.twoThirty {
+  grid-row-start: 14;
+}
+
+.threeOclock {
+  grid-row-start: 15;
+}
+
+.threeThirty {
+  grid-row-start: 16;
+}
+
+.fourOclock {
+  grid-row-start: 17;
+}
+
+.fourThirty {
+  grid-row-start: 18;
+}
+
+.fiveOclock {
+  grid-row-start: 19;
+}
+
+/* end times */
+
+.endNineThirty {
+  grid-row-end: 5; 
+}
+
+.endTenOclock {
+  grid-row-end: 6; 
+}
+
+.endTenThirty {
+  grid-row-end: 7;
+}
+
+.endElevenOclock {
+  grid-row-end: 8;
+}
+
+.endElevenThirty {
+  grid-row-end: 9;
+}
+
+.endTwelveOclock {
+  grid-row-end: 10;
+}
+
+.endTwelveThirty {
+  grid-row-end: 11;
+}
+
+.endOneOclock {
+  grid-row-end: 12;
+}
+
+.endOneThirty {
+  grid-row-end: 13;
+}
+
+.endTwoOclock {
+  grid-row-end: 15;
+}
+
+.endTwoThirty {
+  grid-row-end: 16;
+}
+
+.endThreeOclock {
+  grid-row-end: 17;
+}
+
+.endThreeThirty {
+  grid-row-end: 18;
+}
+
+.endFourOclock {
+  grid-row-end: 19;
+}
+
+.endFourThirty {
+  grid-row-end: 20;
+}
+
+.endFiveOclock {
+  grid-row-end: 21;
+}
+
+.endFiveThirty {
+  grid-row-end: 22;
+}
+
+.endSixOclock {
+  grid-row-end: 23;
+}
