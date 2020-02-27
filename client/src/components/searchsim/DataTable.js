@@ -247,6 +247,38 @@ const DataTable = () => {
               />
             </a>
           </p>
+          <p className="mt-1">
+            <span style={{ "color": "#67d3fa" }}><i className="fab fa-facebook" style={{ "color": "#037FFF", "fontSize": "1.2em" }}></i>選課沒地雷</span>
+            <strong style={{ "color": "#faba67" }}>{`[${row.chn_name.split("</br>")[0]}]`}</strong>
+            <span style={{ "color": "#67d3fa" }}> 評價: </span>
+            <a
+              // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.chn_name.split("</br>")[0])}`}
+              href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chn_name.split("</br>")[0]).split("（")[0])}`}
+              // +${encodeURI(row.teacher)}
+              target="_blank"
+              // onClick={(e) => { e.preventDefault() }}
+              style={{ "font-size": "1.5em","color": "black" }}
+            >
+              {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
+              <i class="fas fa-bomb"></i>
+            </a>
+          </p>
+          <p className="mt-1 mb-1">
+            <span style={{ "color": "#67d3fa" }}><i className="fab fa-facebook" style={{ "color": "#037FFF", "fontSize": "1.2em"}}></i>選課沒地雷</span>
+            <strong style={{ "color": "#faba67" }}>{`[${row.teacher}]`}</strong>
+            <span style={{ "color": "#67d3fa" }}> 評價: </span>
+            <a
+              // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.teacher)}`}
+              href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`}
+              // +${encodeURI(row.teacher)}
+              target="_blank"
+              // onClick={(e) => { e.preventDefault() }}
+              style={{ "font-size": "1.5em", "color": "black" }}
+            >
+              {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
+              <i class="fas fa-bomb"></i>
+            </a>
+          </p>
           <p>{row.restrict === "" ? "無限修條件" : `限修條件:`}</p>
           <p>{row.restrict === "" ? "" : row.restrict}</p>
         </div>

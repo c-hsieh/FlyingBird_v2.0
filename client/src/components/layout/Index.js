@@ -71,7 +71,7 @@ const Index = () => {
             <strong style={{ color: "#000000" }}>排序</strong>
           </li>
           <li className="lead text-muted">
-            點擊每一欄資料會跑出更多Detial，且有個
+            點擊每一欄資料會跑出更多Detial，有
             <Logo
               style={{
                 height: "1.3em",
@@ -79,7 +79,9 @@ const Index = () => {
               }}
             />
             <span className="badge badge-light">Google</span>
-            關鍵字連結，可讓你快速搜尋評價。
+            關鍵字搜尋連結，和<i className="fab fa-facebook" style={{ "color": "#037FFF", "fontSize": "1em" }}></i>
+            <span className="badge badge-light">選課沒地雷(NTNU) 社團<i class="fas fa-bomb" style={{ "font-size": "1.2em", "color": "black" }}></i>
+            </span>內搜尋連結，可讓你快速搜尋評價。
           </li>
           <li className="lead text-muted">點擊課程名稱，會連結去課程綱要。</li>
           <li className="lead text-muted">
@@ -98,6 +100,12 @@ const Index = () => {
             可以把自己喜歡的課程加到
             <strong style={{ color: "#000000" }}>Like List</strong>
             ，再藉由開課序號進到選課網進行選課
+          </li>
+          <li className="lead text-muted">
+            在<strong style={{ color: "#000000" }}>Like List</strong>裡可以點擊
+            <button className="btn btn-success btn-sm" type="button">
+              Join
+            </button>把課程加入到<strong style={{ color: "#000000" }}>課表Schedule</strong>裡。
           </li>
 
           <div className="col d-flex justify-content-end">
@@ -135,13 +143,13 @@ const Index = () => {
           </div>
 
           <h5 className="  mt-5">建議與除錯：</h5>
-          <li className="lead text-muted">
+          {/* <li className="lead text-muted">
             <button className="btn btn-warning btn-sm" type="button">
               Time Select
             </button>
             在最後要送出時在設定，且不要開關開關，會出錯....
             如果遇到不能使用請重新整理，再試一遍。
-          </li>
+          </li> */}
           <li className="lead text-muted">
             如果<strong style={{ color: "#000000" }}>多次</strong>遇到
             <span className="badge badge-danger">Error!</span>

@@ -395,6 +395,41 @@ const DataTable = () => {
               />
             </a>
           </p>
+          {/* <p className="mt-1"><span style={{ "font-size": "0.8em", 'color': '#777777' }}>需登入Facebook</span></p> */}
+          <p>
+            <span style={{ "color": "#67d3fa" }}><i className="fab fa-facebook" style={{ "color": "#037FFF", "fontSize": "1.2em" }}></i>選課沒地雷</span>
+            <strong style={{ "color": "#faba67" }}>{`[${row.chnName}]`}</strong>
+            <span style={{ "color": "#67d3fa" }}> 評價: </span>
+            <a
+              // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.chnName)}`}
+              href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chnName).split("（")[0])}`}
+              // +${encodeURI(row.teacher)}
+              target="_blank"
+              // onClick={(e) => { e.preventDefault() }}
+              style={{ "font-size": "1.5em", "color": "black" }}
+            >
+              {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
+              <i class="fas fa-bomb"></i>
+            </a>
+            {/* <span style={{ "font-size": "0.8em", 'color': '#6b6b6b' }}>需登入Facebook</span> */}
+          </p>
+          <p className="mt-1 mb-1">
+            <span style={{ "color": "#67d3fa" }}><i className="fab fa-facebook" style={{ "color": "#037FFF", "fontSize": "1.2em" }}></i>選課沒地雷</span>
+            <strong style={{ "color": "#faba67" }}>{`[${row.teacher}]`}</strong>
+            <span style={{ "color": "#67d3fa" }}> 評價: </span>
+            <a
+              // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.teacher)}`}
+              href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`}
+              // +${encodeURI(row.teacher)}
+              target="_blank"
+              // onClick={(e) => { e.preventDefault() }}
+              style={{ "font-size": "1.5em", "color": "black" }}
+            >
+              {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
+              <i class="fas fa-bomb"></i>
+            </a>
+            {/* <span style={{ "font-size": "0.8em", 'color': '#6b6b6b' }}>需登入Facebook</span> */}
+          </p>
           {/* <p>{"Facebook選課沒地雷 評價: "}
                     <a
                         href='#'
