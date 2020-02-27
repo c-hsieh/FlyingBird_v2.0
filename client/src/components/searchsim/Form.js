@@ -107,7 +107,7 @@ const Form = (prop) => {
         if (e.target.id === "engTeach") {
             setFormValue({
                 ...formValue,
-                [e.target.id]: e.target.checked === "on" ? "Y" : "N",
+                [e.target.id]: e.target.checked ? "Y" : "N",
                 ['course_code']: '',
                 ['serial_number']: ''
             })
@@ -205,35 +205,43 @@ const Form = (prop) => {
                 
                 <div className="row">
                     <div className="form-group col">
-                        <label htmlFor="acadmYear">Acadm Year</label>
+                        {/* <label htmlFor="acadmYear">Acadm Year</label> */}
+                        <label htmlFor="acadmYear">學年</label>
                         <input type="text" className="form-control" id="acadmYear" onChange={onChange} value={formValue.acadmYear} readOnly/>
                     </div>
                     <div className="form-group col">
-                        <label htmlFor="acadmTerm">Acadm Term</label>
+                        {/* <label htmlFor="acadmTerm">Acadm Term</label> */}
+                        <label htmlFor="acadmTerm">學期</label>
                         <input type="text" className="form-control" id="acadmTerm" onChange={onChange} value={formValue.acadmTerm} readOnly/>
                     </div>
                 </div>
 
                 <div className="form-check" >
-                    <input className="form-check-input" type="checkbox" onChange={onChange} checked={formValue.engTeach} id="engTeach" />
-                    <label className="form-check-label" htmlFor="engTeach">
+                    <input className="form-check-input" type="checkbox" onChange={onChange} checked={formValue.engTeach==="Y"?true:false} id="engTeach" />
+                    {/* <label className="form-check-label" htmlFor="engTeach">
                         Coures taught in english
+                    </label> */}
+                    <label className="form-check-label" htmlFor="engTeach">
+                        英語教學
                     </label>
                 </div>
                 <div className="row">
                     <div className="form-group col-xs-7 col-sm-3 pr-sm-0 pr-xs-1" >
-                        <label htmlFor="depFilter">Dept. Filter:</label>
-                        <input type="text" className="form-control" id="acadmTerm" onChange={onChangeFilter} value={depFilter}/>
+                        {/* <label htmlFor="depFilter">Dept. Filter:</label> */}
+                        <label htmlFor="depFilter">系所Keyword:</label>
+                        <input type="text" className="form-control" id="acadmTerm" placeholder="Keyword..." onChange={onChangeFilter} value={depFilter}/>
                     </div>
                     <div className="form-group col-xs-7 col-sm-3 pl-sm-0 pl-xs-1">
-                        <label htmlFor="deptCode">Dept. Select:</label>
+                        {/* <label htmlFor="deptCode">Dept. Select:</label> */}
+                        <label htmlFor="deptCode">系所/學程:</label>
                         <select className="form-control select2 "id="deptCode" onChange={onChange} value={formValue.deptCode}>
                             {Object.keys(dep).map(i => <option key={customData[0][dep[i]]} value={customData[0][dep[i]]}>{dep[i]}</option>)}
                         </select>
                     </div>
                     <div className="clearfix visible-xs"></div>
                     <div className="form-group col-xs-7 col-sm-6">
-                        <label htmlFor="classCode">Class Select:</label>
+                        {/* <label htmlFor="classCode">Class Select:</label> */}
+                        <label htmlFor="classCode">班級:</label>
                         <select className="form-control form-control" id="classCode" onChange={onChange} value={formValue.classCode}>
                             {Object.keys(classLevel).map(i => <option key={classLevel[i]} value={classLevel[i]}>{i}</option>)}
                         </select>
@@ -241,22 +249,26 @@ const Form = (prop) => {
                 </div>
                 <div className="row">
                     <div className="form-group col">
-                        <label htmlFor="teacher">Teacher:</label>
+                        {/* <label htmlFor="teacher">Teacher:</label> */}
+                        <label htmlFor="teacher">教師姓名:</label>
                         <input type="text" className="form-control" id="teacher" placeholder="" onChange={onChange} value={decodeURI(formValue.teacher)}/>
                     </div>
                     <div className="form-group col">
-                        <label htmlFor="chn">Course Name</label>
+                        {/* <label htmlFor="chn">Course Name</label> */}
+                        <label htmlFor="chn">課程名稱</label>
                         <input type="text" className="form-control" id="chn" placeholder="" onChange={onChange} value={decodeURI(formValue.chn)}/>
                      </div>
                 </div>
                 <div className="row">
                     <div className="form-group col">
-                        <label htmlFor="serial_number">Serial Number</label>
-                        <input type="text" className="form-control" id="serial_number" placeholder="" onChange={onChange} value={formValue.serial_number}/>
+                        {/* <label htmlFor="serial_number">Serial Number</label> */}
+                        <label htmlFor="serial_number">開課序號</label>
+                        <input type="text" className="form-control" id="serial_number" placeholder="e.g. 2684" onChange={onChange} value={formValue.serial_number}/>
                     </div>
                     <div className="form-group col">
-                        <label htmlFor="course_code">Course Code</label>
-                        <input type="text" className="form-control" id="course_code" placeholder="" onChange={onChange} value={formValue.course_code}/>
+                        {/* <label htmlFor="course_code">Course Code</label> */}
+                        <label htmlFor="course_code">開課代碼</label>
+                        <input type="text" className="form-control" id="course_code" placeholder="e.g. ICC0074" onChange={onChange} value={formValue.course_code}/>
                     </div>
                 </div>
                 

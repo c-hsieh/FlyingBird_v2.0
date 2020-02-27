@@ -35,7 +35,7 @@ const Index = () => {
             <input
               className="form-control w-25 d-inline "
               type="text"
-              placeholder="Dept. Filter"
+              placeholder="Keyword..."
             />
             ，輸入系所關鍵字能快速搜尋。
           </li>

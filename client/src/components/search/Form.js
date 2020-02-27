@@ -239,9 +239,10 @@ const Form = prop => {
   const setvalue = async e => {
     //console.log("Hello", e.target.id)
     if (e.target.id === "notFull") {
+      console.log("e.target.checked", e.target.checked)
       setFormValue({
         ...formValue,
-        [e.target.id]: e.target.checked === "on" ? "1" : "0",
+        [e.target.id]: (e.target.checked) ? "1" : "0",
         ["serialNo"]: ""
       });
     } else if (e.target.id === "teacher" || e.target.id === "chnName") {
@@ -361,7 +362,8 @@ const Form = prop => {
       <form onSubmit={findClass} id="formsubmit">
         <div className="row">
           <div className="form-group col-xs-4 col-sm-3">
-            <label htmlFor="acadmYear">Acadm Year</label>
+            {/* <label htmlFor="acadmYear">Acadm Year</label> */}
+            <label htmlFor="acadmYear">學年</label>
             <input
               type="text"
               className="form-control"
@@ -372,7 +374,8 @@ const Form = prop => {
             />
           </div>
           <div className="form-group col-xs-4 col-sm-3">
-            <label htmlFor="acadmTerm">Acadm Term</label>
+            {/* <label htmlFor="acadmTerm">Acadm Term</label> */}
+            <label htmlFor="acadmTerm">學期</label>
             <input
               type="text"
               className="form-control"
@@ -384,7 +387,8 @@ const Form = prop => {
           </div>
           <div className="clearfix visible-xs"></div>
           <div className="form-group col-xs-4 col-sm-6">
-            <label htmlFor="courseCode">Course Type:</label>
+            {/* <label htmlFor="courseCode">Course Type:</label> */}
+            <label htmlFor="courseCode">科目類別: </label>
             <select
               className="form-control select2 "
               id="courseCode"
@@ -414,17 +418,21 @@ const Form = prop => {
             className="form-check-input"
             type="checkbox"
             onChange={onChange}
-            checked={formValue.notFull}
+            checked={formValue.notFull==="1"?true:false}
             id="notFull"
           />
-          <label className="form-check-label" htmlFor="notFull">
+          {/* <label className="form-check-label" htmlFor="notFull">
             Not Full Course
+          </label> */}
+          <label className="form-check-label" htmlFor="notFull">
+            未額滿課程
           </label>
         </div>
 
         <div className="row">
           <div className="form-group col">
-            <label htmlFor="chnName">Course Name</label>
+            {/* <label htmlFor="chnName">Course Name</label> */}
+            <label htmlFor="chnName">課程名稱:</label>
             <input
               type="text"
               className="form-control"
@@ -435,7 +443,8 @@ const Form = prop => {
             />
           </div>
           <div className="form-group col">
-            <label htmlFor="teacher">Teacher:</label>
+            {/* <label htmlFor="teacher">Teacher:</label> */}
+            <label htmlFor="teacher">教師姓名:</label>
             <input
               type="text"
               className="form-control"
@@ -448,14 +457,15 @@ const Form = prop => {
         </div>
         <div className="row">
           <div className="form-group col-xs-3 col-sm-3 pr-sm-0 pr-xs-1">
-            <label htmlFor="depFilter">Dept. Filter:</label>
+            {/* <label htmlFor="depFilter">Dept. Filter:</label> */}
+            <label htmlFor="depFilter">系所Keyword: </label>
             <input
               type="text"
               className="form-control"
               id="acadmTerm"
               onChange={onChangeFilter}
               value={depFilter}
-              placeholder="Keyword..."
+              placeholder="Keyword... (e.g. 數學)"
               disabled={
                 dis === 2 || dis === 3 || dis === 4 || dis === 6
                   ? "disabled"
@@ -464,7 +474,8 @@ const Form = prop => {
             />
           </div>
           <div className="form-group col-xs-3 col-sm-3 pl-sm-0 pl-xs-1">
-            <label htmlFor="deptCode">Dept. Select:</label>
+            {/* <label htmlFor="deptCode">Dept. Select:</label> */}
+            <label htmlFor="deptCode">系所/學程:</label>
             <select
               className="form-control select2 "
               id="deptCode"
@@ -485,7 +496,8 @@ const Form = prop => {
           </div>
           {/* <div className="clearfix visible-xs"></div> */}
           <div className="form-group col-xs-6 col-sm-3">
-            <label htmlFor="formS">Year Select:</label>
+            {/* <label htmlFor="formS">Year Select:</label> */}
+            <label htmlFor="formS">年級:</label>
             <select
               className="form-control form-control"
               id="formS"
@@ -515,7 +527,8 @@ const Form = prop => {
             </select>
           </div>
           <div className="form-group col-xs-6 col-sm-3">
-            <label htmlFor="class1">Class Select:</label>
+            {/* <label htmlFor="class1">Class Select:</label> */}
+            <label htmlFor="class1">班級:</label>
             <select
               className="form-control form-control"
               id="class1"
@@ -537,18 +550,20 @@ const Form = prop => {
         </div>
         <div className="row">
           <div className="form-group col">
-            <label htmlFor="serialNo">Serial Number</label>
+            {/* <label htmlFor="serialNo">Serial Number</label> */}
+            <label htmlFor="serialNo">開課序號</label>
             <input
               type="text"
               className="form-control"
               id="serialNo"
-              placeholder=""
+              placeholder="(e.g. 2653)"
               onChange={onChange}
               value={formValue.serialNo}
             />
           </div>
           <div className="form-group col">
-            <label htmlFor="generalCore">Field Category:</label>
+            {/* <label htmlFor="generalCore">Field Category:</label> */}
+            <label htmlFor="generalCore">通識課程類別:</label>
             <select
               className="form-control form-control"
               id="generalCore"
