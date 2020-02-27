@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const fetch = require("node-fetch");
+const { stringify } = require("querystring");
 // const config = require("config");
 const jwt = require("jsonwebtoken");
 const auth = require("../../middleware/auth");
@@ -11,9 +13,31 @@ const User = require("../../models/User");
 // @route   POST api/auth
 // @desc    Auth user
 // @access  Public
-router.post("/", (req, res) => {
-  const { email, password } = req.body;
-  console.log("hiii")
+router.post("/", async(req, res) => {
+  const { email, password, captcha } = req.body;
+  console.log("toLoginAuth")
+  if (!captcha)return res.status(400).json({ msg: "Please select captcha" });
+
+  // Secret key
+  //  process.env.SECRETKEY \;
+
+  // Verify URL
+  const query = stringify({
+    secret: process.env.SECRETKEY,
+    response: captcha,
+    remoteip: req.connection.remoteAddress
+  });
+  const verifyURL = `https://google.com/recaptcha/api/siteverify?${query}`;
+
+  // Make a request to verifyURL
+  const secret = await fetch(verifyURL).then(res => res.json());
+  console.log("secret", secret);
+  // If not successful
+  if (secret.success !== undefined && !secret.success)
+    return res.status(400).json({msg: 'Failed captcha verification' });
+
+  // // If successful
+  // return res.json({ success: true, msg: 'Captcha passed' });
   // Simple validation
   if (!email || !password) {
     return res.status(400).json({ msg: "Please enter all fields" });

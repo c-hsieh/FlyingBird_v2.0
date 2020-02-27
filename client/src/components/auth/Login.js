@@ -9,6 +9,7 @@ import Register from "./Register";
 import {Context} from "../../flux/store";
 import { clearErrors } from "../../flux/actions/errorActions";
 import { login } from "../../flux/actions/authActions";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const loginFormInite = {
     email: "",
@@ -24,6 +25,7 @@ const Login = () => {
     const [modalL01, setModalL01] = useState(false);
     const [modalR01, setModalR01] = useState(false);
     const ref = useRef();
+    const recaptchaRef = useRef();
 
     const setModalL01Toggle = useCallback(() => {
       // Clear errors
@@ -45,6 +47,9 @@ const Login = () => {
       if (modalL01) {
         if (isAuthenticated) {
           setModalL01Toggle();
+        }else{
+          recaptchaRef.current.reset();
+          // window.grecaptcha.reset();
         }
       }
     }, [auth, error, setModalL01Toggle, modalL01]);
@@ -77,10 +82,18 @@ const Login = () => {
           [e.target.id]: e.target.value
         });
     }
-    const toLogin = e => {
+    const onChangeCaptch = (val) => {
+      console.log("val", val)
+    }
+    const toLogin = async (e) => {
       e.preventDefault();
       console.log("toLogin");
-      login(loginForm, dispatch);
+      // await recaptchaRef.current.execute();
+      const captcha = await recaptchaRef.current.getValue();
+      console.log("captcha Value", captcha);
+      
+      
+      login(loginForm, captcha, dispatch);
     };
   return (
     <>
@@ -183,6 +196,14 @@ const Login = () => {
                     value={loginForm.password}
                   />
                 </div>
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey="6LeT29wUAAAAABnfqyODIlNLSyQgUebEHKtw7f-2"
+                  // sitekey="6Lcw19wUAAAAAKlGhjZ6YvDdLEZgfp82h7L-NgPx"
+                  // size="invisible"
+                  className="mb-2"
+                  onChange={onChangeCaptch}
+                />
                 <button
                   //   type="submit"
                   className="btn btn-primary btn-block"

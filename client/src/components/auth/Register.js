@@ -8,6 +8,7 @@ import React, {
 import { Context } from "../../flux/store";
 import { clearErrors } from "../../flux/actions/errorActions";
 import { register } from "../../flux/actions/authActions";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const regFormInite = {
     name: "",
@@ -19,6 +20,8 @@ const Register = ({modalR01, setModalR01}) => {
     const [regForm, setRegForm] = useState(regFormInite);
     const [msg, setMsg] = useState(null);
     const ref = useRef();
+    const recaptchaRef = useRef();
+
     const setModalR01Toggle = useCallback(() => {
       clearErrors(dispatch);
       setModalR01(i => !i);
@@ -38,10 +41,17 @@ const Register = ({modalR01, setModalR01}) => {
       if (modalR01) {
         if (isAuthenticated) {
           setModalR01Toggle();
+        } else {
+          console.log("refresh")
+          recaptchaRef.current.reset();
+          // window.grecaptcha.reset();
         }
       }
     }, [auth, error, setModalR01Toggle, modalR01]);
 
+    const onChangeCaptch = val => {
+      console.log("val", val);
+    };
     const onChange = (e) => {
         e.preventDefault();
         setRegForm({
@@ -49,10 +59,12 @@ const Register = ({modalR01, setModalR01}) => {
             [e.target.id]: e.target.value
         });
     }
-    const toRegister = (e) => {
+    const toRegister = async(e) => {
 
         e.preventDefault();
-        register(regForm, dispatch);
+        const captcha = await recaptchaRef.current.getValue();
+      console.log("captcha Value", captcha);
+        register(regForm, captcha, dispatch);
     }
     useEffect(() => {
       const listener = event => {
@@ -157,6 +169,14 @@ const Register = ({modalR01, setModalR01}) => {
                     Check me out
                   </label>
                 </div> */}
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey="6LeT29wUAAAAABnfqyODIlNLSyQgUebEHKtw7f-2"
+                  // sitekey="6Lcw19wUAAAAAKlGhjZ6YvDdLEZgfp82h7L-NgPx"
+                  // size="invisible"
+                  className="mb-2"
+                  onChange={onChangeCaptch}
+                />
                 <button
                   className="btn btn-primary btn-block"
                   // data-dismiss="modal"

@@ -23,7 +23,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.1",
     "node-fetch": "^2.6.0",
-    "query-string": "^6.10.1"
+    "query-string": "^6.10.1",
+    "querystring": "^0.2.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.2"
