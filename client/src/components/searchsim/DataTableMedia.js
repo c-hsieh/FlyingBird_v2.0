@@ -145,6 +145,9 @@ const DataTable = () => {
         // console.log(likeList)
         // localStorage.setItem('LikeList', JSON.stringify(likeList));
     }, [data])
+    const isMobileDevice = () => {
+      return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    };
     const formatterLike = (cell, row) => {
         // console.log('formatterLike', row)
 
@@ -262,7 +265,10 @@ const DataTable = () => {
              
             <a
               // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.chn_name.split("</br>")[0])}`}
-              href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chn_name.split("</br>")[0]).split("（")[0])}`}
+              // href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chn_name.split("</br>")[0]).split("（")[0])}`}
+              href={isMobileDevice() ? `https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI((row.chn_name.split("</br>")[0]).split("（")[0])}`
+                : `https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chn_name.split("</br>")[0]).split("（")[0])}`
+              }
               // +${encodeURI(row.teacher)}
               target="_blank"
               // onClick={(e) => { e.preventDefault() }}
@@ -278,7 +284,10 @@ const DataTable = () => {
             <span style={{ "color": "#67d3fa" }}> 評價: </span>
             <a
               // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.teacher)}`}
-              href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`}
+              // href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`}
+              href={isMobileDevice() ? `https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI(row.teacher)}`
+                : `https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`
+              }
               target="_blank"
               // onClick={(e) => { e.preventDefault() }}
               style={{ "font-size": "1.5em", "color": "black" }}

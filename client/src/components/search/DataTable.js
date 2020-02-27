@@ -203,6 +203,9 @@ const DataTable = () => {
     //     // console.log(likeList)
     //     localStorage.setItem('LikeList', JSON.stringify(likeList));
     // }, [data])
+    const isMobileDevice = () => {
+      return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    };
  
     const formatterLike = (cell, row) => {
         // console.log('formatterLike', row)
@@ -402,7 +405,10 @@ const DataTable = () => {
             <span style={{ "color": "#67d3fa" }}> 評價: </span>
             <a
               // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.chnName)}`}
-              href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chnName).split("（")[0])}`}
+              // href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chnName).split("（")[0])}`}
+              href={isMobileDevice() ? `https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI((row.chnName).split("（")[0])}`
+                : `https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chnName).split("（")[0])}`
+              }
               // +${encodeURI(row.teacher)}
               target="_blank"
               // onClick={(e) => { e.preventDefault() }}
@@ -419,7 +425,10 @@ const DataTable = () => {
             <span style={{ "color": "#67d3fa" }}> 評價: </span>
             <a
               // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.teacher)}`}
-              href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`}
+              // href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`}
+              href={isMobileDevice() ? `https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI(row.teacher)}`
+                : `https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`
+              }
               // +${encodeURI(row.teacher)}
               target="_blank"
               // onClick={(e) => { e.preventDefault() }}
