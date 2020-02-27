@@ -315,7 +315,7 @@ const Form = prop => {
     setFormValue({
       ...FormValueInitial
     });
-    // setFormValue({...TimeSelectListInital})
+    // setTimeSelectList({...TimeSelectListInital})
 
     setTimeShow(false);
     let t = Object.assign(TimeSelectListInital);
