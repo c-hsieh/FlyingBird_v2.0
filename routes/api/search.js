@@ -68,7 +68,7 @@ router.post("/query", async (request, response) => {
 
         // console.log("text", JSON.parse(text.replace(/(')(?!s )/g, "\"")));
         // const res = JSON.parse(text.replace(/'/g, '"'));
-        const res = JSON.parse(text.replace(/(')(?!s )/g, "\""));
+        const res = JSON.parse(text.replace(/(')(?![a-z] )/g, "\""));
         // const rr = await fetch_response.json();
 
         // console.log('rr', rr)

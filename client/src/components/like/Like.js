@@ -110,6 +110,19 @@ const Like = () => {
   // const toSetJoin = useCallback((serial_no, isJoin) => {
     
   // });
+  const dealSession = s => {
+    if (s == "A") {
+      return 11;
+    } else if (s == "B") {
+      return 12;
+    } else if (s == "C") {
+      return 13;
+    } else if (s == "D") {
+      return 14;
+    } else {
+      return s;
+    }
+  };
   const coverToNum = w => {
     if (w === "一") {
       return 1;
@@ -138,8 +151,8 @@ const Like = () => {
         let time = itemT.split(" ");
         let week = (coverToNum(time[0]) - 1) * 15;
         let timeSession = time[1].split("-");
-        let timeSession0 = timeSession[0]; //toNumber
-        let timeSession1 = timeSession[timeSession.length - 1]; //toNumber
+        let timeSession0 = dealSession(timeSession[0]); //toNumber
+        let timeSession1 = dealSession(timeSession[timeSession.length - 1]); //toNumber
         console.log("qwqw", timeSession0);
         [...Array(timeSession1 - timeSession0 + 1).keys()].map(i =>
           joinCourseArr.push(
@@ -188,8 +201,8 @@ const Like = () => {
           let time = itemT.split(" ");
           let week = (coverToNum(time[0])-1)*15;
           let timeSession = time[1].split("-");
-          let timeSession0 = timeSession[0]; //toNumber
-          let timeSession1 = timeSession[timeSession.length - 1]; //toNumber
+          let timeSession0 = dealSession(timeSession[0]); //toNumber
+          let timeSession1 = dealSession(timeSession[timeSession.length - 1]); //toNumber
           console.log("qwqw", timeSession0);
           [...Array(timeSession1 - timeSession0 + 1).keys()].map(i =>
             joinCourseArr.push(

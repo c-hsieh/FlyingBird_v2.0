@@ -29,6 +29,19 @@ const MyCourses =  () =>{
   ];
 //   const [likeList, setLikeList] = useState(like.likes);
 // like.likes
+  const dealSession = (s) => {
+    if (s == "A") {
+      return 11;
+    } else if (s == "B") {
+      return 12;
+    } else if (s == "C") {
+      return 13;
+    } else if (s == "D") {
+      return 14;
+    }else{
+      return s
+    }
+  }
   
   const coverToNum = (w) => {
     if (w === "一") {
@@ -71,8 +84,9 @@ const MyCourses =  () =>{
               let time = itemT.split(" ");
               let week = coverToNum(time[0]);
               let timeSession = time[1].split("-");
-              let timeSession0 = timeSession[0]; //toNumber
-              let timeSession1 = timeSession[timeSession.length - 1]; //toNumber
+              // let timeSession0 = timeSession[0]; //toNumber
+              let timeSession0 = dealSession(timeSession[0]); //toNumber
+              let timeSession1 = dealSession(timeSession[timeSession.length - 1]); //toNumber
               emptyBoxNum = emptyBoxNum - (timeSession1 - timeSession0 + 1);
               //   console.log(time, week, timeSession);
               sessionBlock = {
@@ -112,9 +126,7 @@ const MyCourses =  () =>{
   
     return (
       <>
-        {auth.isAuthenticated ? (
-          null
-        ) : (
+        {auth.isAuthenticated ? null : (
           <h2
             className="text-center mt-2 md-2 "
             style={{ color: "#d6d6d6", verticalAlign: "middle" }}
@@ -175,8 +187,8 @@ const MyCourses =  () =>{
                 course={course}
                 //   type={course.Type}
                 day={course.week}
-                startTime={course.timeSession0}
-                endTime={course.timeSession1}
+                startTime={(course.timeSession0).toString()}
+                endTime={(course.timeSession1).toString()}
                 //   room={course.Room}
                 onMouseOver={() => onTableMouseOver(course.serial_no)}
                 onMouseLeave={onTableMouseLeave}
