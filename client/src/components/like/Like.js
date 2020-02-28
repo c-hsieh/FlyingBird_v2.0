@@ -20,7 +20,7 @@ const List = (prop) => {
             <div className="card-body">
               <div className="row ">
                 <div class="col-sm-8 col-8">
-                  {/* <h5 className="float-left" style={{ "font-size": "1.2em" }}> */}
+                  {/* <h5 className="float-left" style={{ "fontSize": "1.2em" }}> */}
                   {/* {console.log("likeItem", likeItem)} */}
                   {/* {likeItem.chn_name.toString().split("</br>")[0]} */}
                   {/* </h5> */}
@@ -28,7 +28,7 @@ const List = (prop) => {
                     // className="btn btn-dark btn-block"
                     href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=&deptCode=${likeItem.dept_code}&formS=&classes1=&deptGroup=`}
                     rel="noopener noreferrer"
-                    style={{ "font-size": "1em" }}
+                    style={{ "fontSize": "1em" }}
                     target="_blank"
                     role="button"
                   >

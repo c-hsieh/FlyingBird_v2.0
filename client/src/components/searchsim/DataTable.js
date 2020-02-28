@@ -147,12 +147,12 @@ const DataTable = () => {
         // console.log('formatterLike', row)
         if (auth.isAuthenticated) {
             if (row.like) {
-            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size":"0.8em"}}><i className="fas fa-heart"></i></a>
+            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "fontSize":"0.8em"}}><i className="fas fa-heart"></i></a>
             } else {
-                return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+                return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "fontSize": "0.8em" }}><i className="far fa-heart"></i></a>
             }
         }else{
-            return <p style={{ "font-size": "0.5em" }}>Please Login...</p>;
+            return <p style={{ "fontSize": "0.5em" }}>Please Login...</p>;
         }
         
         
@@ -263,7 +263,7 @@ const DataTable = () => {
               // +${encodeURI(row.teacher)}
               target="_blank"
               // onClick={(e) => { e.preventDefault() }}
-              style={{ "font-size": "1.5em","color": "black" }}
+              style={{ "fontSize": "1.5em","color": "black" }}
             >
               {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
               <i class="fas fa-bomb"></i>
@@ -283,7 +283,7 @@ const DataTable = () => {
               // +${encodeURI(row.teacher)}
               target="_blank"
               // onClick={(e) => { e.preventDefault() }}
-              style={{ "font-size": "1.5em", "color": "black" }}
+              style={{ "fontSize": "1.5em", "color": "black" }}
             >
               {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
               <i class="fas fa-bomb"></i>
@@ -390,47 +390,46 @@ const DataTable = () => {
         );
     
     const contentTable = ({ paginationProps, paginationTableProps }) => (
-        <div className="">
-            {/* <SizePerPageDropdownStandalone
+      <div className="">
+        {/* <SizePerPageDropdownStandalone
                 {...paginationProps}
             /> */}
-            
-            <PaginationListStandalone  {...paginationProps} style={{ 'margin-right': '10px' }}/>
-            <ToolkitProvider
-                keyField="id"
-                className='d-flex'
-                columns={
-                    columns
-                }
-                data={data} //class_list
-                columnToggle
-                search
-            >
-                {
-                    toolkitprops => (
-                        <div>
-                            <CustomToggleList {...toolkitprops.columnToggleProps} />
-                            <SearchBar
-                            {...toolkitprops.searchProps}
-                            className='ml-auto'
-                            placeholder="Search..."
-                            style={{'margin-right': '10px'}}
-                            />
-                            <BootstrapTable
-                                bootstrap4
-                                striped
-                                // hover
-                                expandRow={expandRow}
-                                // selectRow={selectRow}
-                                {...toolkitprops.baseProps}
-                                {...paginationTableProps}
-                            />
-                        </div>
-                    )
-                }
-            </ToolkitProvider>
-            <PaginationListStandalone {...paginationProps} className='ml-auto'/>
-        </div>
+
+        <PaginationListStandalone
+          {...paginationProps}
+          style={{ "margin-right": "10px" }}
+        />
+        <ToolkitProvider
+          keyField="serial_no"
+          className="d-flex"
+          columns={columns}
+          data={data} //class_list
+          columnToggle
+          search
+        >
+          {toolkitprops => (
+            <div>
+              <CustomToggleList {...toolkitprops.columnToggleProps} />
+              <SearchBar
+                {...toolkitprops.searchProps}
+                className="ml-auto"
+                placeholder="Search..."
+                style={{ "margin-right": "10px" }}
+              />
+              <BootstrapTable
+                bootstrap4
+                striped
+                // hover
+                expandRow={expandRow}
+                // selectRow={selectRow}
+                {...toolkitprops.baseProps}
+                {...paginationTableProps}
+              />
+            </div>
+          )}
+        </ToolkitProvider>
+        <PaginationListStandalone {...paginationProps} className="ml-auto" />
+      </div>
     );
     if (class_list === undefined || class_list.length === 0) {
         console.log("class_list", class_list)
@@ -443,7 +442,7 @@ const DataTable = () => {
                 href="/search"
                 // target="button "
                 // rel="noopener noreferrer"
-                style={{ "font-size": "1.2em" }}
+                style={{ "fontSize": "1.2em" }}
               >
                 <i class="far fa-hand-point-left"></i>
                 Go Back to Search

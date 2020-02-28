@@ -14,13 +14,13 @@ const Index = () => {
 
           <p className="lead text-muted">
             哈嘍～我是數學系謝長霖
-            {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "font-size": "1em" }}></i> */}
+            {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "fontSize": "1em" }}></i> */}
             <a
               href={"https://www.facebook.com/ChangLinHsiehx"}
               target="button _blank"
               // onClick={(e) => { e.preventDefault()}}
               rel="noopener noreferrer"
-              style={{ "font-size": "1.2em" }}
+              style={{ "fontSize": "1.2em" }}
             >
               <i className="fab fa-facebook"></i>
             </a>
@@ -80,7 +80,7 @@ const Index = () => {
             />
             <span className="badge badge-light">Google</span>
             關鍵字搜尋連結，和<i className="fab fa-facebook" style={{ "color": "#037FFF", "fontSize": "1em" }}></i>
-            <span className="badge badge-light">選課沒地雷(NTNU) 社團<i class="fas fa-bomb" style={{ "font-size": "1.2em", "color": "black" }}></i>
+            <span className="badge badge-light">選課沒地雷(NTNU) 社團<i class="fas fa-bomb" style={{ "fontSize": "1.2em", "color": "black" }}></i>
             </span>內搜尋連結，可讓你快速搜尋評價。
           </li>
           <li className="lead text-muted">點擊課程名稱，會連結去課程綱要。</li>
@@ -121,7 +121,7 @@ const Index = () => {
               }
               target="button _blank"
               rel="noopener noreferrer"
-              style={{ "font-size": "1.2em" }}
+              style={{ "fontSize": "1.2em" }}
               className="mr-2"
             >
               <i className="fas fa-link"></i>
@@ -134,7 +134,7 @@ const Index = () => {
               href={"http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/index.jsp"}
               target="button _blank"
               rel="noopener noreferrer"
-              style={{ "font-size": "1.2em" }}
+              style={{ "fontSize": "1.2em" }}
               className="ml-2"
             >
               <i className="fas fa-link"></i>
@@ -163,14 +163,14 @@ const Index = () => {
             {/* <strong style={{ "color": "#000000" }}>希望學校能給我穩定的API</strong>。 */}
           </li>
           <li className="lead text-muted">
-            {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "font-size": "1em" }}></i> */}
+            {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "fontSize": "1em" }}></i> */}
             如果有其他問題歡迎聯絡我
             <a
               href={"https://www.facebook.com/ChangLinHsiehx"}
               target="button _blank"
               // onClick={(e) => { e.preventDefault() }}
               rel="noopener noreferrer"
-              style={{ "font-size": "1.2em" }}
+              style={{ "fontSize": "1.2em" }}
             >
               <i className="fab fa-facebook"></i>
             </a>
@@ -183,7 +183,7 @@ const Index = () => {
               target="button _blank"
               rel="noopener noreferrer"
               // onClick={(e) => { e.preventDefault() }}
-              style={{ "font-size": "1.2em", color: "#000000" }}
+              style={{ "fontSize": "1.2em", color: "#000000" }}
             >
               <i class="fab fa-github"></i>
             </a>

@@ -253,12 +253,12 @@ const DataTable = (prop) => {
         // console.log('formatterLike', row)
         if (auth.isAuthenticated) {
           if (row.like) {
-            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="fas fa-heart"></i></a>
+            return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "fontSize": "0.8em" }}><i className="fas fa-heart"></i></a>
           } else {
-              return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>
+              return <a href='#' onClick={(e) => { e.preventDefault(); addToLike(cell, row) }} style={{ "color": "red", "fontSize": "0.8em" }}><i className="far fa-heart"></i></a>
           }
         }else{
-            return <a href='#' onClick={(e) => { e.preventDefault(); alert.show("Please Login..") }} style={{ "color": "red", "font-size": "0.8em" }}><i className="far fa-heart"></i></a>  
+            return <a href='#' onClick={(e) => { e.preventDefault(); alert.show("Please Login..") }} style={{ "color": "red", "fontSize": "0.8em" }}><i className="far fa-heart"></i></a>  
         }
         
     }
@@ -467,14 +467,14 @@ const DataTable = (prop) => {
             <span style={{ "color": "#67d3fa" }}> 評價: </span>
             <a
               // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.chnName)}`}
-              href={isMobileDevice() ? `https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI((row.chnName).split("（")[0])}`
-                : `https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chnName).split("（")[0])}`
-              }
-              // href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chnName).split("（")[0])}`}
+              // href={isMobileDevice() ? `https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI((row.chnName).split("（")[0])}`
+              //   : `https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI((row.chnName).split("（")[0])}`
+              // }
+              href={`https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI((row.chnName).split("（")[0])}`}
               // +${encodeURI(row.teacher)}
               target="_blank"
               // onClick={(e) => { e.preventDefault() }}
-              style={{ "font-size": "1.5em", "color": "black" }}
+              style={{ "fontSize": "1.5em", "color": "black" }}
             >
               {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
               <i class="fas fa-bomb"></i>
@@ -487,13 +487,14 @@ const DataTable = (prop) => {
             <a
               // href={`https://sites.google.com/site/ntnucourse/system/app/pages/search?scope=search-site&q=${encodeURI(row.teacher)}`}
               // href={`https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`}
-              href={isMobileDevice() ? `https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI(row.teacher)}`
-                : `https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`
-              }
+              // href={isMobileDevice() ? `https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI(row.teacher)}`
+              //   : `https://www.facebook.com/groups/143704482352660/search/?query=${encodeURI(row.teacher)}`
+              // }
+              href={`https://m.facebook.com/groups/search/?groupID=143704482352660&query=${encodeURI(row.teacher)}`}
               // +${encodeURI(row.teacher)}
               target="_blank"
               // onClick={(e) => { e.preventDefault() }}
-              style={{ "font-size": "1.5em", "color": "black" }}
+              style={{ "fontSize": "1.5em", "color": "black" }}
             >
               {/* <span classNames="badge badge-success" > GOOGLE~ </span> */}
               <i class="fas fa-bomb"></i>
@@ -624,47 +625,46 @@ const DataTable = (prop) => {
         );
 
     const contentTable = ({ paginationProps, paginationTableProps }) => (
-        <div className="">
-            {/* <SizePerPageDropdownStandalone
+      <div className="">
+        {/* <SizePerPageDropdownStandalone
                 {...paginationProps}
             /> */}
 
-            <PaginationListStandalone  {...paginationProps} style={{ 'margin-right': '10px' }} />
-            <ToolkitProvider
-                keyField="id"
-                className='d-flex'
-                columns={
-                    columns
-                }
-                data={data} //class_list
-                columnToggle
-                search
-            >
-                {
-                    toolkitprops => (
-                        <div>
-                            <CustomToggleList {...toolkitprops.columnToggleProps} />
-                            <SearchBar
-                                {...toolkitprops.searchProps}
-                                className='ml-auto'
-                                placeholder="Search..."
-                                style={{ 'margin-right': '10px' }}
-                            />
-                            <BootstrapTable
-                                bootstrap4
-                                striped
-                                // hover
-                                expandRow={expandRow}
-                                // selectRow={selectRow}
-                                {...toolkitprops.baseProps}
-                                {...paginationTableProps}
-                            />
-                        </div>
-                    )
-                }
-            </ToolkitProvider>
-            <PaginationListStandalone {...paginationProps} className='ml-auto' />
-        </div>
+        <PaginationListStandalone
+          {...paginationProps}
+          style={{ "margin-right": "10px" }}
+        />
+        <ToolkitProvider
+          keyField="serialNo"
+          className="d-flex"
+          columns={columns}
+          data={data} //class_list
+          columnToggle
+          search
+        >
+          {toolkitprops => (
+            <div>
+              <CustomToggleList {...toolkitprops.columnToggleProps} />
+              <SearchBar
+                {...toolkitprops.searchProps}
+                className="ml-auto"
+                placeholder="Search..."
+                style={{ "margin-right": "10px" }}
+              />
+              <BootstrapTable
+                bootstrap4
+                striped
+                // hover
+                expandRow={expandRow}
+                // selectRow={selectRow}
+                {...toolkitprops.baseProps}
+                {...paginationTableProps}
+              />
+            </div>
+          )}
+        </ToolkitProvider>
+        <PaginationListStandalone {...paginationProps} className="ml-auto" />
+      </div>
     );
     if (class_list === undefined || class_list.length === 0) {
         console.log("class_list", class_list)

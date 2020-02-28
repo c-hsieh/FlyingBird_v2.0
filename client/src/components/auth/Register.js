@@ -91,8 +91,8 @@ const Register = ({modalR01, setModalR01}) => {
         className="modal"
         style={
           modalR01
-            ? { display: "block", "background-color": "rgba(0,0,0,0.4)" }
-            : { display: "none", "background-color": "rgba(0,0,0,0.4)" }
+            ? { display: "block", "backgroundColor": "rgba(0,0,0,0.4)" }
+            : { display: "none", "backgroundColor": "rgba(0,0,0,0.4)" }
         }
       >
         <div className="modal-dialog">

@@ -132,13 +132,13 @@ const Login = () => {
         //   width: "100%" /* Full width */,
         //   height: "100%" /* Full height */,
         //   overflow: "auto" /* Enable scroll if needed */,
-        //   "background-color": "rgb(0,0,0)" /* Fallback color */,
-        //   "background-color": "rgba(0,0,0,0.4)"
+        //   "backgroundColor": "rgb(0,0,0)" /* Fallback color */,
+        //   "backgroundColor": "rgba(0,0,0,0.4)"
         // }}
         style={
           modalL01
-            ? { display: "block", "background-color": "rgba(0,0,0,0.4)" }
-            : { display: "none", "background-color": "rgba(0,0,0,0.4)" }
+            ? { display: "block", "backgroundColor": "rgba(0,0,0,0.4)" }
+            : { display: "none", "backgroundColor": "rgba(0,0,0,0.4)" }
         }
       >
         <div className="modal-dialog">
