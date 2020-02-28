@@ -50,7 +50,9 @@
   display: grid;
   /* width: 90%; */
   /* grid-gap: 1px; */
-  grid-template-columns: 1fr repeat(5, 1.8fr);
+  /* grid-template-columns: 1fr repeat(5, 1.8fr); */
+  grid-template-columns: 1.1fr repeat(6, 1.7fr);
+  /* grid-template-columns: 4em repeat(6, 8em); */
   grid-template-rows: repeat(16, 5em);
   margin-top: 10px;
   /* minmax(5em, 1fr) */
@@ -63,11 +65,13 @@
 
 .titleWrapper {
   display: grid;
-  grid-column: 1 / 7;
+  grid-column: 1 / 8;
   /* width: 90%; */
   /* grid-gap: 10px; */
   
-  grid-template-columns: 1fr repeat(5, 1.8fr);
+  grid-template-columns: 1.1fr repeat(6, 1.7fr);
+  /* grid-template-columns: 0.8fr repeat(6, 1.8fr); */
+  /* grid-template-columns: 4em repeat(6, 8em); */
   /* margin-bottom: 10px; */
   /* border-bottom: 1px solid black; */
   /* justify-items: center; */
@@ -78,10 +82,10 @@
     border-right: 1px solid;
     border-top: 1px solid;
     text-align: center;
-    font-size: 1em;
 }
 .titleWrapperP{
     margin: auto;
+    /* font-size: 2px; */
 }
 
 .timeWrapper {
@@ -120,14 +124,25 @@
     font-size: 0.6em;
   }
   .titleWrapperDIV {
-    font-size: 0.6em;
+    font-size: 0.2em;
+  }
+  .titleWrapperP{
+    margin: auto;
+    font-size: 8px;
+  }
 }
+@media (max-width: 500px) {
+  
+  .titleWrapperP{
+    margin: auto;
+    font-size: 5px;
+  }
 }
-p {
+/* p {
   margin: 0;
   padding: 0;
   size: 0.5em;
-}
+} */
 .courseElement{
     display: flex;
     padding: 4px  ;
@@ -251,6 +266,7 @@ p {
 
 .timeColumn {
   border-left: 1px solid;
+  /* font-size: 1px; */
 }
 
 .monday {
@@ -271,6 +287,10 @@ p {
 
 .friday {
   grid-column: 6 / 7;
+}
+
+.saturday {
+  grid-column: 7 / 8;
 }
 
 /* start times */

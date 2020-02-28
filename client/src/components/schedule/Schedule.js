@@ -16,16 +16,18 @@ const MyCourses =  () =>{
   const [emptyBox, setEmptyBox] = useState(75);
   const colorPalettes = [
     "#3ec1d3",
+    "#2eb872",
     "#ffe75e",
     "#ff9a00",
+    "#3366CC",
     "#ff165d",
     "#e1f2fb",
     "#3399FF",
-    "#3366CC",
     "#2DFF65",
     "#a3de83",
-    "#2eb872",
-    "#f688bb"
+    "#f688bb",
+    "#FFBD21",
+    "#2095F2"
   ];
 //   const [likeList, setLikeList] = useState(like.likes);
 // like.likes
@@ -60,12 +62,12 @@ const MyCourses =  () =>{
   }
     useEffect(() => {
       if (auth.user === null) {
-        console.log("auth.token", auth.token);
+        // console.log("auth.token", auth.token);
       } else if (like.initial===false) {
         (async function banana() {
           await getLikes(auth.user.email, dispatch, auth.token);
           
-          console.log("like.likes", like.likes);
+          // console.log("like.likes", like.likes);
         })();
       }
     //   setLikeList(like.likes);
@@ -73,12 +75,12 @@ const MyCourses =  () =>{
 
   useEffect(() => {
     let courseBlock = [];
-    let emptyBoxNum = 75
+    let emptyBoxNum = 90
+    console.log("settimes");
     like.likes.forEach(item => {
         if(item.isJoin === true){
             let times = item.time_inf.split(", ");
-            let color = colorPalettes[parseInt(item.serial_no) % 11];
-            console.log("times", times);
+            let color = colorPalettes[parseInt(item.serial_no) % 13];
             times.map(async itemT => {
               let sessionBlock = item;
               let time = itemT.split(" ");
@@ -167,18 +169,23 @@ const MyCourses =  () =>{
                 <p className="titleWrapperP">TIME</p>
               </div>
               {/* <p>TIME</p> */}
-              {["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"].map(
-                i => (
-                  <div className="titleWrapperDIV">
-                    <p className="titleWrapperP">{i}</p>
-                  </div>
-                )
-              )}
+              {[
+                "MONDAY",
+                "TUESDAY",
+                "WEDNESDAY",
+                "THURSDAY",
+                "FRIDAY",
+                "SATURDAY"
+              ].map(i => (
+                <div className="titleWrapperDIV">
+                  <p className="titleWrapperP">{i}</p>
+                </div>
+              ))}
             </section>
             {[...Array(emptyBox).keys()].map(i => (
               <div className="gridBox"></div>
             ))}
-            {console.log("emptyBox", emptyBox)}
+            {/* {console.log("emptyBox", emptyBox)} */}
             {courseBlock.map(course => (
               <TableData
                 key={course.serial_no}
@@ -187,8 +194,8 @@ const MyCourses =  () =>{
                 course={course}
                 //   type={course.Type}
                 day={course.week}
-                startTime={(course.timeSession0).toString()}
-                endTime={(course.timeSession1).toString()}
+                startTime={course.timeSession0.toString()}
+                endTime={course.timeSession1.toString()}
                 //   room={course.Room}
                 onMouseOver={() => onTableMouseOver(course.serial_no)}
                 onMouseLeave={onTableMouseLeave}

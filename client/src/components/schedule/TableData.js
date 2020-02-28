@@ -8,17 +8,18 @@ const TableData = props => {
     useEffect(() => {
       window.addEventListener("resize", () => {
         setSize(window.innerWidth);
-        console.log("setSize");
+        // console.log("setSize");
       });
     }, []);
 
   const convertDay = weekDay => {
+    // console.log("weekDay", weekDay);
     if (weekDay == "1") return "monday";
     else if (weekDay == "2") return "tuesday";
     else if (weekDay == "3") return "wednesday";
     else if (weekDay == "4") return "thursday";
     else if (weekDay == "5") return "friday";
-    else if (weekDay == "6") return "saturday";
+    else if (weekDay == "6")return "saturday";
     else return null;
   };
 
@@ -71,7 +72,7 @@ const TableData = props => {
     
 
     if (props.display === props.id) {
-        {console.log("display",typeof props.display);}
+        // {console.log("display",typeof props.display);}
       return (
         <div
           className={`courseElement ${convertDay(props.day)}
@@ -107,6 +108,9 @@ const TableData = props => {
                 : {props.course.serial_no}
               </p>
             </div>
+            {/* <button className="btn btn-warning btn-sm mx-auto mt-auto" type="button">
+              Hello
+            </button> */}
           </div>
         </div>
       );
@@ -123,7 +127,7 @@ const TableData = props => {
             // el can be null - see https://reactjs.org/docs/refs-and-the-dom.html#caveats-with-callback-refs
             if (!el) return;
 
-            console.log("www", el.getBoundingClientRect().height); // prints 200px
+            // console.log("www", el.getBoundingClientRect().height); // prints 200px
             setDivHeight(el.getBoundingClientRect().height);
           }}
         >
@@ -150,7 +154,7 @@ const TableData = props => {
                   </div>
               </div> */}
             {size > 800 & divHeight > 80? (
-              <div class="card-body p-1 pt-2" >
+              <div class="card-body p-1 pt-1" >
                 <p
                   className="card-text"
                   style={{ textAlign: "left", fontSize: "1em" }}
