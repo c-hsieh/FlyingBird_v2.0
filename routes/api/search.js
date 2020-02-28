@@ -26,7 +26,7 @@ router.post("/query", async (request, response) => {
   console.log("I got a request!");
   // console.log(request);
   data = request.body;
-  // console.log(data);
+  console.log(data);
   // const url = new URL('http://cos1.ntnu.edu.tw/AasEnrollStudent/CourseQueryCtrl?action=showGrid');
   const url =
     "http://cos1.ntnu.edu.tw/AasEnrollStudent/CourseQueryCtrl?action=showGrid";
@@ -53,17 +53,27 @@ router.post("/query", async (request, response) => {
     body: queryString.stringify(data)
   };
   try {
-    const fetch_response = await fetch(url, options);
-    fetch_response.type = "basic";
-    // console.log("fetch_response", fetch_response);
-    const text = await fetch_response.text();
-    // console.log("text", JSON.parse(te.replace(/'/g, "\"")));
-    const res = JSON.parse(text.replace(/'/g, '"'));
-    // const rr = await fetch_response.json();
+        const fetch_response = await fetch(url, options);
+        fetch_response.type = "basic";
+        // console.log("fetch_response", fetch_response);
+        const text = await fetch_response.text();
+        // console.log("text", text[21466]);
+        // console.log("text", text[21467]);
+        // console.log("text", text[21468]);
+        // console.log("text", text);
+        // if(text[0]=="{"){
+        //   text = "["+text+"]"
+        //   console.log(text)
+        // }
 
-    // console.log('rr', rr)
-    response.json(res["List"]);
-  } catch (error) {
+        // console.log("text", JSON.parse(text.replace(/(')(?!s )/g, "\"")));
+        // const res = JSON.parse(text.replace(/'/g, '"'));
+        const res = JSON.parse(text.replace(/(')(?!s )/g, "\""));
+        // const rr = await fetch_response.json();
+
+        // console.log('rr', rr)
+        response.json(res["List"]);
+      } catch (error) {
     console.log(error);
     response.json({ err: error });
   }
