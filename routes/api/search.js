@@ -102,6 +102,7 @@ router.post("/query", async (request, response) => {
         return
       } catch (error) {
         console.log("got Json error");
+        console.log("text", text);
         console.log(error);
         const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
         response.json(res["List"]);

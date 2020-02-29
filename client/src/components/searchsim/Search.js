@@ -107,7 +107,7 @@ const Search = () => {
         );
         window.setTimeout(() => {
           setAlert(null);
-        }, 2700);
+        }, 5000);
         //   chi = undefined;
         setChi(<span></span>);
       } else {
