@@ -74,7 +74,6 @@ router.post("/query", async (request, response) => {
       const fetch_response = await fetch(url, options);
       fetch_response.type = "basic";
       // console.log("fetch_response", fetch_response);
-      const text = await fetch_response.text();
       // console.log("text", text[21466]);
       // console.log("text", text[21467]);
       // console.log("text", text[21468]);
@@ -86,12 +85,25 @@ router.post("/query", async (request, response) => {
 
       // console.log("text", JSON.parse(text.replace(/(')(?!s )/g, "\"")));
       // const res = JSON.parse(text.replace(/'/g, '"'));
-      const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
+      // const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
+      // const resText = await JSON.stringify(text);
+      // const res = await JSON.parse(resText);
       // const rr = await fetch_response.json();
-
+      // console.log(res);
       // console.log('rr', rr)
-      response.json(res["List"]);
-      return
+      // response.json(res["List"]);
+      const text = await fetch_response.text();
+      try {
+        const json = JSON.parse(text);
+        response.json(json["List"]);
+        return
+      } catch (error) {
+        console.log(error);
+        const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
+        response.json(res["List"]);
+        return;
+      }
+      
     } catch (error) {
       console.log(error);
       if(test == cookieNum){
