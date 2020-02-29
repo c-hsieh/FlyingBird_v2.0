@@ -44,10 +44,13 @@ router.post("/query", async (request, response) => {
     process.env.MAGIC8,
     process.env.MAGIC9
   ];
+  const step = [1,3,7,9]
   const random = Math.floor(Math.random() * cookieNum);
+  const randomStep = Math.floor(Math.random() * 4);
+  
   let test = 0;
   while (test < cookieNum) {
-    console.log("random", (random + test) % cookieNum);
+    console.log("random", (random + step[randomStep] * test) % cookieNum);
     const options = {
       method: "POST",
       headers: {
@@ -65,7 +68,7 @@ router.post("/query", async (request, response) => {
         "Accept-Encoding": "gzip, deflate",
         "Accept-Language": "en-US,en;q=0.9",
         // "Cookie": 'JSESSIONID=lRphp27V0ym260yprwhYJXvZqp7vyzlrysypTrsPHj2ylHpKzwdz!407899233'
-        Cookie: `JSESSIONID=${cookies[(random + test) % cookieNum]}`
+        Cookie: `JSESSIONID=${cookies[(random + step[randomStep]*test) % cookieNum]}`
       },
       body: queryString.stringify(data)
     };
