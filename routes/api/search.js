@@ -31,23 +31,23 @@ router.post("/query", async (request, response) => {
   const url =
     "http://cos1.ntnu.edu.tw/AasEnrollStudent/CourseQueryCtrl?action=showGrid";
   // url.search = new URLSearchParams(data).toString();
-  // const cookieNum = 10
-  // const cookies = [
-  //   process.env.MAGIC,
-  //   process.env.MAGIC1,
-  //   process.env.MAGIC2,
-  //   process.env.MAGIC3,
-  //   process.env.MAGIC4,
-  //   process.env.MAGIC5,
-  //   process.env.MAGIC6,
-  //   process.env.MAGIC7,
-  //   process.env.MAGIC8,
-  //   process.env.MAGIC9
-  // ];
-  const cookieNum = 1;
+  const cookieNum = 10
   const cookies = [
-    process.env.MAGIC
+    process.env.MAGIC,
+    process.env.MAGIC1,
+    process.env.MAGIC2,
+    process.env.MAGIC3,
+    process.env.MAGIC4,
+    process.env.MAGIC5,
+    process.env.MAGIC6,
+    process.env.MAGIC7,
+    process.env.MAGIC8,
+    process.env.MAGIC9
   ];
+  // const cookieNum = 1;
+  // const cookies = [
+  //   process.env.MAGIC
+  // ];
   const step = [1,3,7,9]
   const random = Math.floor(Math.random() * cookieNum);
   const randomStep = Math.floor(Math.random() * 4);
@@ -110,17 +110,18 @@ router.post("/query", async (request, response) => {
         console.log("got Json error");
         console.log("text", text);
         console.error(error);
-        try {
-          const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
-          response.json(res["List"]);
-          console.log("success search");
-          return;
-        } catch (error) {
-          console.log("got Json error twice");
-          console.error(error);
-          response.json({ err: error });
-          return;
-        }
+        const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
+        response.json(res["List"]);
+        console.log("success search");
+        return;
+        // try {
+          
+        // } catch (error) {
+        //   console.log("got Json error twice");
+        //   console.error(error);
+        //   response.json({ err: error });
+        //   return;
+        // }
         
       }
       
