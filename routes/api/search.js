@@ -26,23 +26,27 @@ router.post("/query", async (request, response) => {
   console.log("I got a request!  To search course");
   // console.log(request);
   data = request.body;
-  console.log("data", data);
+  // console.log("data", data);
   // const url = new URL('http://cos1.ntnu.edu.tw/AasEnrollStudent/CourseQueryCtrl?action=showGrid');
   const url =
     "http://cos1.ntnu.edu.tw/AasEnrollStudent/CourseQueryCtrl?action=showGrid";
   // url.search = new URLSearchParams(data).toString();
-  const cookieNum = 10
+  // const cookieNum = 10
+  // const cookies = [
+  //   process.env.MAGIC,
+  //   process.env.MAGIC1,
+  //   process.env.MAGIC2,
+  //   process.env.MAGIC3,
+  //   process.env.MAGIC4,
+  //   process.env.MAGIC5,
+  //   process.env.MAGIC6,
+  //   process.env.MAGIC7,
+  //   process.env.MAGIC8,
+  //   process.env.MAGIC9
+  // ];
+  const cookieNum = 1;
   const cookies = [
-    process.env.MAGIC,
-    process.env.MAGIC1,
-    process.env.MAGIC2,
-    process.env.MAGIC3,
-    process.env.MAGIC4,
-    process.env.MAGIC5,
-    process.env.MAGIC6,
-    process.env.MAGIC7,
-    process.env.MAGIC8,
-    process.env.MAGIC9
+    process.env.MAGIC
   ];
   const step = [1,3,7,9]
   const random = Math.floor(Math.random() * cookieNum);
@@ -97,21 +101,34 @@ router.post("/query", async (request, response) => {
       // response.json(res["List"]);
       const text = await fetch_response.text();
       try {
+        console.log("set Json")
         const json = JSON.parse(text);
         response.json(json["List"]);
+        console.log("success search");
         return
       } catch (error) {
         console.log("got Json error");
         console.log("text", text);
-        console.log(error);
-        const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
-        response.json(res["List"]);
-        return;
+        console.error(error);
+        try {
+          const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
+          response.json(res["List"]);
+          console.log("success search");
+          return;
+        } catch (error) {
+          console.log("got Json error twice");
+          console.error(error);
+          response.json({ err: error });
+          return;
+        }
+        
       }
       
     } catch (error) {
       console.log(error);
       if(test == cookieNum){
+        console.log("Failed to search");
+        console.log("data", data);
         response.json({ err: error });
         return;
       }
