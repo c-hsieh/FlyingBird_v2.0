@@ -13,6 +13,7 @@ const Like = require("../../models/Like");
 // @access  Private
 router.post("/getLike", auth, (req, res) => {
   const { email } = req.body;
+  console.log("getLike", email);
   // console.log("email", email);
   // Check for existing user
   Like.findOne({ email })
@@ -39,7 +40,7 @@ router.post("/getLike", auth, (req, res) => {
 // @access  Private
 router.post('/addLike', auth, (req, res) => {
   const { email, like } = req.body;
-  console.log("req.body", req.body);
+  console.log("addLike", req.body);
   const query = { email: email.toString() };
   const update = {
     $push: {
@@ -66,7 +67,7 @@ router.post('/addLike', auth, (req, res) => {
 // unFinish
 router.post("/setJoin", auth, (req, res) => {
   const { email, serial_no, isJoin } = req.body;
-  console.log("typeof", typeof isJoin)
+  // console.log("typeof", typeof isJoin)
   console.log("setJoin", req.body);
   const query = { email: email.toString(), "like.serial_no": serial_no.toString() };
   const update = {

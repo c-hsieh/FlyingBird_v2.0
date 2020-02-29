@@ -15,6 +15,7 @@ const Like = require("../../models/Like");
 // @desc    Register new user
 // @access  Public
 router.post("/", async(req, res) => {
+  console.log("Register new user");
   const { name, email, password, captcha } = req.body;
   if (!captcha)return res.status(400).json({ msg: "Please select captcha" });
 

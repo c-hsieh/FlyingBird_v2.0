@@ -23,10 +23,10 @@ router.post("/post", async (request, response) => {
 });
 
 router.post("/query", async (request, response) => {
-  console.log("I got a request!");
+  console.log("I got a request!  To search course");
   // console.log(request);
   data = request.body;
-  // console.log(data);
+  console.log("data", data);
   // const url = new URL('http://cos1.ntnu.edu.tw/AasEnrollStudent/CourseQueryCtrl?action=showGrid');
   const url =
     "http://cos1.ntnu.edu.tw/AasEnrollStudent/CourseQueryCtrl?action=showGrid";
@@ -50,7 +50,7 @@ router.post("/query", async (request, response) => {
   
   let test = 0;
   while (test < cookieNum) {
-    console.log("random", (random + step[randomStep] * test) % cookieNum);
+    console.log("channel", (random + step[randomStep] * test) % cookieNum);
     const options = {
       method: "POST",
       headers: {
@@ -101,6 +101,7 @@ router.post("/query", async (request, response) => {
         response.json(json["List"]);
         return
       } catch (error) {
+        console.log("got Json error");
         console.log(error);
         const res = JSON.parse(text.replace(/(')(?![a-z] )/g, '"'));
         response.json(res["List"]);
