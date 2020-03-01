@@ -15,8 +15,10 @@ const Like = require("../../models/Like");
 // @desc    Register new user
 // @access  Public
 router.post("/", async(req, res) => {
-  console.log("Register new user");
+  
   const { name, email, password, captcha } = req.body;
+  console.log("Register new user");
+  console.log(email);
   if (!captcha)return res.status(400).json({ msg: "Please select captcha" });
 
   // Secret key
@@ -70,7 +72,8 @@ router.post("/", async(req, res) => {
                 like: []
               });
               newLike.save().then(like => {
-                res.json(like.like);
+                // res.json(like.like);
+                console.log(like.like);
               });
               jwt.sign(
                 { id: user.id },

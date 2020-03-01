@@ -406,37 +406,37 @@
 }
 
 .endTwoOclock {
-  grid-row-end: 15;
+  grid-row-end: 14;
 }
 
 .endTwoThirty {
-  grid-row-end: 16;
+  grid-row-end: 15;
 }
 
 .endThreeOclock {
-  grid-row-end: 17;
+  grid-row-end: 16;
 }
 
 .endThreeThirty {
-  grid-row-end: 18;
+  grid-row-end: 17;
 }
 
 .endFourOclock {
-  grid-row-end: 19;
+  grid-row-end: 18;
 }
 
 .endFourThirty {
-  grid-row-end: 20;
+  grid-row-end: 19;
 }
 
 .endFiveOclock {
-  grid-row-end: 21;
+  grid-row-end: 20;
 }
 
 .endFiveThirty {
-  grid-row-end: 22;
+  grid-row-end: 21;
 }
 
 .endSixOclock {
-  grid-row-end: 23;
+  grid-row-end: 22;
 }

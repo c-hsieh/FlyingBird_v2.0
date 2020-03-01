@@ -16,6 +16,7 @@ const User = require("../../models/User");
 router.post("/", async(req, res) => {
   const { email, password, captcha } = req.body;
   console.log("toLoginAuth")
+  console.log(email);
   if (!captcha)return res.status(400).json({ msg: "Please select captcha" });
 
   // Secret key
