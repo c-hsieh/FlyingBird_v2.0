@@ -105,6 +105,11 @@ const Search = () => {
 
   return (
     <React.Fragment>
+      <h4 className="mt-1 justify-content-center mx-auto">
+        <span style={{ fontSize: "0.8em", color: "#777777" }}>
+          因為此網站查詢資料是同步與學校資料庫要資料，現在校方資料庫人數爆滿，導致無法查詢，請耐心等候...稍後再試
+        </span>
+      </h4>
       {/* {console.log(size)} */}
       <button
         className="btn btn-primary mb-3 mt-3"
