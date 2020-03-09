@@ -27,7 +27,8 @@ const formatterChnName = (cell, row) => {
         </span>
         <br />
         <a
-          href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`}
+          // href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`}
+          href={`https://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&courseGroup=${row.courseGroup}&deptCode=${row.deptCode}&formS=${row.formS}&classes1=${row.class1}&deptGroup=${row.deptGroup}`}
           target="_blank"
           style={{ fontSize: "0.8em" }}
           rel="noopener noreferrer"
