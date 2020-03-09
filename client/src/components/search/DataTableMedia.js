@@ -17,6 +17,7 @@ const { SearchBar } = Search;
 const formatterChnName = (cell, row) => {
     // console.log('cell', cell)
     // console.log('row', row)
+    // asd
 
     const sp = cell.split('</br>')
     // const jo = sp.join(`</br >`)
