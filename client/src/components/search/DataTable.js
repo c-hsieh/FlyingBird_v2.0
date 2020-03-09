@@ -16,7 +16,8 @@ const { SearchBar } = Search;
 const formatterChnName = (cell, row) =>{
     // console.log('cell', cell)
     // console.log('row', row)
-    console.log("cell", typeof cell);
+    // console.log('row.class1', row.class1)
+    // console.log("cell", typeof cell);
     let sp = []
     if (cell.includes('</br>')){
         sp = cell.split('</br>')
@@ -27,7 +28,8 @@ const formatterChnName = (cell, row) =>{
     return (
       <span>
         <a
-          href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`}
+          // href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&deptCode=${row.deptCode}`}
+          href={`https://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${row.acadmYear}&term=${row.acadmTerm}&courseCode=${row.courseCode}&courseGroup=${row.courseGroup}&deptCode=${row.deptCode}&formS=${row.formS}&classes1=${row.class1}&deptGroup=${row.deptGroup}`}
           target="_blank"
           rel="noopener noreferrer"
         >
