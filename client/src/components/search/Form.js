@@ -381,7 +381,7 @@ const Form = prop => {
               className="form-control"
               id="acadmTerm"
               onChange={onChange}
-              value={2}
+              value={3}
               readOnly
             />
           </div>
