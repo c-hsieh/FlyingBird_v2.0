@@ -26,9 +26,10 @@ const List = (prop) => {
                   {/* </h5> */}
                   <a
                     // className="btn btn-dark btn-block"
-                    href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=&deptCode=${likeItem.dept_code}&formS=&classes1=&deptGroup=`}
+                    // href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=&deptCode=${likeItem.dept_code}&formS=&classes1=&deptGroup=`}
+                    href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=${likeItem.course_group}&deptCode=${likeItem.dept_code}&formS=${likeItem.form_s}&classes1=${likeItem.classes}&deptGroup=${likeItem.dept_group}`}
                     rel="noopener noreferrer"
-                    style={{ "fontSize": "1em" }}
+                    style={{ fontSize: "1em" }}
                     target="_blank"
                     role="button"
                   >
@@ -75,9 +76,13 @@ const List = (prop) => {
                     //     : { backgroundColor: "#98999B", borderColor: "#64fa64" }
                     // }
                     id={likeItem.serial_no}
-                    onClick={e => {
+                    onClick={(e) => {
                       e.preventDefault();
-                      toSetJoin(likeItem.serial_no, !likeItem.isJoin, likeItem.time_inf);
+                      toSetJoin(
+                        likeItem.serial_no,
+                        !likeItem.isJoin,
+                        likeItem.time_inf
+                      );
                     }}
                   >
                     Join
@@ -88,7 +93,7 @@ const List = (prop) => {
                     type="button"
                     className="btn btn-sm btn-warning btn-block"
                     id={likeItem.serial_no}
-                    onClick={e => del(e.target.id)}
+                    onClick={(e) => del(e.target.id)}
                   >
                     Delete
                   </button>

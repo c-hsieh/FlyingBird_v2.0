@@ -163,7 +163,11 @@ const DataTable = () => {
               dept_code: row.deptCode,
               chn_name: row.chnName,
               time_inf: row.timeInfo,
-              isJoin: false
+              course_group: row.courseGroup,
+              from_s: row.fromS,
+              classes: row.class1,
+              dept_group: row.deptGroup,
+              isJoin: false,
             };
             // console.log('likeItem', likeItem)
             // cde.push(likeItem)

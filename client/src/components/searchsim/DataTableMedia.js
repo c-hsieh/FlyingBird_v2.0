@@ -100,15 +100,19 @@ const DataTable = () => {
         if (!(likeList.some((item) => item.serial_no === row.serial_no))) {
             // let cde = likeList
             const likeItem = {
-                acadm_year: row.acadm_year,
-                acadm_term: row.acadm_term,
-                serial_no: row.serial_no,
-                course_code: row.course_code,
-                dept_code: row.dept_code,
-                chn_name: row.chn_name,
-                time_inf: row.time_inf,
-                isJoin: false
-            }
+              acadm_year: row.acadm_year,
+              acadm_term: row.acadm_term,
+              serial_no: row.serial_no,
+              course_code: row.course_code,
+              dept_code: row.dept_code,
+              chn_name: row.chn_name,
+              time_inf: row.time_inf,
+              course_group: row.course_group,
+              from_s: row.from_s,
+              classes: row.classes,
+              dept_group: row.dept_group,
+              isJoin: false,
+            };
             // console.log('likeItem', likeItem)
             // cde.push(likeItem)
             // setLikeList(cde)

@@ -100,7 +100,11 @@ const DataTable = () => {
           dept_code: row.dept_code,
           chn_name: row.chn_name,
           time_inf: row.time_inf,
-          isJoin: false
+          course_group: row.course_group,
+          from_s: row.from_s,
+          classes: row.classes,
+          dept_group: row.dept_group,
+          isJoin: false,
         };
         // console.log("likeItem", likeItem);
         // cde.push(likeItem);
