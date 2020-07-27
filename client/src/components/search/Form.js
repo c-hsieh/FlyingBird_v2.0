@@ -372,7 +372,7 @@ const Form = prop => {
               className="form-control"
               id="acadmYear"
               onChange={onChange}
-              value={108}
+              value={109}
               readOnly
             />
           </div>
@@ -384,7 +384,7 @@ const Form = prop => {
               className="form-control"
               id="acadmTerm"
               onChange={onChange}
-              value={3}
+              value={1}
               readOnly
             />
           </div>
