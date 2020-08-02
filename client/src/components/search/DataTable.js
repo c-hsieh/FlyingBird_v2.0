@@ -164,7 +164,7 @@ const DataTable = () => {
               chn_name: row.chnName,
               time_inf: row.timeInfo,
               course_group: row.courseGroup,
-              from_s: row.fromS,
+              form_s: row.formS,
               classes: row.class1,
               dept_group: row.deptGroup,
               isJoin: false,

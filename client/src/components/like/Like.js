@@ -27,7 +27,7 @@ const List = (prop) => {
                   <a
                     // className="btn btn-dark btn-block"
                     // href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=&deptCode=${likeItem.dept_code}&formS=&classes1=&deptGroup=`}
-                    href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=${likeItem.course_group}&deptCode=${likeItem.dept_code}&formS=${likeItem.fromS}&classes1=${likeItem.classes}&deptGroup=${likeItem.dept_group}`}
+                    href={`http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/SyllabusCtrl?year=${likeItem.acadm_year}&term=${likeItem.acadm_term}&courseCode=${likeItem.course_code}&courseGroup=${likeItem.course_group}&deptCode=${likeItem.dept_code}&formS=${likeItem.form_s}&classes1=${likeItem.classes}&deptGroup=${likeItem.dept_group}`}
                     rel="noopener noreferrer"
                     style={{ fontSize: "1em" }}
                     target="_blank"
