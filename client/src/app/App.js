@@ -1,5 +1,10 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+} from "react-router-dom";
 
 import Navbar from '../components/layout/Navbar';
 import Index from '../components/layout/Index';
@@ -25,12 +30,28 @@ const options = {
   // you can also just use 'scale'
   transition: transitions.SCALE
 };
-
-function App() {
+const Routers = () => {
+  let location = useLocation();
   useEffect(() => {
     ReactGA.initialize("UA-174561276-1");
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, [])
+    ReactGA.pageview(location.pathname + location.search);
+  }, []);
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+    console.log("bananaONE", location.pathname + location.search);
+  }, [location]);
+  return (
+    <Switch>
+      <Route exact path="/" component={Index} />
+      <Route exact path="/search" component={Search} />
+      <Route exact path="/like" component={Like} />
+      <Route exact path="/searchsim" component={Searchsim} />
+      <Route exact path="/schedule" component={Schedule} />
+    </Switch>
+  );
+}
+
+function App() {
   
   return (
     <ContextController>
@@ -39,13 +60,7 @@ function App() {
           <Navbar />
           <AlertProvider template={AlertTemplate} {...options}>
             <div className="container">
-              <Switch>
-                <Route exact path="/" component={Index} />
-                <Route exact path="/search" component={Search} />
-                <Route exact path="/like" component={Like} />
-                <Route exact path="/searchsim" component={Searchsim} />
-                <Route exact path="/schedule" component={Schedule} />
-              </Switch>
+              <Routers />
             </div>
           </AlertProvider>
         </>
