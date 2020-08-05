@@ -11,6 +11,7 @@ import Schedule from '../components/schedule/Schedule'
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
+import ReactGA from "react-ga";
 
 import { ContextController, Context } from "../flux/store";
 import './App.css';
@@ -26,6 +27,10 @@ const options = {
 };
 
 function App() {
+  useEffect(() => {
+    ReactGA.initialize("UA-174561276-1");
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, [])
   
   return (
     <ContextController>
