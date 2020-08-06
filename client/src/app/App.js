@@ -43,7 +43,7 @@ const Routers = () => {
   return (
     <Switch>
       <Route exact path="/" component={Index} />
-      <Route exact path="/search" component={Search} />
+      <Route exact path="/search" component={Searchsim} />
       <Route exact path="/like" component={Like} />
       <Route exact path="/searchsim" component={Searchsim} />
       <Route exact path="/schedule" component={Schedule} />

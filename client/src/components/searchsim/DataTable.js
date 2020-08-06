@@ -441,7 +441,7 @@ const DataTable = () => {
     }else{
         return (
           <>
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <a
                 href="/search"
                 // target="button "
@@ -451,7 +451,7 @@ const DataTable = () => {
                 <i class="far fa-hand-point-left"></i>
                 Go Back to Search
               </a>
-            </div>
+            </div> */}
 
             {/* <h2>{heading}</h2> */}
             {/* <ColoredLine color="red" /> */}
