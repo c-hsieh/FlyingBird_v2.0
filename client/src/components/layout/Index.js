@@ -12,20 +12,6 @@ const Index = () => {
         <div className="container">
           <h1 className="  mt-5">NTNU Schedule of Course</h1>
 
-          <p className="lead text-muted">
-            哈嘍～我是數學系謝長霖
-            {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "fontSize": "1em" }}></i> */}
-            <a
-              href={"https://www.facebook.com/ChangLinHsiehx"}
-              target="button _blank"
-              // onClick={(e) => { e.preventDefault()}}
-              rel="noopener noreferrer"
-              style={{ "fontSize": "1.2em" }}
-            >
-              <i className="fab fa-facebook"></i>
-            </a>
-            ，由於選課網站不是很容易操作，所以做了一個選課搜尋網。希望大家能喜歡～
-          </p>
           <h5 className="  mt-5">操作簡介：</h5>
           <p className="lead text-muted">
             搜尋頁的搜尋方式與選課網雷同，比較特別的是：
@@ -75,24 +61,39 @@ const Index = () => {
             <Logo
               style={{
                 height: "1.3em",
-                width: "1.3em"
+                width: "1.3em",
               }}
             />
             <span className="badge badge-light">Google</span>
-            關鍵字搜尋連結，和<i className="fab fa-facebook" style={{ "color": "#037FFF", "fontSize": "1em" }}></i>
-            <span className="badge badge-light">選課沒地雷(NTNU) 社團<i class="fas fa-bomb" style={{ "fontSize": "1.2em", "color": "black" }}></i>
-            </span>內搜尋連結，可讓你快速搜尋評價。
+            關鍵字搜尋連結，和
+            <i
+              className="fab fa-facebook"
+              style={{ color: "#037FFF", fontSize: "1em" }}
+            ></i>
+            <span className="badge badge-light">
+              選課沒地雷(NTNU) 社團
+              <i
+                class="fas fa-bomb"
+                style={{ fontSize: "1.2em", color: "black" }}
+              ></i>
+            </span>
+            內搜尋連結，可讓你快速搜尋評價。
           </li>
           <li className="lead text-muted">點擊課程名稱，會連結去課程綱要。</li>
           <li className="lead text-muted">
-            <span className="badge badge-light">限修/選課人數 授權 </span>{" "}
-            那欄紅色
-            <span className="badge badge-danger">額滿</span>{" "}
-            顯示選課人數已額滿、
-            <span className="badge badge-warning">快滿</span>{" "}
-            顯示選課人數快額滿(剩下10以下)、
-            <span className="badge badge-success">很多</span>{" "}
-            顯示離限修人數還有一段距離。
+            <del>
+              <span className="badge badge-light">限修/選課人數 授權 </span>{" "}
+              那欄紅色
+              <span className="badge badge-danger">額滿</span>{" "}
+              顯示選課人數已額滿、
+              <span className="badge badge-warning">快滿</span>{" "}
+              顯示選課人數快額滿(剩下10以下)、
+              <span className="badge badge-success">很多</span>{" "}
+              顯示離限修人數還有一段距離。
+            </del>
+            <span style={{ color: "black" }}>
+              <strong>(畢業了!爬不了選課人數了)</strong>
+            </span>
           </li>
           <li className="lead text-muted">
             最旁邊的愛心按鈕
@@ -105,7 +106,9 @@ const Index = () => {
             在<strong style={{ color: "#000000" }}>Like List</strong>裡可以點擊
             <button className="btn btn-success btn-sm" type="button">
               Join
-            </button>把課程加入到<strong style={{ color: "#000000" }}>課表Schedule</strong>裡。
+            </button>
+            把課程加入到
+            <strong style={{ color: "#000000" }}>課表Schedule</strong>裡。
           </li>
 
           <div className="col d-flex justify-content-end">
@@ -121,7 +124,7 @@ const Index = () => {
               }
               target="button _blank"
               rel="noopener noreferrer"
-              style={{ "fontSize": "1.2em" }}
+              style={{ fontSize: "1.2em" }}
               className="mr-2"
             >
               <i className="fas fa-link"></i>
@@ -134,7 +137,7 @@ const Index = () => {
               href={"http://courseap.itc.ntnu.edu.tw/acadmOpenCourse/index.jsp"}
               target="button _blank"
               rel="noopener noreferrer"
-              style={{ "fontSize": "1.2em" }}
+              style={{ fontSize: "1.2em" }}
               className="ml-2"
             >
               <i className="fas fa-link"></i>
@@ -150,44 +153,44 @@ const Index = () => {
             在最後要送出時在設定，且不要開關開關，會出錯....
             如果遇到不能使用請重新整理，再試一遍。
           </li> */}
-          <li className="lead text-muted">
-            如果<strong style={{ color: "#000000" }}>多次</strong>遇到
-            <span className="badge badge-danger">Error!</span>
-            {/* <div className="alert alert-danger d-inline mb-5 mt-2" role="alert">Error!</div> */}
-            ，可能是我跟學校連結的API掛掉，請連結
-            <a className="btn btn-success btn-sm" href="/searchsim">
+          {/* <li className="lead text-muted"> */}
+          {/* 如果<strong style={{ color: "#000000" }}>多次</strong>遇到 */}
+          {/* <span className="badge badge-danger">Error!</span> */}
+          {/* <div className="alert alert-danger d-inline mb-5 mt-2" role="alert">Error!</div> */}
+          {/* ，可能是我跟學校連結的API掛掉，請連結 */}
+          {/* <a className="btn btn-success btn-sm" href="/searchsim">
               Simple Search
               <i className="fas fa-search"></i>
             </a>
-            這個使用。
-            {/* <strong style={{ "color": "#000000" }}>希望學校能給我穩定的API</strong>。 */}
-          </li>
+            這個使用。 */}
+          {/* <strong style={{ "color": "#000000" }}>希望學校能給我穩定的API</strong>。 */}
+          {/* </li> */}
           <li className="lead text-muted">
             {/* <i className="fab fa-facebook" style={{ "color": "#007BFF", "fontSize": "1em" }}></i> */}
-            如果有其他問題歡迎聯絡我
+            如果有問題歡迎聯絡我
             <a
               href={"https://www.facebook.com/ChangLinHsiehx"}
               target="button _blank"
               // onClick={(e) => { e.preventDefault() }}
               rel="noopener noreferrer"
-              style={{ "fontSize": "1.2em" }}
+              style={{ fontSize: "1.2em" }}
             >
               <i className="fab fa-facebook"></i>
             </a>
           </li>
-          <h5 className="  mt-5">未來：</h5>
-          <p className="lead text-muted">
-            未來希望能整合課程評價、推薦課程與加退選功能。歡迎有興趣的同學，能一起協作。
-            <a
+          {/* <h5 className="  mt-5">未來：</h5> */}
+          {/* <p className="lead text-muted"> */}
+          {/* 未來希望能整合課程評價、推薦課程與加退選功能。歡迎有興趣的同學，能一起協作。 */}
+          {/* <a
               href={"https://github.com/Aaron3141/FlyingBird_v2.0"}
               target="button _blank"
               rel="noopener noreferrer"
               // onClick={(e) => { e.preventDefault() }}
-              style={{ "fontSize": "1.2em", color: "#000000" }}
+              style={{ fontSize: "1.2em", color: "#000000" }}
             >
               <i class="fab fa-github"></i>
-            </a>
-          </p>
+            </a> */}
+          {/* </p> */}
           <br />
         </div>
       </React.Fragment>

@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import Navbar from '../components/layout/Navbar';
+import Footer from '../components/layout/Footer';
 import Index from '../components/layout/Index';
 import Search from '../components/search/Search';
 import Searchsim from '../components/searchsim/Search';
@@ -43,7 +44,7 @@ const Routers = () => {
   return (
     <Switch>
       <Route exact path="/" component={Index} />
-      <Route exact path="/search" component={Search} />
+      <Route exact path="/search" component={Searchsim} />
       <Route exact path="/like" component={Like} />
       <Route exact path="/searchsim" component={Searchsim} />
       <Route exact path="/schedule" component={Schedule} />
@@ -63,6 +64,7 @@ function App() {
               <Routers />
             </div>
           </AlertProvider>
+          <Footer/>
         </>
       </Router>
     </ContextController>
