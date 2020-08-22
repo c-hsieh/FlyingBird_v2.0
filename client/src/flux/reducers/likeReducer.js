@@ -25,7 +25,12 @@ export default function(state, action) {
     case DELETE_LIKE:
       return {
         ...state,
-        likes: state.likes.filter(item => item.serial_no !== action.payload)
+        likes: state.likes.filter(
+          (item) =>
+            item.serial_no !== action.payload.serial_no &&
+            item.acadm_year != action.payload.acadm_year &&
+            item.acadm_term != action.payload.acadm_term
+        ),
       };
     case DELETE_ALL_LIKE:
       return {
@@ -40,7 +45,13 @@ export default function(state, action) {
     case SET_JOIN:
       return {
         ...state,
-        likes: state.likes.map(item=>{if(item.serial_no == action.payload){item.isJoin=!(item.isJoin)}return item})
+        likes: state.likes.map(item=>{if (
+                                        item.serial_no == action.payload.serial_no &&
+                                        item.acadm_year == action.payload.acadm_year &&
+                                        item.acadm_term == action.payload.acadm_term
+                                      ) {
+                                        item.isJoin = !item.isJoin;
+                                      }return item})
       };
     case LIKES_LOADING:
       return {

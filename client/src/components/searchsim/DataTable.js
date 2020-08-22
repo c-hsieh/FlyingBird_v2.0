@@ -120,7 +120,14 @@ const DataTable = () => {
         // setLikeList(abc => abc.filter(li => li.serial_no !== row.serial_no));
         setLikeList(likeList.filter(li => li.serial_no !== row.serial_no));
         console.log("HI  deleteLike");
-        deleteLike(auth.user.email, row.serial_no, dispatch, auth);
+        deleteLike(
+          auth.user.email,
+          row.serial_no,
+          row.acadm_year,
+          row.acadm_term,
+          dispatch,
+          auth
+        );
         // localStorage.setItem('LikeList', JSON.stringify(likeList));
       }
       // console.log('setData', data)

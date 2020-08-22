@@ -229,7 +229,14 @@ const DataTable = (prop) => {
           // console.log('likeList', likeList)
         } else {
           setLikeList(likeList.filter(li => li.serial_no !== row.serialNo));
-          deleteLike(auth.user.email, row.serialNo, dispatch, auth);
+          deleteLike(
+            auth.user.email,
+            row.serialNo,
+            row.acadmYear,
+            row.acadmTerm,
+            dispatch,
+            auth
+          );
           // localStorage.setItem('LikeList', JSON.stringify(likeList));
         }
         // console.log('setData', data)

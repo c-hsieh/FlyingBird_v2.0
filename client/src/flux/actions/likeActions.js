@@ -48,37 +48,37 @@ export const addLike = (email, like, dispatch, auth) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
-export const setJoin = (email, serial_no, isJoin, dispatch, auth) => {
+export const setJoin = (email, serial_no, acadm_year, acadm_term, isJoin, dispatch, auth) => {
   // Request body
-  const body = JSON.stringify({ email, serial_no, isJoin });
+  const body = JSON.stringify({ email, serial_no, acadm_year, acadm_term, isJoin });
   console.log("setJoin", body);
   axios
     .post("/api/like/setJoin", body, tokenConfig(auth.token))
-    .then(res =>
+    .then((res) =>
       dispatch({
         type: SET_JOIN,
-        payload: serial_no
+        payload: { serial_no, acadm_year, acadm_term },
       })
     )
-    .catch(err =>
+    .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
 
-export const deleteLike = (email, serial_no, dispatch, auth) => {
+export const deleteLike = (email, serial_no, acadm_year, acadm_term, dispatch, auth) => {
   
   // Request body
-  const body = JSON.stringify({ email, serial_no });
+  const body = JSON.stringify({ email, serial_no, acadm_year, acadm_term });
   console.log("deleteLike", body);
   axios
     .post("/api/like/deleteLike", body, tokenConfig(auth.token))
-    .then(res =>
+    .then((res) =>
       dispatch({
         type: DELETE_LIKE,
-        payload: serial_no
+        payload: { serial_no, acadm_year, acadm_term },
       })
     )
-    .catch(err =>
+    .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };

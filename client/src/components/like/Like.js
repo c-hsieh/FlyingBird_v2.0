@@ -80,6 +80,8 @@ const List = (prop) => {
                       e.preventDefault();
                       toSetJoin(
                         likeItem.serial_no,
+                        likeItem.acadm_year,
+                        likeItem.acadm_term,
                         !likeItem.isJoin,
                         likeItem.time_inf
                       );
@@ -93,7 +95,11 @@ const List = (prop) => {
                     type="button"
                     className="btn btn-sm btn-warning btn-block"
                     id={likeItem.serial_no}
-                    onClick={(e) => del(e.target.id)}
+                    ayear={likeItem.acadm_year}
+                    aterm={likeItem.acadm_term}
+                    onClick={(e) =>
+                      del(e.target.id, e.target.ayear, e.target.aterm)
+                    }
                   >
                     Delete
                   </button>
@@ -143,15 +149,14 @@ const Like = () => {
       return 6;
     }
   };
-  const toSetJoin = (serial_no, isJoin, time_inf) => {
+  const toSetJoin = (serial_no, acadm_year, acadm_term, isJoin, time_inf) => {
     // console.log("toSetJoin");
     // console.log("isJoin: ", isJoin);
-    
-    if (isJoin===true) {
+
+    if (isJoin === true) {
       let joinCourseArr = [];
       let times = time_inf.split(", ");
-      times.map(itemT => {
-        
+      times.map((itemT) => {
         // let sessionBlock = item;
         let time = itemT.split(" ");
         let week = (coverToNum(time[0]) - 1) * 15;
@@ -159,29 +164,43 @@ const Like = () => {
         let timeSession0 = dealSession(timeSession[0]); //toNumber
         let timeSession1 = dealSession(timeSession[timeSession.length - 1]); //toNumber
         console.log("qwqw", timeSession0);
-        [...Array(timeSession1 - timeSession0 + 1).keys()].map(i =>
+        [...Array(timeSession1 - timeSession0 + 1).keys()].map((i) =>
           joinCourseArr.push(
             parseInt(week) + parseInt(timeSession0) + parseInt(i)
           )
         );
       });
-      let abc = joinCourseArr.some(ele => joinCourse.some(e=>e===ele));
-      if(!abc){
-        setJoin(auth.user.email, serial_no, isJoin, dispatch, auth);
-      }else{
-        console.log("Exists")
+      let abc = joinCourseArr.some((ele) => joinCourse.some((e) => e === ele));
+      if (!abc) {
+        setJoin(
+          auth.user.email,
+          serial_no,
+          acadm_year,
+          acadm_term,
+          isJoin,
+          dispatch,
+          auth
+        );
+      } else {
+        console.log("Exists");
         alert.show("Time conflicts!");
       }
-    }else{
-      setJoin(auth.user.email, serial_no, isJoin, dispatch, auth);
+    } else {
+      setJoin(
+        auth.user.email,
+        serial_no,
+        acadm_year,
+        acadm_term,
+        isJoin,
+        dispatch,
+        auth
+      );
     }
+  };
 
-   
-  }
-
-  const del =  code => {
+  const del =  (code, ayear, aterm) => {
     // console.log(code, code)
-    deleteLike(auth.user.email, code, dispatch, auth);
+    deleteLike(auth.user.email, code, ayear, aterm, dispatch, auth);
     // setLikeList(likeList.filter(li => li.serial_no !== code));
 
   };

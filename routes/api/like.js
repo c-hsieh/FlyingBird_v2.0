@@ -66,10 +66,15 @@ router.post('/addLike', auth, (req, res) => {
 // @access  Private
 // unFinish
 router.post("/setJoin", auth, (req, res) => {
-  const { email, serial_no, isJoin } = req.body;
+  const { email, serial_no, acadm_year, acadm_term, isJoin } = req.body;
   // console.log("typeof", typeof isJoin)
   console.log("setJoin", req.body);
-  const query = { email: email.toString(), "like.serial_no": serial_no.toString() };
+  const query = {
+    email: email.toString(),
+    "like.serial_no": serial_no.toString(),
+    "like.acadm_year": acadm_year.toString(),
+    "like.acadm_term": acadm_term.toString()
+  };
   const update = {
     $set: {
       // serial_no: true
@@ -93,14 +98,18 @@ router.post("/setJoin", auth, (req, res) => {
 // @desc    Delete a Like
 // @access  Private
 router.post("/deleteLike", auth, (req, res) => {
-  const { email, serial_no } = req.body;
+  const { email, serial_no, acadm_year, acadm_term } = req.body;
   console.log('deleteLike', req.body);
   const query = { email: email.toString() };
   const update = {
     $pull: {
-      like: { serial_no: serial_no.toString()}
+      like: {
+        serial_no: serial_no.toString(),
+        acadm_year: acadm_year.toString(),
+        acadm_term: acadm_term.toString(),
+      },
       // like: { "id": "10"}
-    }
+    },
   };
   Like.updateOne(query, update, { multi: true })
     .then(result => {
