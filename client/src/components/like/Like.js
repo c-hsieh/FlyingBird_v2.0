@@ -95,11 +95,15 @@ const List = (prop) => {
                     type="button"
                     className="btn btn-sm btn-warning btn-block"
                     id={likeItem.serial_no}
-                    ayear={likeItem.acadm_year}
-                    aterm={likeItem.acadm_term}
-                    onClick={(e) =>
-                      del(e.target.id, e.target.ayear, e.target.aterm)
-                    }
+                    data-ayear={likeItem.acadm_year}
+                    data-aterm={likeItem.acadm_term}
+                    onClick={(e) => {
+                      del(
+                        e.target.id,
+                        e.target.dataset.ayear,
+                        e.target.dataset.aterm
+                      );
+                    }}
                   >
                     Delete
                   </button>
@@ -199,7 +203,6 @@ const Like = () => {
   };
 
   const del =  (code, ayear, aterm) => {
-    // console.log(code, code)
     deleteLike(auth.user.email, code, ayear, aterm, dispatch, auth);
     // setLikeList(likeList.filter(li => li.serial_no !== code));
 
@@ -207,7 +210,7 @@ const Like = () => {
 
   useEffect(() => {
     if (auth.user === null) {
-      console.log("auth.token", auth.token);
+      // console.log("auth.token", auth.token);
     } else if(like.initial===false) {
       (async function banana() {
         await getLikes(auth.user.email, dispatch, auth.token);
@@ -227,7 +230,7 @@ const Like = () => {
           let timeSession = time[1].split("-");
           let timeSession0 = dealSession(timeSession[0]); //toNumber
           let timeSession1 = dealSession(timeSession[timeSession.length - 1]); //toNumber
-          console.log("qwqw", timeSession0);
+          // console.log("qwqw", timeSession0);
           [...Array(timeSession1 - timeSession0 + 1).keys()].map(i =>
             joinCourseArr.push(
               parseInt(week) + parseInt(timeSession0) + (parseInt(i))
@@ -236,13 +239,13 @@ const Like = () => {
         });
       }
     });
-    console.log("joinCourseArr", joinCourseArr);
+    // console.log("joinCourseArr", joinCourseArr);
     setJoinCourse(joinCourseArr);
   }, [like.likes]);
 
   return (
     <React.Fragment>
-      {console.log("likeList", likeList)}
+      {/* {console.log("likeList", likeList)} */}
       {auth.isAuthenticated ? (
         <h3 className="text-center mt-2 mb-4">
           <i className="fas fa-heart"></i>Like
