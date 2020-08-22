@@ -27,9 +27,9 @@ export default function(state, action) {
         ...state,
         likes: state.likes.filter(
           (item) =>
-            item.serial_no !== action.payload.serial_no &&
-            item.acadm_year != action.payload.acadm_year &&
-            item.acadm_term != action.payload.acadm_term
+            item.serial_no !== action.payload.serial_no ||
+            item.acadm_year !== action.payload.acadm_year ||
+            item.acadm_term !== action.payload.acadm_term
         ),
       };
     case DELETE_ALL_LIKE:
