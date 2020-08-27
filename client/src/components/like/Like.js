@@ -251,12 +251,15 @@ const Like = () => {
           <i className="fas fa-heart"></i>Like
         </h3>
       ) : (
-        <h2
-          className="text-center mt-5 "
-          style={{ color: "#d6d6d6", verticalAlign: "middle" }}
-        >
-          Please Login.....
-        </h2>
+          <div style={{ minHeight: "50vh"}}>
+            <h2
+              className="text-center pt-5"
+              style={{ color: "#d6d6d6", verticalAlign: "middle" }}
+            >
+              Please Login.....
+            </h2>
+        </div>
+        
       )}
 
       {likeList.length !== 0 ? (

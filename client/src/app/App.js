@@ -60,7 +60,7 @@ function App() {
         <>
           <Navbar />
           <AlertProvider template={AlertTemplate} {...options}>
-            <div className="container">
+            <div className="container" style={{ minHeight: 'calc(100vh - 110px)'}}>
               <Routers />
             </div>
           </AlertProvider>

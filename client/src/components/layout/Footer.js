@@ -6,17 +6,22 @@ import { ReactComponent as Logo } from "./google.svg";
 const Footer = () => {
   return (
     <React.Fragment>
-      <div
+      {/* <div
         className="mb-1 text-center text-mute"
-        style={{
-          paddingTop: "15px",
-          paddingBottom: "8px",
-          backgroundColor: "#F2F2F2",
-          weight: "100%",
-        }}
+        
       >
+        
+      </div> */}
+      <footer
+        className="text-center text-mute"
+        style={{
+        paddingTop: "15px",
+        paddingBottom: "15px",
+        backgroundColor: "#F2F2F2",
+        weight: "100%",
+      }}>
         © Create by Aaron
-      </div>
+      </footer>
     </React.Fragment>
   );
 };
